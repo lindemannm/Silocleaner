@@ -45,9 +45,10 @@ change the tracked signing configuration to make that build work.
 
 ## Release hand-off
 
-Phase 4 owns notarization and fresh-machine installation evidence. Before
-that phase can close, archive with the configured Developer ID identity and
-verify the main app, Finder extension, Sentinel, and helper signatures and
-entitlements as one bundle. In particular, verify that the helper's
-designated-requirement check sees the final main-app bundle ID and the same
-Silocleaner team ID; it rejects unsigned and mismatched clients by design.
+Phase 4 owns notarization and fresh-machine installation evidence. Follow the
+repeatable archive, notarization, stapling, component-signature, entitlement,
+and Gatekeeper checks in `ENTITLEMENTS.md`. The scripts deliberately verify the
+main app, Finder extension, Sentinel, and helper individually rather than using
+`codesign --deep`. In particular, verify that the helper's designated-
+requirement check sees the final main-app bundle ID and the same Silocleaner
+team ID; it rejects unsigned and mismatched clients by design.

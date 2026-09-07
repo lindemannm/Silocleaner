@@ -171,15 +171,21 @@ Status: **in progress**
   not inspect or mutate selected apps, so no filesystem temporary exception or
   security-scoped bookmark is required. Apps elsewhere intentionally use the
   main app or its Services entry point instead.
-- [ ] Audit all targets' entitlements against their actual requirements;
-  remove unused app groups and temporary exceptions.
+- [x] Audit all targets' entitlements against their actual requirements;
+  remove unused app groups and temporary exceptions. `ENTITLEMENTS.md` records
+  the intentionally minimal policy: the main app and Finder extension share
+  the one preference-bearing app group; FinderOpen remains sandboxed; helper
+  and Sentinel have no entitlements.
 - [x] Replace private `PackageKit`, `CommerceKit`, and `StoreFoundation`
   dependencies with public APIs, or omit the affected features from a
   notarized release.
 - [x] Remove absolute paths from `OTHER_SWIFT_FLAGS` and make all module maps
   project-relative and source-controlled where genuinely required.
-- [ ] Set a supported signing/notarization workflow with verification of the
+- [x] Set a supported signing/notarization workflow with verification of the
   app, Finder extension, Sentinel, and privileged helper as a single bundle.
+  `Scripts/notarize-release.sh` archives, verifies, notarizes, staples, runs
+  Gatekeeper assessment, and re-verifies the individual signed components;
+  `ENTITLEMENTS.md` supplies the required fresh-machine acceptance record.
 
 Exit criteria:
 
