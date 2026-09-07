@@ -161,14 +161,7 @@ class IOSAppInstaller {
     }
 
     private static func makeTemporaryDirectory() throws -> URL {
-        let directory = try FileManager.default.url(
-            for: .itemReplacementDirectory,
-            in: .userDomainMask,
-            appropriateFor: nil,
-            create: true
-        )
-        try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: directory.path)
-        return directory
+        try PrivateTemporaryDirectory.create()
     }
 
     /// Extract IPA to a directory uniquely created for this install.

@@ -196,16 +196,18 @@ Exit criteria:
 
 ## Phase 5 -- dependencies, tests, and release confidence
 
-Status: **not started**
+Status: **in progress**
 
-- [ ] Pin every dependency to an immutable tag or revision. Fork/vend the
-  required AlinFoundation revision if its maintenance or trust model is not
-  suitable for Silocleaner.
-- [ ] Add CI that resolves dependencies from the lockfile, builds Debug and
-  Release without developer-local paths, runs tests, and reports failures.
-- [ ] Add unit tests for file-scope classification, deep-link parsing, command
-  argument construction, temporary file lifecycle, and destructive-operation
-  previews.
+- [x] Pin every dependency to an immutable revision in both the project and
+  `Package.resolved`. AlinFoundation remains an upstream-owned, immutable
+  commit; fork or vend it before release if its maintenance or trust model is
+  not accepted.
+- [x] Add CI that verifies the lockfile, resolves dependencies, builds Debug
+  and Release without developer-local paths, runs tests, and reports failures.
+- [x] Add unit tests for file-scope classification, deep-link parsing,
+  temporary-file lifecycle, and destructive-operation previews.
+- [ ] Add command-argument construction tests after extracting the remaining
+  user-shell environment capture behind a direct-process interface.
 - [ ] Add integration/UI tests for Finder invocation, Sentinel behaviour,
   helper installation/approval states, protected/unprotected deletion, undo,
   and a conflicting Pearcleaner install.
@@ -221,6 +223,9 @@ Exit criteria:
 - Tests execute, rather than merely build, and cover the new helper contract.
 - Fresh-install, upgrade, uninstall, and Pearcleaner-coexistence checks have
   recorded evidence.
+
+`RELEASE-VALIDATION.md` is the required evidence record for the remaining
+hardware, privacy-permission, signed-release, and independent-review gates.
 
 ## Suggested first implementation slice
 

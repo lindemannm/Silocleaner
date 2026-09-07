@@ -39,11 +39,7 @@ struct PearCLI: ParsableCommand {
     /// actual operation rather than merely the command spelling.
     static func confirmDestructiveOperation(_ paths: [URL], acknowledged: Bool) -> Bool {
         guard !acknowledged else { return true }
-        printOS("Preview — the following \(paths.count) item(s) would be moved to the Trash:\n")
-        for path in paths.sorted(by: { $0.path < $1.path }) {
-            printOS(path.path)
-        }
-        printOS("\nRe-run this command with --yes to confirm.\n")
+        printOS(DestructiveOperationPreview.message(for: paths))
         return false
     }
 

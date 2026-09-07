@@ -17,7 +17,6 @@
 		C73545F92D849B5700A3DC0C /* SilocleanerHelper in CopyFiles */ = {isa = PBXBuildFile; fileRef = C73545F02D849A1B00A3DC0C /* SilocleanerHelper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C73545FD2D84E5DD00A3DC0C /* com.lindemannm.SilocleanerSentinel.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = C7B3AB072D83900B00D829C5 /* com.lindemannm.SilocleanerSentinel.plist */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C739C3382EB027A9003639C6 /* askpass.sh in Resources */ = {isa = PBXBuildFile; fileRef = C739C3372EB027A9003639C6 /* askpass.sh */; };
-		C7E200012F00000100SEC002 /* homebrew-auto-update.sh in Resources */ = {isa = PBXBuildFile; fileRef = C7E200022F00000100SEC002 /* homebrew-auto-update.sh */; };
 		C73AE1922EC69A81009CAC42 /* GlobalConsoleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73AE1912EC69A81009CAC42 /* GlobalConsoleManager.swift */; };
 		C74206E52E79E47400BDDB6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C74206E42E79E47400BDDB6A /* Assets.xcassets */; };
 		C74422412E4936750002D277 /* DaemonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74422402E4936700002D277 /* DaemonView.swift */; };
@@ -50,6 +49,7 @@
 		C7D31D512AFF00F300C7ED9E /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D31D502AFF00F300C7ED9E /* Locations.swift */; };
 		C7DD49EA2BAB4D8100CCBA16 /* AppInfoFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DD49E92BAB4D8100CCBA16 /* AppInfoFetch.swift */; };
 		C7DD49EE2BAB7F6000CCBA16 /* ReversePathsFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DD49ED2BAB7F6000CCBA16 /* ReversePathsFetch.swift */; };
+		C7E200012F00000100SEC002 /* homebrew-auto-update.sh in Resources */ = {isa = PBXBuildFile; fileRef = C7E200022F00000100SEC002 /* homebrew-auto-update.sh */; };
 		C7F539382AF60865007DF1B2 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F539372AF60865007DF1B2 /* Utilities.swift */; };
 		C7F8436B2CBF066F00E3E30A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C7F8436A2CBF066F00E3E30A /* Localizable.xcstrings */; };
 		C7FBD9DF2DAD66D500151934 /* AlinFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C7C90DDD2DA8221B0056769A /* AlinFoundation */; };
@@ -137,7 +137,6 @@
 		C73545EA2D8496DA00A3DC0C /* HelperToolManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperToolManager.swift; sourceTree = "<group>"; };
 		C73545F02D849A1B00A3DC0C /* SilocleanerHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SilocleanerHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		C739C3372EB027A9003639C6 /* askpass.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = askpass.sh; sourceTree = "<group>"; };
-		C7E200022F00000100SEC002 /* homebrew-auto-update.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = homebrew-auto-update.sh; sourceTree = "<group>"; };
 		C73AE1912EC69A81009CAC42 /* GlobalConsoleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConsoleManager.swift; sourceTree = "<group>"; };
 		C74206E42E79E47400BDDB6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C74422402E4936700002D277 /* DaemonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonView.swift; sourceTree = "<group>"; };
@@ -156,7 +155,6 @@
 		C77B90172AF19382009CC655 /* AppCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommands.swift; sourceTree = "<group>"; };
 		C77B90192AF1938F009CC655 /* Logic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		C77B90242AF2D796009CC655 /* Silocleaner.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Silocleaner.entitlements; sourceTree = "<group>"; };
-		C7E300012F00000100AD0001 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Silocleaner/Config/Signing.xcconfig; sourceTree = SOURCE_ROOT; };
 		C78121632BC892A000BE06BD /* FinderOpen.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FinderOpen.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C78121652BC892A000BE06BD /* FinderOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderOpen.swift; sourceTree = "<group>"; };
 		C78121672BC892A000BE06BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -175,6 +173,8 @@
 		C7D31D502AFF00F300C7ED9E /* Locations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
 		C7DD49E92BAB4D8100CCBA16 /* AppInfoFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoFetch.swift; sourceTree = "<group>"; };
 		C7DD49ED2BAB7F6000CCBA16 /* ReversePathsFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversePathsFetch.swift; sourceTree = "<group>"; };
+		C7E200022F00000100SEC002 /* homebrew-auto-update.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "homebrew-auto-update.sh"; sourceTree = "<group>"; };
+		C7E300012F00000100AD0001 /* Silocleaner/Config/Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Silocleaner/Config/Signing.xcconfig; sourceTree = SOURCE_ROOT; };
 		C7F539372AF60865007DF1B2 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		C7F8436A2CBF066F00E3E30A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -202,9 +202,7 @@
 		};
 		C75E82E42E8C58620090C3B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				AppGroupDefaults.swift,
-			);
+			membershipExceptions = ();
 			target = C77B8FFF2AF18E2E009CC655 /* Silocleaner */;
 		};
 		C75E82E52E8C58620090C3B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
@@ -287,6 +285,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		281662A3304F436A00F58D48 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				C7E300012F00000100AD0001 /* Silocleaner/Config/Signing.xcconfig */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		C72893072AFD442600C8C1CD /* Logic */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,6 +365,7 @@
 				C73545F12D849A1B00A3DC0C /* SilocleanerHelper */,
 				C77B90012AF18E2E009CC655 /* Products */,
 				C72893162AFD531500C8C1CD /* Frameworks */,
+				281662A3304F436A00F58D48 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -486,6 +493,7 @@
 				C781216A2BC892A000BE06BD /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				C75E82DD2E8C58380090C3B1 /* Shared */,
 				C71B87562EF49C58009C5B07 /* TCC */,
 				C71DC3392EAAAFF000503474 /* Components */,
 				C74649E62E48000C002D1C63 /* LipoView */,
@@ -805,7 +813,7 @@
 		};
 		C77B900D2AF18E2F009CC655 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C7E300012F00000100AD0001 /* Signing.xcconfig */;
+			baseConfigurationReference = C7E300012F00000100AD0001 /* Silocleaner/Config/Signing.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APP_BUILD = 121;
@@ -879,7 +887,7 @@
 		};
 		C77B900E2AF18E2F009CC655 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C7E300012F00000100AD0001 /* Signing.xcconfig */;
+			baseConfigurationReference = C7E300012F00000100AD0001 /* Silocleaner/Config/Signing.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APP_BUILD = 121;
@@ -1166,8 +1174,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.8.0;
+				kind = revision;
+				revision = 9a1d2a19d3595fcf8d9c447173f9a1687b3dcadb;
 			};
 		};
 		C7736E4D2C49A44200917293 /* XCRemoteSwiftPackageReference "AlinFoundation" */ = {
@@ -1182,8 +1190,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.0;
+				kind = revision;
+				revision = 309a47b2b1d9b5e991f36961c983ecec72275be3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

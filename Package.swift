@@ -7,6 +7,12 @@ let package = Package(
     products: [.library(name: "SilocleanerHelperSecurity", targets: ["SilocleanerHelperSecurity"])],
     targets: [
         .target(
+            name: "SilocleanerCore",
+            path: "Shared",
+            exclude: ["AppGroupDefaults.swift"],
+            sources: ["ReleaseSafety.swift"]
+        ),
+        .target(
             name: "SilocleanerHelperSecurity",
             path: "SilocleanerHelper",
             exclude: ["main.swift", "com.lindemannm.Silocleaner.SilocleanerHelper.plist"]
@@ -15,6 +21,11 @@ let package = Package(
             name: "SilocleanerHelperSecurityTests",
             dependencies: ["SilocleanerHelperSecurity"],
             path: "HelperSecurityTests"
+        ),
+        .testTarget(
+            name: "SilocleanerCoreTests",
+            dependencies: ["SilocleanerCore"],
+            path: "CoreTests"
         )
     ]
 )
