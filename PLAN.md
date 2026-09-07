@@ -32,28 +32,29 @@ The first objective is a safe privilege boundary, not a cosmetic rename.
 
 ## Phase 0 -- establish a reproducible baseline
 
-Status: **not started**
+Status: **complete**
 
-- [ ] Record supported macOS versions and target release channel (Developer ID
+- [x] Record supported macOS versions and target release channel (Developer ID
   notarized distribution, App Store, or both). The current project targets
   macOS 13.0; the distribution decision governs entitlements and private API
-  removal.
-- [ ] Add an `upstream` Git remote for `alienator88/Pearcleaner`; document the
-  intended update/merge policy for the fork.
-- [ ] Build all current targets without signing in a clean, isolated derived
-  data directory, then record the exact Xcode/macOS versions and failures.
-- [ ] Inventory every destructive operation and classify it as: unprivileged
+  removal. See `BASELINE.md`.
+- [x] Add an `upstream` Git remote for `alienator88/Pearcleaner`; document the
+  intended update/merge policy for the fork. See `BASELINE.md`.
+- [x] Build all current targets without signing in a clean, isolated derived
+  data directory, then record the exact Xcode/macOS versions and failures. See
+  `BASELINE.md`.
+- [x] Inventory every destructive operation and classify it as: unprivileged
   user file, protected user file, system file, package receipt, launch item,
-  Homebrew item, app thinning, or application update.
-- [ ] Decide which existing capabilities are in the first Silocleaner release.
+  Homebrew item, app thinning, or application update. See `BASELINE.md`.
+- [x] Decide which existing capabilities are in the first Silocleaner release.
   Features relying on private frameworks should be disabled or removed unless a
-  supported public-API design is agreed.
+  supported public-API design is agreed. See `BASELINE.md`.
 
 Exit criteria:
 
-- A clean checkout can resolve dependencies and build the selected supported
+- [x] A clean checkout can resolve dependencies and build the selected supported
   targets.
-- Every privilege-requiring operation has an owner, input source, and expected
+- [x] Every privilege-requiring operation has an owner, input source, and expected
   filesystem scope documented.
 
 ## Phase 1 -- redesign the privileged helper
@@ -222,7 +223,7 @@ Exit criteria:
 
 | Check | Result | Notes |
 | --- | --- | --- |
-| Clone and Git status | Passed | Clean `main` at `7724df7`. |
+| Clone and Git status | Passed | Clean `main` at `2527435` before the Phase 0 documentation change. |
 | Dependency resolution | Passed | Sparkle 2.8.0, ArgumentParser 1.6.1, AlinFoundation `f61241c`. |
-| Full build | Pending | The initial isolated Xcode build did not reach a completed result in the available command window. |
+| Full build | Passed | Unsigned, isolated Debug and Release builds completed with Xcode 26.6 on macOS 26.6.2; see `BASELINE.md`. |
 | Automated tests | Pending | No test target or test source files were found in the baseline project. |
