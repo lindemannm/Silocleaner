@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "Silocleaner Uninstall" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

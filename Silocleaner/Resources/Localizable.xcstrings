@@ -596,6 +596,7 @@
       }
     },
     "**whoami** command should return 'root' if helper is running correctly." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -26741,6 +26742,9 @@
         }
       }
     },
+    "Enabling this extension lets you right-click apps in the standard Applications folders to quickly uninstall them with Silocleaner." : {
+
+    },
     "Enabling this extension will allow you to right click apps in Finder to quickly uninstall them with Silocleaner" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -27215,6 +27219,7 @@
       }
     },
     "Enter manual command here, Enter to run" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -27923,6 +27928,7 @@
       }
     },
     "Example privileged commands" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -33956,6 +33962,7 @@
       }
     },
     "Helper Playground" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -39984,6 +39991,124 @@
         }
       }
     },
+    "Launch Services Manager" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Startdienste-Manager"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Administrador de Servicios de Lanzamiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestionnaire des services de lancement"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luncurkan Manajer Layanan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avvia Gestore Servizi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launch Services マネージャー"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "서비스 관리자 실행"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zarządzanie usługami startowymi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerenciador de Serviços de Inicialização"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar Gestor de Serviços"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Менеджер служб запуска"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Správca služieb spúšťania"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaženi upravitelja storitev"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlatma Hizmetleri Yöneticisi"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Менеджер служб запуску"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trình Quản Lý Dịch Vụ Khởi Chạy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动服务管理器"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啟動服務管理員"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啟動服務管理器"
+          }
+        }
+      }
+    },
     "Launch Silocleaner at login" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -40099,124 +40224,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "登入時啟動 Silocleaner"
-          }
-        }
-      }
-    },
-    "Launch Services Manager" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Startdienste-Manager"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Administrador de Servicios de Lanzamiento"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gestionnaire des services de lancement"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Luncurkan Manajer Layanan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Avvia Gestore Servizi"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Launch Services マネージャー"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "서비스 관리자 실행"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zarządzanie usługami startowymi"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gerenciador de Serviços de Inicialização"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iniciar Gestor de Serviços"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Менеджер служб запуска"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Správca služieb spúšťania"
-          }
-        },
-        "sl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zaženi upravitelja storitev"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Başlatma Hizmetleri Yöneticisi"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Менеджер служб запуску"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trình Quản Lý Dịch Vụ Khởi Chạy"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "启动服务管理器"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "啟動服務管理員"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "啟動服務管理器"
           }
         }
       }
@@ -53462,719 +53469,6 @@
         }
       }
     },
-    "Silocleaner and all of its files will be cleanly removed, are you sure?" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner und alle seine Dateien werden sauber entfernt, sind Sie sicher?"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Está seguro de que desea eliminar Silocleaner y todos sus archivos?"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner et tous ses fichiers seront supprimés, êtes-vous sûr(e) ?"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner dan semua filenya akan dihapus dengan bersih, apakah Anda yakin?"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner e tutti i suoi file verranno rimossi completamente, sei sicuro?"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner とそのすべてのファイルが完全に削除されます。よろしいですか？"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner와 그 모든 파일이 깨끗하게 제거됩니다. 확실합니까?"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner i wszystkie jego pliki zostaną całkowicie usunięte. Czy na pewno chcesz to zrobić?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O Silocleaner e todos os seus arquivos serão removidos de forma limpa, tem certeza?"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O Silocleaner e todos os seus ficheiros serão removidos de forma limpa, tem a certeza?"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner и все его файлы будут полностью удалены, вы уверены?"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner a všetky jeho súbory budú úplne odstránené, si si istý?"
-          }
-        },
-        "sl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner in vse njegove datoteke bodo čisto odstranjene, ste prepričani?"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner ve onun tüm dosyaları tamamen kaldırılacak, emin misiniz?"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner і всі його файли буде повністю видалено, ви впевнені?"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner và tất cả các tệp của nó sẽ bị gỡ bỏ sạch sẽ, bạn có chắc chắn không?"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 及其所有文件将被干净地移除，您确定吗？"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 及其全部檔案將會完全移除，你確定嗎？"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 及其全部檔案將會完全移除，你確定嗎？"
-          }
-        }
-      }
-    },
-    "Silocleaner CLI support" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner CLI Unterstützung"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Soporte para Silocleaner CLI"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ajouter Silocleaner à l’interface de ligne de commande"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dukungan CLI/Baris Perintah Silocleaner"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Supporto CLI Silocleaner"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner CLI サポート"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner CLI 지원"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Obsługa Silocleaner CLI"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Suporte CLI do Silocleaner"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Suporte CLI do Silocleaner"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Поддержка CLI Silocleaner"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner CLI podpora"
-          }
-        },
-        "sl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Podpora za Silocleaner CLI"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner CLI desteği"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Підтримка Silocleaner CLI"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hỗ trợ sử dụng Silocleaner bằng dòng lệnh"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner CLI 支持"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 命令列介面（CLI）支援"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 命令列介面（CLI）支援"
-          }
-        }
-      }
-    },
-    "Silocleaner requires permissions to search all system locations comprehensively." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner benötigt Berechtigungen, um alle Systemstandorte umfassend zu durchsuchen."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner requiere permisos para buscar en todas las ubicaciones del sistema de manera exhaustiva."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner nécessite des autorisations pour rechercher de manière exhaustive tous les emplacements système."
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner memerlukan izin untuk mencari semua lokasi sistem secara menyeluruh."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner richiede autorizzazioni per cercare in modo completo tutte le posizioni di sistema."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner はすべてのシステムの場所を包括的に検索するための権限が必要です。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner는 모든 시스템 위치를 포괄적으로 검색하기 위해 권한이 필요합니다."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner wymaga uprawnień do kompleksowego przeszukiwania wszystkich lokalizacji systemowych."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner requer permissões para pesquisar de forma abrangente todos os locais do sistema."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner requer permissões para pesquisar todos os locais do sistema de forma abrangente."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner требует разрешений для всестороннего поиска по всем системным местоположениям."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner vyžaduje povolenia na komplexné prehľadávanie všetkých systémových umiestnení."
-          }
-        },
-        "sl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner potrebuje dovoljenja za celovito iskanje po vseh sistemskih lokacijah."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner, tüm sistem konumlarını kapsamlı bir şekilde aramak için izin gerektirir."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner потребує дозволів для всебічного пошуку у всіх системних місцях."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner yêu cầu quyền để tìm kiếm toàn diện tất cả các vị trí hệ thống."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 需要权限来全面搜索所有系统位置。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 需要權限來全面搜索所有系統位置。"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 需要權限來全面搜尋所有系統位置。"
-          }
-        }
-      }
-    },
-    "Silocleaner Uninstall" : {
-      "comment" : "Right click context menu item when using the Finder extension to uninstall using Silocleaner",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner Deinstallation"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Desinstalar Silocleaner"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Désinstaller avec Silocleaner"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copot Silocleaner"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Disinstalla Silocleaner"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleanerでアンインストール"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 제거"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Odinstaluj za pomocą Silocleaner"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Desinstalar o Silocleaner"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Desinstalar Silocleaner"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Удалить через Silocleaner"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Odinštalovať Silocleanerom"
-          }
-        },
-        "sl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Odstrani Silocleaner"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner ile Kaldırma"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Видалити через Silocleaner"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gỡ cài đặt Silocleaner"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 卸载"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 解除安裝"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 解除安裝"
-          }
-        }
-      }
-    },
-    "Silocleaner will ask you to enter your password once to enable the helper, then all subsequent privileged operations will run without any other prompts as long as the helper stays enabled in Settings > Login Items. This authorization is all managed by macOS via SMAppService." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner wird Sie einmal nach Ihrem Passwort fragen, um den Helfer zu aktivieren, dann werden alle nachfolgenden privilegierten Operationen ohne weitere Aufforderungen ausgeführt, solange der Helfer in Einstellungen > Anmeldeobjekte aktiviert bleibt. Diese Autorisierung wird von macOS über SMAppService verwaltet."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner te pedirá que ingreses tu contraseña una vez para habilitar el asistente, luego todas las operaciones privilegiadas posteriores se ejecutarán sin ningún otro aviso mientras el asistente permanezca habilitado en Configuración > Elementos de inicio de sesión. Esta autorización es gestionada por macOS a través de SMAppService."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner vous demandera de saisir votre mot de passe une fois pour activer l'assistant, puis toutes les opérations privilégiées suivantes s'exécuteront sans aucune autre invite tant que l'assistant reste activé dans Réglages > Éléments de connexion. Cette autorisation est gérée par macOS via SMAppService."
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner akan meminta Anda memasukkan kata sandi sekali untuk mengaktifkan pembantu, kemudian semua operasi istimewa berikutnya akan berjalan tanpa permintaan lain selama pembantu tetap diaktifkan di Pengaturan > Item Masuk. Otorisasi ini dikelola oleh macOS melalui SMAppService."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner ti chiederà di inserire la tua password una volta per abilitare l'assistente, quindi tutte le operazioni privilegiate successive verranno eseguite senza altri avvisi finché l'assistente rimane abilitato in Impostazioni > Elementi di accesso. Questa autorizzazione è gestita da macOS tramite SMAppService."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner は、ヘルパーを有効にするために一度だけパスワードを入力するよう求め、その後、ヘルパーが設定 > ログイン項目で有効なままである限り、すべての後続の特権操作は他のプロンプトなしで実行されます。この承認は macOS によって SMAppService 経由で管理されます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner는 도우미를 활성화하기 위해 한 번 비밀번호를 입력하도록 요청한 후, 도우미가 설정 > 로그인 항목에서 활성화된 상태로 유지되는 한 모든 후속 권한 작업은 다른 프롬프트 없이 실행됩니다. 이 권한 부여는 SMAppService를 통해 macOS에서 관리됩니다."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner poprosi Cię o podanie hasła raz, aby włączyć pomocnika, a następnie wszystkie kolejne operacje uprzywilejowane będą działać bez żadnych innych monitów, dopóki pomocnik pozostaje włączony w Ustawieniach > Elementy logowania. Ta autoryzacja jest zarządzana przez macOS za pośrednictwem SMAppService."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O Silocleaner pedirá que você insira sua senha uma vez para ativar o assistente, então todas as operações privilegiadas subsequentes serão executadas sem qualquer outro aviso, desde que o assistente permaneça ativado em Configurações > Itens de Login. Esta autorização é gerenciada pelo macOS via SMAppService."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O Silocleaner pedirá que você insira sua senha uma vez para habilitar o assistente, então todas as operações privilegiadas subsequentes serão executadas sem outros avisos, desde que o assistente permaneça habilitado em Ajustes > Itens de Início de Sessão. Esta autorização é toda gerida pelo macOS via SMAppService."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner попросит вас ввести пароль один раз, чтобы включить помощник, после чего все последующие привилегированные операции будут выполняться без дополнительных запросов, пока помощник остается включенным в Настройки > Элементы входа. Это разрешение управляется macOS через SMAppService."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner vás požiada o zadanie hesla raz na povolenie pomocníka, potom všetky nasledujúce privilegované operácie budú prebiehať bez ďalších výziev, pokiaľ pomocník zostane povolený v Nastaveniach > Položky prihlásenia. Toto overenie je spravované systémom macOS prostredníctvom SMAppService."
-          }
-        },
-        "sl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner vas bo prosil, da enkrat vnesete geslo za omogočanje pomočnika, nato pa bodo vse nadaljnje privilegirane operacije potekale brez drugih pozivov, dokler bo pomočnik ostal omogočen v Nastavitve > Elementi za prijavo. To avtorizacijo upravlja macOS prek SMAppService."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner, yardımcıyı etkinleştirmek için sizden bir kez şifrenizi girmenizi isteyecek, ardından yardımcı Ayarlar > Giriş Öğeleri'nde etkin kaldığı sürece tüm sonraki ayrıcalıklı işlemler başka bir uyarı olmadan çalışacaktır. Bu yetkilendirme, macOS tarafından SMAppService aracılığıyla yönetilir."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner попросить вас ввести пароль один раз, щоб увімкнути помічника, після чого всі наступні привілейовані операції будуть виконуватися без будь-яких інших запитів, доки помічник залишається увімкненим у Налаштуваннях > Елементи входу. Ця авторизація керується macOS через SMAppService."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner sẽ yêu cầu bạn nhập mật khẩu một lần để kích hoạt trình trợ giúp, sau đó tất cả các thao tác đặc quyền tiếp theo sẽ chạy mà không có bất kỳ lời nhắc nào khác miễn là trình trợ giúp vẫn được bật trong Cài đặt > Mục đăng nhập. Sự ủy quyền này được quản lý bởi macOS thông qua SMAppService."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 会要求您输入密码一次以启用助手，然后所有后续的特权操作将在没有其他提示的情况下运行，只要助手在设置 > 登录项中保持启用状态。此授权由 macOS 通过 SMAppService 管理。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 會要求您輸入密碼一次以啟用助手，然後所有後續的特權操作將在不提示的情況下運行，只要助手在設定 > 登入項目中保持啟用狀態。此授權由 macOS 通過 SMAppService 管理。"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner 會要求您輸入密碼一次以啟用助手，然後所有後續的特權操作將在不提示的情況下運行，只要助手在設定 > 登入項目中保持啟用狀態。此授權由 macOS 通過 SMAppService 管理。"
-          }
-        }
-      }
-    },
-    "Silocleaner will strip the %@ architecture from %@'s executable file to save space. Would you like to proceed?" : {
-      "comment" : "Lipo alert message",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner wird die %@-Architektur aus der ausführbaren Datei von %@ entfernen, um Speicherplatz zu sparen. Möchten Sie fortfahren?"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner eliminará la arquitectura %@ del archivo ejecutable de %@ para ahorrar espacio. ¿Desea continuar?"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner supprimera l'architecture %@ du fichier exécutable de %@ pour économiser de l'espace. Voulez-vous continuer ?"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner akan menghapus arsitektur %@ dari file eksekusi %@ untuk menghemat ruang. Apakah Anda ingin melanjutkan?"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner rimuoverà l'architettura %@ dal file eseguibile di %@ per risparmiare spazio. Vuoi procedere?"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleanerは、スペースを節約するために%@の実行可能ファイルから%@アーキテクチャを削除します。続行しますか？"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner가 공간을 절약하기 위해 %@의 실행 파일에서 %@ 아키텍처를 제거합니다. 계속하시겠습니까?"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner usunie architekturę %@ z pliku wykonywalnego %@, aby zaoszczędzić miejsce. Czy chcesz kontynuować?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner removerá a arquitetura %@ do arquivo executável de %@ para economizar espaço. Deseja continuar?"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O Silocleaner irá remover a arquitetura %@ do arquivo executável de %@ para economizar espaço. Deseja continuar?"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner удалит архитектуру %@ из исполняемого файла %@ для экономии места. Хотите продолжить?"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner odstráni architektúru %@ z vykonávacieho súboru %@, aby ušetril miesto. Chcete pokračovať?"
-          }
-        },
-        "sl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner bo odstranil arhitekturo %@ iz izvedljive datoteke %@, da prihrani prostor. Želite nadaljevati?"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner, alan kazanmak için %@'nin çalıştırılabilir dosyasından %@ mimarisini kaldıracak. Devam etmek istiyor musunuz?"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner видалить архітектуру %@ з виконуваного файлу %@, щоб заощадити місце. Бажаєте продовжити?"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner sẽ loại bỏ kiến trúc %@ khỏi tập tin thực thi của %@ để tiết kiệm không gian. Bạn có muốn tiếp tục không?"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner将从%@的可执行文件中剥离%@架构以节省空间。您想继续吗？"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner將從%@的可執行文件中剝離%@架構以節省空間。您想繼續嗎？"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Silocleaner將會從%@的可執行檔中移除%@架構以節省空間。你想繼續嗎？"
-          }
-        }
-      }
-    },
     "Pending schedules" : {
       "localizations" : {
         "de" : {
@@ -62102,6 +61396,7 @@
       }
     },
     "Reset App Store (fixes stuck downloads)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -62220,6 +61515,7 @@
       }
     },
     "Reset App Store?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -69428,6 +68724,7 @@
       }
     },
     "Service desynced, attempting recovery..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -70136,6 +69433,7 @@
       }
     },
     "Service successfully registered and eligible to run." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -70252,6 +69550,10 @@
           }
         }
       }
+    },
+    "Service successfully registered." : {
+      "comment" : "Text displayed in the status label when the helper tool is successfully registered.",
+      "isCommentAutoGenerated" : true
     },
     "Services" : {
       "localizations" : {
@@ -72259,6 +71561,719 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "顯示最近 3 個版本"
+          }
+        }
+      }
+    },
+    "Silocleaner and all of its files will be cleanly removed, are you sure?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner und alle seine Dateien werden sauber entfernt, sind Sie sicher?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Está seguro de que desea eliminar Silocleaner y todos sus archivos?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner et tous ses fichiers seront supprimés, êtes-vous sûr(e) ?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner dan semua filenya akan dihapus dengan bersih, apakah Anda yakin?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner e tutti i suoi file verranno rimossi completamente, sei sicuro?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner とそのすべてのファイルが完全に削除されます。よろしいですか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner와 그 모든 파일이 깨끗하게 제거됩니다. 확실합니까?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner i wszystkie jego pliki zostaną całkowicie usunięte. Czy na pewno chcesz to zrobić?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Silocleaner e todos os seus arquivos serão removidos de forma limpa, tem certeza?"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Silocleaner e todos os seus ficheiros serão removidos de forma limpa, tem a certeza?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner и все его файлы будут полностью удалены, вы уверены?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner a všetky jeho súbory budú úplne odstránené, si si istý?"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner in vse njegove datoteke bodo čisto odstranjene, ste prepričani?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner ve onun tüm dosyaları tamamen kaldırılacak, emin misiniz?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner і всі його файли буде повністю видалено, ви впевнені?"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner và tất cả các tệp của nó sẽ bị gỡ bỏ sạch sẽ, bạn có chắc chắn không?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 及其所有文件将被干净地移除，您确定吗？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 及其全部檔案將會完全移除，你確定嗎？"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 及其全部檔案將會完全移除，你確定嗎？"
+          }
+        }
+      }
+    },
+    "Silocleaner CLI support" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner CLI Unterstützung"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soporte para Silocleaner CLI"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter Silocleaner à l’interface de ligne de commande"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dukungan CLI/Baris Perintah Silocleaner"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supporto CLI Silocleaner"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner CLI サポート"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner CLI 지원"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obsługa Silocleaner CLI"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suporte CLI do Silocleaner"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suporte CLI do Silocleaner"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поддержка CLI Silocleaner"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner CLI podpora"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podpora za Silocleaner CLI"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner CLI desteği"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Підтримка Silocleaner CLI"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hỗ trợ sử dụng Silocleaner bằng dòng lệnh"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner CLI 支持"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 命令列介面（CLI）支援"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 命令列介面（CLI）支援"
+          }
+        }
+      }
+    },
+    "Silocleaner requires permissions to search all system locations comprehensively." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner benötigt Berechtigungen, um alle Systemstandorte umfassend zu durchsuchen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner requiere permisos para buscar en todas las ubicaciones del sistema de manera exhaustiva."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner nécessite des autorisations pour rechercher de manière exhaustive tous les emplacements système."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner memerlukan izin untuk mencari semua lokasi sistem secara menyeluruh."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner richiede autorizzazioni per cercare in modo completo tutte le posizioni di sistema."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner はすべてのシステムの場所を包括的に検索するための権限が必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner는 모든 시스템 위치를 포괄적으로 검색하기 위해 권한이 필요합니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner wymaga uprawnień do kompleksowego przeszukiwania wszystkich lokalizacji systemowych."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner requer permissões para pesquisar de forma abrangente todos os locais do sistema."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner requer permissões para pesquisar todos os locais do sistema de forma abrangente."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner требует разрешений для всестороннего поиска по всем системным местоположениям."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner vyžaduje povolenia na komplexné prehľadávanie všetkých systémových umiestnení."
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner potrebuje dovoljenja za celovito iskanje po vseh sistemskih lokacijah."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner, tüm sistem konumlarını kapsamlı bir şekilde aramak için izin gerektirir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner потребує дозволів для всебічного пошуку у всіх системних місцях."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner yêu cầu quyền để tìm kiếm toàn diện tất cả các vị trí hệ thống."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 需要权限来全面搜索所有系统位置。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 需要權限來全面搜索所有系統位置。"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 需要權限來全面搜尋所有系統位置。"
+          }
+        }
+      }
+    },
+    "Silocleaner Uninstall" : {
+      "comment" : "Right click context menu item when using the Finder extension to uninstall using Silocleaner",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner Deinstallation"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desinstalar Silocleaner"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Désinstaller avec Silocleaner"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copot Silocleaner"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disinstalla Silocleaner"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleanerでアンインストール"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 제거"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odinstaluj za pomocą Silocleaner"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desinstalar o Silocleaner"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desinstalar Silocleaner"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить через Silocleaner"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odinštalovať Silocleanerom"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odstrani Silocleaner"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner ile Kaldırma"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Видалити через Silocleaner"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gỡ cài đặt Silocleaner"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 卸载"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 解除安裝"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 解除安裝"
+          }
+        }
+      }
+    },
+    "Silocleaner will ask you to enter your password once to enable the helper, then all subsequent privileged operations will run without any other prompts as long as the helper stays enabled in Settings > Login Items. This authorization is all managed by macOS via SMAppService." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner wird Sie einmal nach Ihrem Passwort fragen, um den Helfer zu aktivieren, dann werden alle nachfolgenden privilegierten Operationen ohne weitere Aufforderungen ausgeführt, solange der Helfer in Einstellungen > Anmeldeobjekte aktiviert bleibt. Diese Autorisierung wird von macOS über SMAppService verwaltet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner te pedirá que ingreses tu contraseña una vez para habilitar el asistente, luego todas las operaciones privilegiadas posteriores se ejecutarán sin ningún otro aviso mientras el asistente permanezca habilitado en Configuración > Elementos de inicio de sesión. Esta autorización es gestionada por macOS a través de SMAppService."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner vous demandera de saisir votre mot de passe une fois pour activer l'assistant, puis toutes les opérations privilégiées suivantes s'exécuteront sans aucune autre invite tant que l'assistant reste activé dans Réglages > Éléments de connexion. Cette autorisation est gérée par macOS via SMAppService."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner akan meminta Anda memasukkan kata sandi sekali untuk mengaktifkan pembantu, kemudian semua operasi istimewa berikutnya akan berjalan tanpa permintaan lain selama pembantu tetap diaktifkan di Pengaturan > Item Masuk. Otorisasi ini dikelola oleh macOS melalui SMAppService."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner ti chiederà di inserire la tua password una volta per abilitare l'assistente, quindi tutte le operazioni privilegiate successive verranno eseguite senza altri avvisi finché l'assistente rimane abilitato in Impostazioni > Elementi di accesso. Questa autorizzazione è gestita da macOS tramite SMAppService."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner は、ヘルパーを有効にするために一度だけパスワードを入力するよう求め、その後、ヘルパーが設定 > ログイン項目で有効なままである限り、すべての後続の特権操作は他のプロンプトなしで実行されます。この承認は macOS によって SMAppService 経由で管理されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner는 도우미를 활성화하기 위해 한 번 비밀번호를 입력하도록 요청한 후, 도우미가 설정 > 로그인 항목에서 활성화된 상태로 유지되는 한 모든 후속 권한 작업은 다른 프롬프트 없이 실행됩니다. 이 권한 부여는 SMAppService를 통해 macOS에서 관리됩니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner poprosi Cię o podanie hasła raz, aby włączyć pomocnika, a następnie wszystkie kolejne operacje uprzywilejowane będą działać bez żadnych innych monitów, dopóki pomocnik pozostaje włączony w Ustawieniach > Elementy logowania. Ta autoryzacja jest zarządzana przez macOS za pośrednictwem SMAppService."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Silocleaner pedirá que você insira sua senha uma vez para ativar o assistente, então todas as operações privilegiadas subsequentes serão executadas sem qualquer outro aviso, desde que o assistente permaneça ativado em Configurações > Itens de Login. Esta autorização é gerenciada pelo macOS via SMAppService."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Silocleaner pedirá que você insira sua senha uma vez para habilitar o assistente, então todas as operações privilegiadas subsequentes serão executadas sem outros avisos, desde que o assistente permaneça habilitado em Ajustes > Itens de Início de Sessão. Esta autorização é toda gerida pelo macOS via SMAppService."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner попросит вас ввести пароль один раз, чтобы включить помощник, после чего все последующие привилегированные операции будут выполняться без дополнительных запросов, пока помощник остается включенным в Настройки > Элементы входа. Это разрешение управляется macOS через SMAppService."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner vás požiada o zadanie hesla raz na povolenie pomocníka, potom všetky nasledujúce privilegované operácie budú prebiehať bez ďalších výziev, pokiaľ pomocník zostane povolený v Nastaveniach > Položky prihlásenia. Toto overenie je spravované systémom macOS prostredníctvom SMAppService."
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner vas bo prosil, da enkrat vnesete geslo za omogočanje pomočnika, nato pa bodo vse nadaljnje privilegirane operacije potekale brez drugih pozivov, dokler bo pomočnik ostal omogočen v Nastavitve > Elementi za prijavo. To avtorizacijo upravlja macOS prek SMAppService."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner, yardımcıyı etkinleştirmek için sizden bir kez şifrenizi girmenizi isteyecek, ardından yardımcı Ayarlar > Giriş Öğeleri'nde etkin kaldığı sürece tüm sonraki ayrıcalıklı işlemler başka bir uyarı olmadan çalışacaktır. Bu yetkilendirme, macOS tarafından SMAppService aracılığıyla yönetilir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner попросить вас ввести пароль один раз, щоб увімкнути помічника, після чого всі наступні привілейовані операції будуть виконуватися без будь-яких інших запитів, доки помічник залишається увімкненим у Налаштуваннях > Елементи входу. Ця авторизація керується macOS через SMAppService."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner sẽ yêu cầu bạn nhập mật khẩu một lần để kích hoạt trình trợ giúp, sau đó tất cả các thao tác đặc quyền tiếp theo sẽ chạy mà không có bất kỳ lời nhắc nào khác miễn là trình trợ giúp vẫn được bật trong Cài đặt > Mục đăng nhập. Sự ủy quyền này được quản lý bởi macOS thông qua SMAppService."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 会要求您输入密码一次以启用助手，然后所有后续的特权操作将在没有其他提示的情况下运行，只要助手在设置 > 登录项中保持启用状态。此授权由 macOS 通过 SMAppService 管理。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 會要求您輸入密碼一次以啟用助手，然後所有後續的特權操作將在不提示的情況下運行，只要助手在設定 > 登入項目中保持啟用狀態。此授權由 macOS 通過 SMAppService 管理。"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner 會要求您輸入密碼一次以啟用助手，然後所有後續的特權操作將在不提示的情況下運行，只要助手在設定 > 登入項目中保持啟用狀態。此授權由 macOS 通過 SMAppService 管理。"
+          }
+        }
+      }
+    },
+    "Silocleaner will strip the %@ architecture from %@'s executable file to save space. Would you like to proceed?" : {
+      "comment" : "Lipo alert message",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner wird die %@-Architektur aus der ausführbaren Datei von %@ entfernen, um Speicherplatz zu sparen. Möchten Sie fortfahren?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner eliminará la arquitectura %@ del archivo ejecutable de %@ para ahorrar espacio. ¿Desea continuar?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner supprimera l'architecture %@ du fichier exécutable de %@ pour économiser de l'espace. Voulez-vous continuer ?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner akan menghapus arsitektur %@ dari file eksekusi %@ untuk menghemat ruang. Apakah Anda ingin melanjutkan?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner rimuoverà l'architettura %@ dal file eseguibile di %@ per risparmiare spazio. Vuoi procedere?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleanerは、スペースを節約するために%@の実行可能ファイルから%@アーキテクチャを削除します。続行しますか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner가 공간을 절약하기 위해 %@의 실행 파일에서 %@ 아키텍처를 제거합니다. 계속하시겠습니까?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner usunie architekturę %@ z pliku wykonywalnego %@, aby zaoszczędzić miejsce. Czy chcesz kontynuować?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner removerá a arquitetura %@ do arquivo executável de %@ para economizar espaço. Deseja continuar?"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Silocleaner irá remover a arquitetura %@ do arquivo executável de %@ para economizar espaço. Deseja continuar?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner удалит архитектуру %@ из исполняемого файла %@ для экономии места. Хотите продолжить?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner odstráni architektúru %@ z vykonávacieho súboru %@, aby ušetril miesto. Chcete pokračovať?"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner bo odstranil arhitekturo %@ iz izvedljive datoteke %@, da prihrani prostor. Želite nadaljevati?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner, alan kazanmak için %@'nin çalıştırılabilir dosyasından %@ mimarisini kaldıracak. Devam etmek istiyor musunuz?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner видалить архітектуру %@ з виконуваного файлу %@, щоб заощадити місце. Бажаєте продовжити?"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner sẽ loại bỏ kiến trúc %@ khỏi tập tin thực thi của %@ để tiết kiệm không gian. Bạn có muốn tiếp tục không?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner将从%@的可执行文件中剥离%@架构以节省空间。您想继续吗？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner將從%@的可執行文件中剝離%@架構以節省空間。您想繼續嗎？"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silocleaner將會從%@的可執行檔中移除%@架構以節省空間。你想繼續嗎？"
           }
         }
       }
@@ -80197,6 +80212,7 @@
       }
     },
     "This will:\n• Quit App Store and related processes\n• Clear download cache\n• Fix stuck or failed downloads\n\nYou may need to sign in again." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -83033,6 +83049,124 @@
         }
       }
     },
+    "Uninstall Selected (%lld)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgewählte deinstallieren (%lld)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desinstalar seleccionado (%lld)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Désinstaller la sélection (%lld)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hapus Instalasi yang Dipilih (%lld)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disinstalla selezionato (%lld)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択したものをアンインストール (%lld)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "선택 항목 제거 (%lld)"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odinstaluj wybrane (%lld)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desinstalar Selecionado (%lld)"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desinstalar Selecionado (%lld)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить выбранные (%lld)"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odinštalovať vybrané (%lld)"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odstrani izbrano (%lld)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seçiliyi Kaldır (%lld)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Видалити вибране (%lld)"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gỡ cài đặt đã chọn (%lld)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "卸载所选 (%lld)"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解除安裝選取項目 (%lld)"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解除安裝所選 (%lld)"
+          }
+        }
+      }
+    },
     "Uninstall Silocleaner" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -83148,124 +83282,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "解除安裝 Silocleaner"
-          }
-        }
-      }
-    },
-    "Uninstall Selected (%lld)" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ausgewählte deinstallieren (%lld)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Desinstalar seleccionado (%lld)"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Désinstaller la sélection (%lld)"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hapus Instalasi yang Dipilih (%lld)"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Disinstalla selezionato (%lld)"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "選択したものをアンインストール (%lld)"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "선택 항목 제거 (%lld)"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Odinstaluj wybrane (%lld)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Desinstalar Selecionado (%lld)"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Desinstalar Selecionado (%lld)"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Удалить выбранные (%lld)"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Odinštalovať vybrané (%lld)"
-          }
-        },
-        "sl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Odstrani izbrano (%lld)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seçiliyi Kaldır (%lld)"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Видалити вибране (%lld)"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gỡ cài đặt đã chọn (%lld)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "卸载所选 (%lld)"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "解除安裝選取項目 (%lld)"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "解除安裝所選 (%lld)"
           }
         }
       }
