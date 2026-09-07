@@ -59,7 +59,7 @@ Exit criteria:
 
 ## Phase 1 -- redesign the privileged helper
 
-Status: **in progress**
+Status: **complete**
 
 - [x] Remove `runCommand(command:)` from `HelperToolProtocol`; a root XPC
   service must never expose a generic shell execution endpoint.
@@ -78,7 +78,7 @@ Status: **in progress**
   Phase 3 Silocleaner identity rename remains a signing configuration change.
 - [x] Add serialized request handling, connection invalidation, a bounded path
   request, and path-free audit logging.
-- [ ] Add helper-focused tests for caller validation, rejected operation names,
+- [x] Add helper-focused tests for caller validation, rejected operation names,
   path traversal, symlink handling, quote/metacharacter paths, allowlist
   boundaries, and concurrent requests.
 

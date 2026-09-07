@@ -52,15 +52,11 @@ enum PrivilegedBundleThinner {
     /// bundle.  Only direct children of /Applications are an approved root
     /// helper scope; /System/Applications is intentionally never mutable.
     private static func validatedBundle(at path: String) -> ValidatedBundle? {
-        guard path.utf8.count <= maximumRequestPathBytes,
-              path.hasPrefix("/"),
-              !path.utf8.contains(0),
-              !path.split(separator: "/").contains("..") else { return nil }
+        guard isStructurallyValidRequestPath(path) else { return nil }
 
         let url = URL(fileURLWithPath: path).standardizedFileURL
-        let parent = url.deletingLastPathComponent()
-        guard parent.path == applicationsDirectory, url.pathExtension.lowercased() == "app",
-              noSymlinkComponents(in: url.path), var status = lstat(url.path) else { return nil }
+        guard hasAllowedBundleLocation(url),
+              hasNoSymlinkComponents(atPath: url.path), let status = lstat(url.path) else { return nil }
 
         let fileType = status.st_mode & S_IFMT
         guard fileType == S_IFDIR, status.st_uid == 0 else { return nil }
@@ -68,12 +64,31 @@ enum PrivilegedBundleThinner {
     }
 
     private static func bundleStillMatches(_ bundle: ValidatedBundle) -> Bool {
-        guard noSymlinkComponents(in: bundle.url.path), let status = lstat(bundle.url.path) else { return false }
+        guard hasNoSymlinkComponents(atPath: bundle.url.path), let status = lstat(bundle.url.path) else { return false }
         return (status.st_mode & S_IFMT) == S_IFDIR && status.st_uid == 0 &&
             status.st_dev == bundle.device && status.st_ino == bundle.inode
     }
 
-    private static func noSymlinkComponents(in path: String) -> Bool {
+    /// Lexical checks performed before touching the filesystem.  A path may
+    /// contain shell punctuation because it is never evaluated as a command.
+    static func isStructurallyValidRequestPath(_ path: String) -> Bool {
+        path.utf8.count <= maximumRequestPathBytes &&
+            path.hasPrefix("/") &&
+            !path.utf8.contains(0) &&
+            !path.split(separator: "/").contains("..")
+    }
+
+    /// The helper only operates on application bundles directly below the
+    /// system Applications directory; nested bundles and /System/Applications
+    /// are intentionally outside its authority.
+    static func hasAllowedBundleLocation(_ url: URL) -> Bool {
+        url.deletingLastPathComponent().path == applicationsDirectory &&
+            url.pathExtension.lowercased() == "app"
+    }
+
+    /// Exposed at module scope for focused tests; callers must still use
+    /// `validatedBundle(at:)`, which applies ownership and allowlist checks.
+    static func hasNoSymlinkComponents(atPath path: String) -> Bool {
         var current = ""
         for component in path.split(separator: "/") {
             current += "/\(component)"
