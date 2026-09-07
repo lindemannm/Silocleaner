@@ -139,13 +139,14 @@ be configured before a signed release.
   support/update URLs.
 - [x] Rename targets, product names, directories, schemes, resources, source
   symbols, deep-link notification names, and user-visible text coherently.
-- [ ] Replace all upstream Apple team/profile/signing settings with the
-  Silocleaner signing identity. Do not reuse Pearcleaner identifiers or
-  provisioning profiles.
-- [ ] Create new app-group and service entitlements under the final identity;
-  add migration only where retaining a user's old settings is intentional and
-  safe.
-- [ ] Update helper and Sentinel launch plist associations and Mach-service
+- [x] Replace all upstream Apple team/profile/signing settings with a
+  Silocleaner-only local signing configuration. The project has no checked-in
+  team or certificate and fails closed until the Silocleaner Developer ID
+  identity is configured; see `SIGNING.md`.
+- [x] Create app-group entitlements under the final identity for the app and
+  Finder extension. No legacy settings migration is shipped because this fork
+  has no prior Silocleaner identifier.
+- [x] Update helper and Sentinel launch plist associations and Mach-service
   labels together with their client code.
 - [x] Replace updater ownership and release links with Silocleaner-controlled
   infrastructure; do not ship an updater pointed at Pearcleaner.

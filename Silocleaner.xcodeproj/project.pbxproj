@@ -156,6 +156,7 @@
 		C77B90172AF19382009CC655 /* AppCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommands.swift; sourceTree = "<group>"; };
 		C77B90192AF1938F009CC655 /* Logic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		C77B90242AF2D796009CC655 /* Silocleaner.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Silocleaner.entitlements; sourceTree = "<group>"; };
+		C7E300012F00000100AD0001 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Silocleaner/Config/Signing.xcconfig; sourceTree = SOURCE_ROOT; };
 		C78121632BC892A000BE06BD /* FinderOpen.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FinderOpen.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C78121652BC892A000BE06BD /* FinderOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderOpen.swift; sourceTree = "<group>"; };
 		C78121672BC892A000BE06BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -718,12 +719,12 @@
 				APP_BUILD = "$(APP_BUILD)";
 				APP_VERSION = "$(APP_VERSION)";
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "$(SILOCLEANER_CODE_SIGN_IDENTITY)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "$(SILOCLEANER_CODE_SIGN_IDENTITY)";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(APP_BUILD)";
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 3W63V86W3G;
+				DEVELOPMENT_TEAM = "$(SILOCLEANER_DEVELOPMENT_TEAM)";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INSTALL_PATH = "";
@@ -731,7 +732,6 @@
 				MARKETING_VERSION = "$(APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lindemannm.SilocleanerSentinel;
 				PRODUCT_NAME = SilocleanerSentinel;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -743,12 +743,12 @@
 				APP_BUILD = "$(APP_BUILD)";
 				APP_VERSION = "$(APP_VERSION)";
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "$(SILOCLEANER_CODE_SIGN_IDENTITY)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "$(SILOCLEANER_CODE_SIGN_IDENTITY)";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(APP_BUILD)";
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 3W63V86W3G;
+				DEVELOPMENT_TEAM = "$(SILOCLEANER_DEVELOPMENT_TEAM)";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INSTALL_PATH = "";
@@ -756,7 +756,6 @@
 				MARKETING_VERSION = "$(APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lindemannm.SilocleanerSentinel;
 				PRODUCT_NAME = SilocleanerSentinel;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -766,18 +765,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "$(SILOCLEANER_CODE_SIGN_IDENTITY)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "$(SILOCLEANER_CODE_SIGN_IDENTITY)";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(APP_BUILD)";
-				DEVELOPMENT_TEAM = 3W63V86W3G;
+				DEVELOPMENT_TEAM = "$(SILOCLEANER_DEVELOPMENT_TEAM)";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INSTALL_PATH = "";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = "$(APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lindemannm.Silocleaner.SilocleanerHelper;
 				PRODUCT_NAME = SilocleanerHelper;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -788,19 +786,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "$(SILOCLEANER_CODE_SIGN_IDENTITY)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "$(SILOCLEANER_CODE_SIGN_IDENTITY)";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(APP_BUILD)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 3W63V86W3G;
+				DEVELOPMENT_TEAM = "$(SILOCLEANER_DEVELOPMENT_TEAM)";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INSTALL_PATH = "";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = "$(APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lindemannm.Silocleaner.SilocleanerHelper;
 				PRODUCT_NAME = SilocleanerHelper;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -808,6 +805,7 @@
 		};
 		C77B900D2AF18E2F009CC655 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7E300012F00000100AD0001 /* Signing.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APP_BUILD = 121;
@@ -881,6 +879,7 @@
 		};
 		C77B900E2AF18E2F009CC655 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7E300012F00000100AD0001 /* Signing.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				APP_BUILD = 121;
@@ -956,14 +955,14 @@
 				ASSETCATALOG_COMPILER_SKIP_APP_STORE_DEPLOYMENT = YES;
 				ASSETCATALOG_COMPILER_STANDALONE_ICON_BEHAVIOR = default;
 				CODE_SIGN_ENTITLEMENTS = Silocleaner/Resources/Silocleaner.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "$(SILOCLEANER_CODE_SIGN_IDENTITY)";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "$(APP_BUILD)";
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 3W63V86W3G;
+				DEVELOPMENT_TEAM = "$(SILOCLEANER_DEVELOPMENT_TEAM)";
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -988,7 +987,6 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lindemannm.Silocleaner;
 				PRODUCT_NAME = Silocleaner;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1006,14 +1004,14 @@
 				ASSETCATALOG_COMPILER_SKIP_APP_STORE_DEPLOYMENT = YES;
 				ASSETCATALOG_COMPILER_STANDALONE_ICON_BEHAVIOR = default;
 				CODE_SIGN_ENTITLEMENTS = Silocleaner/Resources/Silocleaner.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "$(SILOCLEANER_CODE_SIGN_IDENTITY)";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "$(APP_BUILD)";
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 3W63V86W3G;
+				DEVELOPMENT_TEAM = "$(SILOCLEANER_DEVELOPMENT_TEAM)";
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1037,7 +1035,6 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lindemannm.Silocleaner;
 				PRODUCT_NAME = Silocleaner;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
@@ -1051,11 +1048,11 @@
 				APP_BUILD = "$(APP_BUILD)";
 				APP_VERSION = "$(APP_VERSION)";
 				CODE_SIGN_ENTITLEMENTS = FinderOpen/FinderOpen.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "$(SILOCLEANER_CODE_SIGN_IDENTITY)";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = "$(APP_BUILD)";
-				DEVELOPMENT_TEAM = 3W63V86W3G;
+				DEVELOPMENT_TEAM = "$(SILOCLEANER_DEVELOPMENT_TEAM)";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FinderOpen/Info.plist;
@@ -1072,7 +1069,6 @@
 				MARKETING_VERSION = "$(APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lindemannm.Silocleaner.FinderOpen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1086,11 +1082,11 @@
 				APP_BUILD = "$(APP_BUILD)";
 				APP_VERSION = "$(APP_VERSION)";
 				CODE_SIGN_ENTITLEMENTS = FinderOpen/FinderOpen.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "$(SILOCLEANER_CODE_SIGN_IDENTITY)";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = "$(APP_BUILD)";
-				DEVELOPMENT_TEAM = 3W63V86W3G;
+				DEVELOPMENT_TEAM = "$(SILOCLEANER_DEVELOPMENT_TEAM)";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_OPTIMIZATION_LEVEL = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1108,7 +1104,6 @@
 				MARKETING_VERSION = "$(APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lindemannm.Silocleaner.FinderOpen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;

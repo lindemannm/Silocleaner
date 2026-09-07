@@ -1,0 +1,9 @@
+// Silocleaner release identity. Keep credentials and team-specific values out
+// of source control by defining them in Signing.local.xcconfig.
+//
+// An empty configuration intentionally prevents an accidental signed release.
+// Unsigned development builds remain available with CODE_SIGNING_ALLOWED=NO.
+SILOCLEANER_DEVELOPMENT_TEAM =
+SILOCLEANER_CODE_SIGN_IDENTITY =
+
+#include? "Signing.local.xcconfig"

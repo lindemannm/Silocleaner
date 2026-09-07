@@ -92,3 +92,4 @@ iOSInjectionProject/
 Builds/Export
 .claude
 Silocleaner/Resources/Localizable.xcstrings.bak
+Silocleaner/Config/Signing.local.xcconfig
