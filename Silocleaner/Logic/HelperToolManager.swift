@@ -14,8 +14,37 @@ extension Notification.Name {
 
 @objc(HelperToolProtocol)
 public protocol HelperToolProtocol {
-    func runThinning(atPath: String, withReply reply: @escaping (Bool, String) -> Void)
-    func runBundleThinning(bundlePath: String, withReply reply: @escaping (Bool, String, [String: UInt64]) -> Void)
+    func thinApplicationBundle(_ request: HelperBundleThinningRequest, withReply reply: @escaping (HelperBundleThinningResult) -> Void)
+}
+
+@objc(SilocleanerBundleThinningRequest)
+public final class HelperBundleThinningRequest: NSObject, NSSecureCoding {
+    public static var supportsSecureCoding: Bool { true }
+    let bundlePath: String
+    init(bundlePath: String) { self.bundlePath = bundlePath }
+    public required init?(coder: NSCoder) {
+        guard let path = coder.decodeObject(of: NSString.self, forKey: "bundlePath") as String? else { return nil }
+        bundlePath = path
+    }
+    public func encode(with coder: NSCoder) { coder.encode(bundlePath as NSString, forKey: "bundlePath") }
+}
+
+@objc(SilocleanerBundleThinningResult)
+public final class HelperBundleThinningResult: NSObject, NSSecureCoding {
+    public static var supportsSecureCoding: Bool { true }
+    let succeeded: Bool
+    let preSize: UInt64
+    let postSize: UInt64
+    public required init?(coder: NSCoder) {
+        succeeded = coder.decodeBool(forKey: "succeeded")
+        preSize = UInt64(coder.decodeInt64(forKey: "preSize"))
+        postSize = UInt64(coder.decodeInt64(forKey: "postSize"))
+    }
+    public func encode(with coder: NSCoder) {
+        coder.encode(succeeded, forKey: "succeeded")
+        coder.encode(Int64(clamping: preSize), forKey: "preSize")
+        coder.encode(Int64(clamping: postSize), forKey: "postSize")
+    }
 }
 
 enum HelperToolAction {
@@ -146,27 +175,7 @@ class HelperToolManager: ObservableObject {
         SMAppService.openSystemSettingsLoginItems()
     }
 
-    // Function to run privileged thinning on apps owned by root
-    func runThinning(atPath path: String) async -> (Bool, String) {
-        guard let connection = getConnection() else {
-            return (false, "XPC: No helper connection")
-        }
-
-        return await withCheckedContinuation { continuation in
-            guard let proxy = connection.remoteObjectProxyWithErrorHandler({ error in
-                continuation.resume(returning: (false, "XPC: Error: \(error.localizedDescription)"))
-            }) as? HelperToolProtocol else {
-                continuation.resume(returning: (false, "XPC: Proxy failure"))
-                return
-            }
-
-            proxy.runThinning(atPath: path) { success, output in
-                continuation.resume(returning: (success, output))
-            }
-        }
-    }
-    
-    // Function to run privileged bundle thinning on entire app bundles
+    // The sole privileged mutation is a validated, root-owned /Applications bundle.
     func runBundleThinning(bundlePath path: String) async -> (Bool, String, [String: UInt64]) {
         guard let connection = getConnection() else {
             return (false, "XPC: No helper connection", [:])
@@ -180,8 +189,9 @@ class HelperToolManager: ObservableObject {
                 return
             }
 
-            proxy.runBundleThinning(bundlePath: path) { success, output, sizes in
-                continuation.resume(returning: (success, output, sizes))
+            proxy.thinApplicationBundle(HelperBundleThinningRequest(bundlePath: path)) { result in
+                let sizes = result.succeeded ? ["pre": result.preSize, "post": result.postSize] : [:]
+                continuation.resume(returning: (result.succeeded, result.succeeded ? "Bundle thinning completed successfully" : "Bundle thinning failed", sizes))
             }
         }
     }
@@ -194,6 +204,8 @@ class HelperToolManager: ObservableObject {
         }
         let connection = NSXPCConnection(machServiceName: helperToolIdentifier, options: .privileged)
         connection.remoteObjectInterface = NSXPCInterface(with: HelperToolProtocol.self)
+        connection.remoteObjectInterface?.setClasses(xpcClasses(HelperBundleThinningRequest.self), for: #selector(HelperToolProtocol.thinApplicationBundle(_:withReply:)), argumentIndex: 0, ofReply: false)
+        connection.remoteObjectInterface?.setClasses(xpcClasses(HelperBundleThinningResult.self), for: #selector(HelperToolProtocol.thinApplicationBundle(_:withReply:)), argumentIndex: 0, ofReply: true)
         connection.invalidationHandler = { [weak self] in
             self?.helperConnection = nil
         }
@@ -293,4 +305,8 @@ class HelperToolManager: ObservableObject {
             return false
         }
     }
+}
+
+private func xpcClasses(_ type: AnyClass) -> Set<AnyHashable> {
+    NSSet(object: type) as! Set<AnyHashable>
 }
