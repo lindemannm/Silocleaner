@@ -63,24 +63,21 @@ Status: **in progress**
 
 - [x] Remove `runCommand(command:)` from `HelperToolProtocol`; a root XPC
   service must never expose a generic shell execution endpoint.
-- [ ] Define small, typed helper operations only for approved needs (for
-  example, a validated bundle-thinning request or a specific protected-file
-  removal operation). Each request must contain structured data, not command
-  text.
-- [ ] For every path accepted by the helper: canonicalize it, reject symlinks
-  or handle them deliberately, verify it lies in an allowlisted scope, and
-  re-check the target immediately before mutation to mitigate time-of-check /
-  time-of-use races.
-- [ ] Replace shell invocation with Foundation or low-level APIs; where a
-  subprocess is unavoidable, pass a fixed executable and an argument array,
-  never `bash -c` / `sh -c`.
+- [x] Define the sole approved helper operation: a secure, typed request to
+  thin a root-owned application bundle that is a direct child of `/Applications`.
+  Each request contains structured data, not command text.
+- [x] Canonicalize the accepted bundle path; reject traversal and symlink
+  components; require root ownership and the `/Applications` allowlist; and
+  re-check the bundle identity immediately before every privileged mutation.
+- [x] Use Foundation and low-level file-descriptor APIs only. The helper has
+  no shell or subprocess invocation.
 - [x] Replace certificate-array equality with `SecCodeCheckValidity` against a
   designated requirement anchored to the helper's Developer ID team and exact
   main-app identifier. Unsigned/ad-hoc helpers and clients fail closed. The
   requirement derives the main-app identifier from the helper identity, so the
   Phase 3 Silocleaner identity rename remains a signing configuration change.
-- [ ] Add connection invalidation, request-size, error, and audit logging that
-  does not expose paths or secrets unnecessarily.
+- [x] Add serialized request handling, connection invalidation, a bounded path
+  request, and path-free audit logging.
 - [ ] Add helper-focused tests for caller validation, rejected operation names,
   path traversal, symlink handling, quote/metacharacter paths, allowlist
   boundaries, and concurrent requests.
