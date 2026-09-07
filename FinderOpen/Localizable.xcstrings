@@ -1,24 +1,24 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Pearcleaner Uninstall" : {
+    "Silocleaner Uninstall" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pearcleaner Deinstallation"
+            "value" : "Silocleaner Deinstallation"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desinstalar Pearcleaner"
+            "value" : "Desinstalar Silocleaner"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Désinstaller avec Pearcleaner"
+            "value" : "Désinstaller avec Silocleaner"
           }
         },
         "id" : {
@@ -30,67 +30,67 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pearcleanerでアンインストール"
+            "value" : "Silocleanerでアンインストール"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odinstaluj za pomocą Pearcleaner"
+            "value" : "Odinstaluj za pomocą Silocleaner"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desinstalar o Pearcleaner"
+            "value" : "Desinstalar o Silocleaner"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Удалить через Pearcleaner"
+            "value" : "Удалить через Silocleaner"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odinštalovať Pearcleanerom"
+            "value" : "Odinštalovať Silocleanerom"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pearcleaner ile Kaldırma"
+            "value" : "Silocleaner ile Kaldırma"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Видалити через Pearcleaner"
+            "value" : "Видалити через Silocleaner"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gỡ cài đặt Pearcleaner"
+            "value" : "Gỡ cài đặt Silocleaner"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pearcleaner 卸载"
+            "value" : "Silocleaner 卸载"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pearcleaner 解除安裝"
+            "value" : "Silocleaner 解除安裝"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pearcleaner 解除安裝"
+            "value" : "Silocleaner 解除安裝"
           }
         }
       }
