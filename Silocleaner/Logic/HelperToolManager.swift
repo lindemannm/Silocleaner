@@ -272,7 +272,7 @@ class HelperToolManager: ObservableObject {
     /// Nuclear reset: Reset BTM (Background Task Management) database to clear desynced helper registrations
     /// This is a last-resort fix for when SMAppService becomes desynced during development
     /// PREREQUISITE: User must manually disable helper in System Settings > Login Items first in certain cases
-    /// Uses AlinFoundation's performPrivilegedCommands() which prompts for password
+    /// Uses the fixed-operation privileged runner, which prompts through sudo.
     func nuclearResetHelper() async -> Bool {
         printOS("Starting nuclear reset of helper tool...")
 
@@ -282,7 +282,9 @@ class HelperToolManager: ObservableObject {
 
         // Execute sfltool resetbtm to clear Background Task Management database
         // NOTE: This only works if user has disabled the service in System Settings first
-        let (success, output) = performPrivilegedCommands(commands: "sfltool resetbtm")
+        let result = try? await runPrivilegedTool("/usr/bin/sfltool", arguments: ["resetbtm"])
+        let success = result?.success == true
+        let output = result?.output ?? "Unable to start sfltool"
 
         if success {
             printOS("BTM reset succeeded")

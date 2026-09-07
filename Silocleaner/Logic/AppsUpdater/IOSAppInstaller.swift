@@ -73,9 +73,14 @@ class IOSAppInstaller {
         // Normalize path to outer wrapper at entry point (defensive coding)
         let normalizedAppPath = normalizeToOuterWrapper(existingAppPath)
 
+        // Each install owns a newly-created private directory. Do not derive a
+        // predictable /tmp path from the App Store ID.
+        let workingDirectory = try makeTemporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: workingDirectory) }
+
         // 1. Extract IPA to temp directory (80-85%)
         progress(0.80, "Installing...")
-        let extractedPayload = try await extractIPA(ipaPath: ipaPath, adamID: adamID)
+        let extractedPayload = try await extractIPA(ipaPath: ipaPath, workingDirectory: workingDirectory)
 
         // 2. Detect wrapped bundle name (NOT hardcoded!)
         let wrappedBundleName = try detectWrappedBundleName(payloadDir: extractedPayload)
@@ -102,7 +107,7 @@ class IOSAppInstaller {
             extractedApp: extractedApp,
             iTunesMetadata: newITunesMetadata,
             bundleMetadata: newBundleMetadata,
-            adamID: adamID
+            workingDirectory: workingDirectory
         )
 
         // 7. Atomic replacement with root privileges (90%)
@@ -110,17 +115,12 @@ class IOSAppInstaller {
         try await performAtomicReplacement(
             existingAppPath: normalizedAppPath,
             newWrapper: newWrapper,
-            wrappedBundleName: wrappedBundleName
+            wrappedBundleName: wrappedBundleName,
+            workingDirectory: workingDirectory
         )
 
-        // 8. Cleanup (95%)
+        // 8. Cleanup (95%) is handled by the scoped defer above.
         progress(0.95, "Installing...")
-
-        // Remove entire temp directory (includes extracted IPA and hard link)
-        let tempDir = "/tmp/silocleaner-ios-\(adamID)"
-        if FileManager.default.fileExists(atPath: tempDir) {
-            try? FileManager.default.removeItem(atPath: tempDir)
-        }
 
         progress(1.0, "Completed")
     }
@@ -160,10 +160,21 @@ class IOSAppInstaller {
         return appBundle.lastPathComponent
     }
 
-    /// Extract IPA to temp directory
-    private static func extractIPA(ipaPath: String, adamID: UInt64) async throws -> URL {
+    private static func makeTemporaryDirectory() throws -> URL {
+        let directory = try FileManager.default.url(
+            for: .itemReplacementDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+        )
+        try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: directory.path)
+        return directory
+    }
 
-        let extractDir = URL(fileURLWithPath: "/tmp/silocleaner-ios-\(adamID)/extracted")
+    /// Extract IPA to a directory uniquely created for this install.
+    private static func extractIPA(ipaPath: String, workingDirectory: URL) async throws -> URL {
+
+        let extractDir = workingDirectory.appendingPathComponent("extracted", isDirectory: true)
 
         // Create extraction directory
         try FileManager.default.createDirectory(at: extractDir, withIntermediateDirectories: true)
@@ -346,10 +357,10 @@ class IOSAppInstaller {
         extractedApp: URL,
         iTunesMetadata: [String: Any],
         bundleMetadata: Data,  // Changed from [String: Any] to Data
-        adamID: UInt64
+        workingDirectory: URL
     ) throws -> URL {
 
-        let wrapperDir = URL(fileURLWithPath: "/tmp/silocleaner-ios-\(adamID)/Wrapper")
+        let wrapperDir = workingDirectory.appendingPathComponent("Wrapper", isDirectory: true)
         try FileManager.default.createDirectory(at: wrapperDir, withIntermediateDirectories: true)
 
         // Copy extracted app to Wrapper/
@@ -377,18 +388,19 @@ class IOSAppInstaller {
     private static func performAtomicReplacement(
         existingAppPath: URL,
         newWrapper: URL,
-        wrappedBundleName: String
+        wrappedBundleName: String,
+        workingDirectory: URL
     ) async throws {
 
         // Normalize to outer wrapper first (handles both inner app and outer wrapper paths)
         let normalizedPath = normalizeToOuterWrapper(existingAppPath)
 
         let oldWrapper = normalizedPath.appendingPathComponent("Wrapper")
-        let backupWrapper = URL(fileURLWithPath: "/tmp/silocleaner-ios-backup-\(UUID().uuidString)")
+        let backupWrapper = workingDirectory.appendingPathComponent("backup-wrapper", isDirectory: true)
         let symlinkPath = normalizedPath.appendingPathComponent("WrappedBundle")
 
-        // Authorization Services is shell-backed. Execute fixed tools with
-        // separate arguments rather than building a script from wrapper paths.
+        // Execute fixed tools with separate arguments rather than building a
+        // script from wrapper paths.
         let operations: [(String, [String])] = [
             ("/usr/bin/pkill", ["-x", wrappedBundleName.replacingOccurrences(of: ".app", with: "")]),
             ("/bin/mv", [oldWrapper.path, backupWrapper.path]),

@@ -316,8 +316,13 @@ struct EnvironmentCleanerView: View {
                                     GlobalConsoleManager.shared.appendOutput("Starting deletion of \(selectedPaths.count) development folder(s)...\n", source: CurrentPage.development.title)
                                     let urls = selectedPaths.map { URL(fileURLWithPath: NSString(string: $0).expandingTildeInPath) }
                                     let bundleName = "Development - Folders (\(selectedPaths.count))"
-                                    let _ = FileManagerUndo.shared.deleteFiles(at: urls, bundleName: bundleName)
-                                    GlobalConsoleManager.shared.appendOutput("✓ Completed deletion of \(selectedPaths.count) folder(s)\n", source: CurrentPage.development.title)
+                                    let success = FileManagerUndo.shared.deleteFiles(at: urls, bundleName: bundleName)
+                                    if success {
+                                        GlobalConsoleManager.shared.appendOutput("✓ Moved \(selectedPaths.count) folder(s) to the Trash\n", source: CurrentPage.development.title)
+                                    } else {
+                                        GlobalConsoleManager.shared.appendOutput("✗ Some selected folders could not be moved to the Trash\n", source: CurrentPage.development.title)
+                                        showCustomAlert(title: "Deletion Incomplete", message: "Some selected folders could not be moved to the Trash. Check the console for the affected paths.", style: .critical)
+                                    }
                                     selectedPaths.removeAll()
                                     refreshPaths()
                                     if let env = appState.selectedEnvironment,
@@ -351,8 +356,13 @@ struct EnvironmentCleanerView: View {
                                     }
                                     if !allContentURLs.isEmpty {
                                         let bundleName = "Development - Contents (\(selectedPaths.count))"
-                                        let _ = FileManagerUndo.shared.deleteFiles(at: allContentURLs, bundleName: bundleName)
-                                        GlobalConsoleManager.shared.appendOutput("✓ Completed deletion of contents\n", source: CurrentPage.development.title)
+                                        let success = FileManagerUndo.shared.deleteFiles(at: allContentURLs, bundleName: bundleName)
+                                        if success {
+                                            GlobalConsoleManager.shared.appendOutput("✓ Moved selected folder contents to the Trash\n", source: CurrentPage.development.title)
+                                        } else {
+                                            GlobalConsoleManager.shared.appendOutput("✗ Some selected folder contents could not be moved to the Trash\n", source: CurrentPage.development.title)
+                                            showCustomAlert(title: "Deletion Incomplete", message: "Some selected folder contents could not be moved to the Trash. Check the console for the affected paths.", style: .critical)
+                                        }
                                     }
                                     selectedPaths.removeAll()
                                     refreshPaths()
@@ -1059,9 +1069,7 @@ struct PipPackageCleanerView: View {
 
                         if !selectedPackages.isEmpty {
                             Button {
-                                Task {
-                                    await uninstallSelectedPackages()
-                                }
+                                confirmPipUninstall(packages.filter { selectedPackages.contains($0.id) })
                             } label: {
                                 Label("Uninstall Selected (\(selectedPackages.count))", systemImage: "trash")
                                     .font(.caption)
@@ -1113,9 +1121,7 @@ struct PipPackageCleanerView: View {
                                     }
 
                                     Button {
-                                        Task {
-                                            await uninstallPackage(package)
-                                        }
+                                        confirmPipUninstall([package])
                                     } label: {
                                         Image(systemName: "trash")
                                             .foregroundStyle(.red)
@@ -1154,9 +1160,7 @@ struct PipPackageCleanerView: View {
                         Spacer()
 
                         Button("Uninstall All") {
-                            Task {
-                                await uninstallAllPackages()
-                            }
+                            confirmPipUninstall(packages)
                         }
                         .disabled(isScanning || packages.isEmpty)
                         .controlSize(.small)
@@ -1392,7 +1396,23 @@ struct PipPackageCleanerView: View {
 
     // MARK: - Uninstall Methods
 
-    private func uninstallPackage(_ package: PipPackage) async {
+    private func confirmPipUninstall(_ packagesToUninstall: [PipPackage]) {
+        guard !packagesToUninstall.isEmpty else { return }
+        let names = packagesToUninstall.prefix(10).map(\.name).joined(separator: "\n")
+        let remainder = packagesToUninstall.count > 10 ? "\n… and \(packagesToUninstall.count - 10) more" : ""
+        showCustomAlert(
+            title: "Uninstall Python Package\(packagesToUninstall.count == 1 ? "" : "s")?",
+            message: "This will permanently remove these package\(packagesToUninstall.count == 1 ? "" : "s") from the selected Python environment:\n\(names)\(remainder)",
+            okText: "Uninstall",
+            style: .warning,
+            onOk: {
+                Task { await uninstallPackages(packagesToUninstall) }
+            }
+        )
+    }
+
+    @discardableResult
+    private func uninstallPackage(_ package: PipPackage) async -> Bool {
         do {
             _ = try await runPipCommand(["uninstall", "-y", package.name])
 
@@ -1400,25 +1420,35 @@ struct PipPackageCleanerView: View {
                 packages.removeAll { $0.id == package.id }
                 selectedPackages.remove(package.id)
             }
+            return true
         } catch {
             await MainActor.run {
                 alertMessage = "Failed to uninstall \(package.name): \(error.localizedDescription)"
                 showAlert = true
             }
+            return false
         }
     }
 
-    private func uninstallSelectedPackages() async {
-        let packagesToUninstall = packages.filter { selectedPackages.contains($0.id) }
-
+    private func uninstallPackages(_ packagesToUninstall: [PipPackage]) async {
+        var failures: [String] = []
         for package in packagesToUninstall {
-            await uninstallPackage(package)
+            if !(await uninstallPackage(package)) {
+                failures.append(package.name)
+            }
         }
-    }
-
-    private func uninstallAllPackages() async {
-        for package in packages {
-            await uninstallPackage(package)
+        if failures.isEmpty {
+            showCustomAlert(
+                title: "Uninstall Complete",
+                message: "Removed \(packagesToUninstall.count) Python package\(packagesToUninstall.count == 1 ? "" : "s").",
+                style: .informational
+            )
+        } else {
+            showCustomAlert(
+                title: "Uninstall Incomplete",
+                message: "Could not uninstall: \(failures.joined(separator: ", ")).",
+                style: .critical
+            )
         }
     }
 
@@ -1564,6 +1594,8 @@ struct PipPackageCleanerView: View {
     private func detectSitePackages(pythonPath: String) async -> [String] {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: pythonPath)
+        // Python's `-c` receives Python source, not shell source. The source is
+        // a constant and no path or user value is interpolated into it.
         process.arguments = ["-c", "import site; print('\\n'.join(site.getsitepackages()))"]
 
         // Set environment, prioritizing the selected Python's directory

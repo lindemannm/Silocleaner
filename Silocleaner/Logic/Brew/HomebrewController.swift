@@ -289,7 +289,6 @@ class HomebrewController: ObservableObject {
             let combinedOutput = output + error
             if isAuthenticationFailure(combinedOutput) {
                 printOS("🔐 Authentication failed, invalidating cache and retrying (attempt \(attemptCount + 1)/\(maxRetries))")
-                KeychainPasswordManager.shared.invalidateCache()
                 attemptCount += 1
 
                 if attemptCount < maxRetries {
@@ -1632,11 +1631,9 @@ class HomebrewController: ObservableObject {
         // Use git directly for faster version check (avoids spawning brew process)
         // --abbrev=0 returns clean semantic version (e.g., "4.6.19") for consistent display
         // Works with both full clones and shallow clones
-        let gitCommand = "git -C \(brewPrefix) describe --tags --abbrev=0 2>/dev/null"
-
         let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/bin/sh")
-        process.arguments = ["-c", gitCommand]
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        process.arguments = ["-C", brewPrefix, "describe", "--tags", "--abbrev=0"]
 
         let pipe = Pipe()
         process.standardOutput = pipe
@@ -1874,11 +1871,9 @@ class HomebrewController: ObservableObject {
         }
 
         // Use git config directly for faster check (avoids spawning brew process)
-        let gitCommand = "git -C \(brewPrefix) config --get homebrew.analyticsdisabled 2>/dev/null"
-
         let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/bin/sh")
-        process.arguments = ["-c", gitCommand]
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        process.arguments = ["-C", brewPrefix, "config", "--get", "homebrew.analyticsdisabled"]
 
         let pipe = Pipe()
         process.standardOutput = pipe
@@ -1914,11 +1909,9 @@ class HomebrewController: ObservableObject {
 
         // Use git config directly for faster toggle (avoids spawning brew process)
         let value = enabled ? "false" : "true"  // Inverted: "false" means NOT disabled (i.e., enabled)
-        let gitCommand = "git -C \(brewPrefix) config --replace-all homebrew.analyticsdisabled \(value) 2>&1"
-
         let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/bin/sh")
-        process.arguments = ["-c", gitCommand]
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        process.arguments = ["-C", brewPrefix, "config", "--replace-all", "homebrew.analyticsdisabled", value]
 
         let pipe = Pipe()
         process.standardOutput = pipe

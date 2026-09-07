@@ -92,22 +92,29 @@ Exit criteria:
 
 ## Phase 2 -- eliminate unsafe command construction and password caching
 
-Status: **not started**
+Status: **in progress**
 
-- [ ] Find every `Process(... "-c" ...)`, `runSUCommand`,
-  `performPrivilegedCommands`, and string-built shell command.
-- [ ] Replace path/name interpolation with typed APIs or correctly delimited
+- [x] Find every shell `Process(... "-c" ...)`, `runSUCommand`,
+  `performPrivilegedCommands`, and string-built command. The one remaining
+  `-c` is a constant Python program (not shell source) used to query the
+  selected Python interpreter.
+- [x] Replace path/name interpolation with typed APIs or correctly delimited
   `Process` arguments. This includes CLI symlink management, undo/restore,
   launch-item management, package cleanup, Homebrew cleanup, and iOS wrapper
   replacement.
-- [ ] Remove the sudo-password cache where the privileged helper replaces it.
+- [x] Remove the sudo-password cache where the privileged helper replaces it.
   If a separate authentication path remains essential, require a documented
   security design and explicit Keychain access control before retaining it.
-- [ ] Make temporary data use uniquely created directories with restrictive
+  Homebrew's `SUDO_ASKPASS` path obtains a fresh password for each request and
+  does not persist it.
+- [x] Make temporary data use uniquely created directories with restrictive
   permissions; remove broad startup deletion of every `/tmp/pearcleaner*`
   entry.
-- [ ] Ensure every destructive action has a clear preview/confirmation and an
-  accurate post-operation result.
+- [x] Ensure every destructive action has a clear preview/confirmation and an
+  accurate post-operation result. Destructive GUI actions require confirmation
+  regardless of the general prompt preference; CLI deletion commands print a
+  resolved-path preview and require `--yes`; completion states distinguish
+  success, failure, and partial deletion.
 
 Exit criteria:
 

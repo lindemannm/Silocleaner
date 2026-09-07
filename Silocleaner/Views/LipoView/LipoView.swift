@@ -267,7 +267,17 @@ struct LipoView: View {
                             Divider().frame(height: 10)
 
                             Button {
-                                startLipo()
+                                let selected = universalApps.filter { selectedApps.contains($0.path.path) }
+                                let preview = selected.prefix(8).map(\.appName).joined(separator: "\n")
+                                let remaining = selected.count > 8 ? "\n… and \(selected.count - 8) more" : ""
+                                let pruning = prune ? " Translation files selected by the current prune setting will also be removed." : ""
+                                showCustomAlert(
+                                    title: "Thin \(selected.count) App\(selected.count == 1 ? "" : "s")?",
+                                    message: "Silocleaner will permanently remove the non-native architecture from:\n\(preview)\(remaining).\(pruning)",
+                                    okText: "Thin",
+                                    style: .warning,
+                                    onOk: { startLipo() }
+                                )
                             } label: {
                                 if !isProcessing {
                                     Label {

@@ -17,6 +17,7 @@
 		C73545F92D849B5700A3DC0C /* SilocleanerHelper in CopyFiles */ = {isa = PBXBuildFile; fileRef = C73545F02D849A1B00A3DC0C /* SilocleanerHelper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C73545FD2D84E5DD00A3DC0C /* com.lindemannm.SilocleanerSentinel.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = C7B3AB072D83900B00D829C5 /* com.lindemannm.SilocleanerSentinel.plist */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C739C3382EB027A9003639C6 /* askpass.sh in Resources */ = {isa = PBXBuildFile; fileRef = C739C3372EB027A9003639C6 /* askpass.sh */; };
+		C7E200012F00000100SEC002 /* homebrew-auto-update.sh in Resources */ = {isa = PBXBuildFile; fileRef = C7E200022F00000100SEC002 /* homebrew-auto-update.sh */; };
 		C73AE1922EC69A81009CAC42 /* GlobalConsoleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73AE1912EC69A81009CAC42 /* GlobalConsoleManager.swift */; };
 		C74206E52E79E47400BDDB6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C74206E42E79E47400BDDB6A /* Assets.xcassets */; };
 		C74422412E4936750002D277 /* DaemonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74422402E4936700002D277 /* DaemonView.swift */; };
@@ -38,7 +39,6 @@
 		C78733BF2E674510008615F2 /* FileWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78733BC2E674496008615F2 /* FileWatcher.swift */; };
 		C78D7B212D556F1A003DD49F /* AppPathsFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78D7B202D556F16003DD49F /* AppPathsFetch.swift */; };
 		C78FF5E12EC1A3B400FC610A /* PasswordRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78FF5E02EC1A3B400FC610A /* PasswordRequestHandler.swift */; };
-		C78FF5E32EC1B1E100FC610A /* KeychainPasswordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78FF5E22EC1B1E100FC610A /* KeychainPasswordManager.swift */; };
 		C7A2A4D62DDB957D006E05E4 /* CLI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A2A4D52DDB957D006E05E4 /* CLI.swift */; };
 		C7A2A4D92DDB95C4006E05E4 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = C7A2A4D82DDB95C4006E05E4 /* ArgumentParser */; };
 		C7A6DBF12C9DD27200CFA042 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7A6DBF02C9DD27200CFA042 /* Assets.xcassets */; };
@@ -137,6 +137,7 @@
 		C73545EA2D8496DA00A3DC0C /* HelperToolManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperToolManager.swift; sourceTree = "<group>"; };
 		C73545F02D849A1B00A3DC0C /* SilocleanerHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SilocleanerHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		C739C3372EB027A9003639C6 /* askpass.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = askpass.sh; sourceTree = "<group>"; };
+		C7E200022F00000100SEC002 /* homebrew-auto-update.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = homebrew-auto-update.sh; sourceTree = "<group>"; };
 		C73AE1912EC69A81009CAC42 /* GlobalConsoleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConsoleManager.swift; sourceTree = "<group>"; };
 		C74206E42E79E47400BDDB6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C74422402E4936700002D277 /* DaemonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonView.swift; sourceTree = "<group>"; };
@@ -163,7 +164,6 @@
 		C78733BC2E674496008615F2 /* FileWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileWatcher.swift; sourceTree = "<group>"; };
 		C78D7B202D556F16003DD49F /* AppPathsFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPathsFetch.swift; sourceTree = "<group>"; };
 		C78FF5E02EC1A3B400FC610A /* PasswordRequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRequestHandler.swift; sourceTree = "<group>"; };
-		C78FF5E22EC1B1E100FC610A /* KeychainPasswordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainPasswordManager.swift; sourceTree = "<group>"; };
 		C7A2A4D52DDB957D006E05E4 /* CLI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLI.swift; sourceTree = "<group>"; };
 		C7A6DBF02C9DD27200CFA042 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7B3AB072D83900B00D829C5 /* com.lindemannm.SilocleanerSentinel.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = com.lindemannm.SilocleanerSentinel.plist; sourceTree = "<group>"; };
@@ -299,7 +299,6 @@
 				C77020282EA94D0A00240D58 /* FuzzySearch.swift */,
 				C73AE1912EC69A81009CAC42 /* GlobalConsoleManager.swift */,
 				C73545EA2D8496DA00A3DC0C /* HelperToolManager.swift */,
-				C78FF5E22EC1B1E100FC610A /* KeychainPasswordManager.swift */,
 				C7C90DD22DA81C590056769A /* Lipo.swift */,
 				C7D31D502AFF00F300C7ED9E /* Locations.swift */,
 				C77B90192AF1938F009CC655 /* Logic.swift */,
@@ -344,6 +343,7 @@
 				C74206E42E79E47400BDDB6A /* Assets.xcassets */,
 				C7F8436A2CBF066F00E3E30A /* Localizable.xcstrings */,
 				C739C3372EB027A9003639C6 /* askpass.sh */,
+				C7E200022F00000100SEC002 /* homebrew-auto-update.sh */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -604,6 +604,7 @@
 			files = (
 				C770B6ED2E78DF9D005A0ABD /* Glass.icon in Resources */,
 				C739C3382EB027A9003639C6 /* askpass.sh in Resources */,
+				C7E200012F00000100SEC002 /* homebrew-auto-update.sh in Resources */,
 				C74206E52E79E47400BDDB6A /* Assets.xcassets in Resources */,
 				C7F8436B2CBF066F00E3E30A /* Localizable.xcstrings in Resources */,
 			);
@@ -637,7 +638,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "chmod +x \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/askpass.sh\"\n";
+			shellScript = "chmod +x \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/askpass.sh\"\nchmod +x \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/homebrew-auto-update.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -673,7 +674,6 @@
 				C77020292EA94D0A00240D58 /* FuzzySearch.swift in Sources */,
 				C7BB99292E8AF1CB007BBB81 /* PluginsView.swift in Sources */,
 				C7C90DD32DA81C5D0056769A /* Lipo.swift in Sources */,
-				C78FF5E32EC1B1E100FC610A /* KeychainPasswordManager.swift in Sources */,
 				C7A2A4D62DDB957D006E05E4 /* CLI.swift in Sources */,
 				C7D31D512AFF00F300C7ED9E /* Locations.swift in Sources */,
 				C77B901A2AF1938F009CC655 /* Logic.swift in Sources */,

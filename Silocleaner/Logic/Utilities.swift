@@ -130,25 +130,6 @@ func directoryExists(at path: String) -> Bool {
     return fileManager.fileExists(atPath: path, isDirectory: nil)
 }
 
-/// Clean up all stale /tmp/silocleaner* directories
-/// Used before creating new temp directories to avoid conflicts from previous failed operations
-func cleanupSilocleanerTempDirs() {
-    let tmpDir = URL(fileURLWithPath: "/tmp")
-
-    guard let contents = try? FileManager.default.contentsOfDirectory(
-        at: tmpDir,
-        includingPropertiesForKeys: nil
-    ) else {
-        return
-    }
-
-    for item in contents where item.lastPathComponent.hasPrefix("silocleaner") {
-        try? FileManager.default.removeItem(at: item)
-    }
-}
-
-
-
 // Open trash folder
 func openTrash() {
     if let trashURL = try? FileManager.default.url(for: .trashDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
@@ -848,10 +829,9 @@ func formatBytes(_ bytes: Int64) -> String {
 }
 
 // MARK: - Privileged command execution
-/// Executes one fixed program with discrete arguments through Authorization
-/// Services. The framework accepts a command string, so this is the sole
-/// boundary that serialises arguments for its shell-backed compatibility API.
-/// Callers must not construct shell source themselves.
+/// Executes one fixed program with discrete arguments through `sudo -A`.
+/// No caller data is parsed as shell source: `Process.arguments` preserves each
+/// argument as one distinct value.
 func runPrivilegedTool(
     _ executable: String,
     arguments: [String] = [],
@@ -861,15 +841,39 @@ func runPrivilegedTool(
     let permittedExecutables: Set<String> = [
         "/bin/chmod", "/bin/cp", "/bin/launchctl", "/bin/ln", "/bin/mkdir",
         "/bin/mv", "/bin/rm", "/bin/rmdir", "/sbin/kextunload", "/usr/bin/killall",
-        "/usr/bin/pkill", "/usr/sbin/chown", "/usr/sbin/installer", "/usr/sbin/pkgutil"
+        "/usr/bin/pkill", "/usr/bin/sfltool", "/usr/sbin/chown", "/usr/sbin/installer", "/usr/sbin/pkgutil"
     ]
     guard permittedExecutables.contains(executable), !arguments.contains(where: { $0.contains("\0") }) else {
         throw NSError(domain: "com.silocleaner.privileges", code: 1,
                       userInfo: [NSLocalizedDescriptionKey: "Unsupported privileged operation"])
     }
 
-    let command = ([executable] + arguments).map(shellQuoted).joined(separator: " ")
-    let (success, output) = performPrivilegedCommands(commands: command)
+    let process = Process()
+    process.executableURL = URL(fileURLWithPath: "/usr/bin/sudo")
+    process.arguments = ["-A", "--", executable] + arguments
+
+    var environment = ProcessInfo.processInfo.environment
+    environment["SUDO_ASKPASS"] = Bundle.main.bundleURL
+        .appendingPathComponent("Contents/Resources/askpass.sh").path
+    process.environment = environment
+
+    let pipe = Pipe()
+    process.standardOutput = pipe
+    process.standardError = pipe
+
+    do {
+        try process.run()
+        process.waitUntilExit()
+    } catch {
+        throw NSError(
+            domain: "com.silocleaner.privileges",
+            code: 2,
+            userInfo: [NSLocalizedDescriptionKey: error.localizedDescription]
+        )
+    }
+
+    let output = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+    let success = process.terminationStatus == 0
 
     // Log custom error if provided and command failed
     if !success, let context = errorContext {
@@ -882,10 +886,4 @@ func runPrivilegedTool(
     }
 
     return (success, output)
-}
-
-/// POSIX single-quote encoding. Every input, including option-looking values,
-/// is a single shell word and cannot introduce an operator or expansion.
-private func shellQuoted(_ value: String) -> String {
-    "'\(value.replacingOccurrences(of: "'", with: "'\\\"'\\\"'"))'"
 }

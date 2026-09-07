@@ -212,7 +212,9 @@ struct FilesView: View {
     // Function to handle the uninstall action
     private func handleUninstallAction() {
         showCustomAlert(
-            enabled: confirmAlert, title: String(localized: "Warning"),
+            // Removing application files is always confirmation-gated. The
+            // preference only controls non-destructive interface prompts.
+            enabled: true, title: String(localized: "Warning"),
             message: String(localized: "Are you sure you want to remove these files?"),
             style: .warning,
             onOk: {

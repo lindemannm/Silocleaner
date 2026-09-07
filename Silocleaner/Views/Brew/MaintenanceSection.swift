@@ -226,16 +226,14 @@ struct MaintenanceSection: View {
                             Spacer()
 
                             Button {
-                                Task {
-                                    isPurgingCache = true
-                                    do {
-                                        try await HomebrewController.shared.performFullCleanup()
-                                        await brewManager.loadCacheSize()
-                                    } catch {
-                                        printOS("Error performing cleanup: \(error)")
-                                    }
-                                    isPurgingCache = false
-                                }
+                                let size = ByteCountFormatter.string(fromByteCount: brewManager.cacheSize, countStyle: .file)
+                                showCustomAlert(
+                                    title: "Run Homebrew Cleanup?",
+                                    message: "This will move approximately \(size) of Homebrew caches and logs to the Trash, then remove orphaned dependencies and old versions.",
+                                    okText: "Run Cleanup",
+                                    style: .warning,
+                                    onOk: { runCleanup() }
+                                )
                             } label: {
                                 if isPurgingCache {
                                     HStack(spacing: 8) {
@@ -394,6 +392,21 @@ struct MaintenanceSection: View {
         }
         .onChange(of: brewManager.maintenanceRefreshTrigger) { _ in
             runAllChecks()
+        }
+    }
+
+    private func runCleanup() {
+        Task {
+            isPurgingCache = true
+            do {
+                try await HomebrewController.shared.performFullCleanup()
+                await brewManager.loadCacheSize()
+                showCustomAlert(title: "Cleanup Complete", message: "Homebrew cleanup completed. Any cache and log files removed by Silocleaner are available in the Trash.", style: .informational)
+            } catch {
+                printOS("Error performing cleanup: \(error)")
+                showCustomAlert(title: "Cleanup Failed", message: error.localizedDescription, style: .critical)
+            }
+            isPurgingCache = false
         }
     }
 

@@ -34,6 +34,19 @@ struct PearCLI: ParsableCommand {
         Self.fsm = fsm
     }
 
+    /// CLI mutations require an explicit, non-interactive acknowledgement.
+    /// Printing the resolved paths first makes `--yes` a confirmation of the
+    /// actual operation rather than merely the command spelling.
+    static func confirmDestructiveOperation(_ paths: [URL], acknowledged: Bool) -> Bool {
+        guard !acknowledged else { return true }
+        printOS("Preview — the following \(paths.count) item(s) would be moved to the Trash:\n")
+        for path in paths.sorted(by: { $0.path < $1.path }) {
+            printOS(path.path)
+        }
+        printOS("\nRe-run this command with --yes to confirm.\n")
+        return false
+    }
+
 //    struct Run: ParsableCommand {
 //        static var configuration = CommandConfiguration(
 //            commandName: "run",
@@ -119,6 +132,9 @@ struct PearCLI: ParsableCommand {
         @Argument(help: "Path to the application")
         var path: String
 
+        @Flag(name: .long, help: "Confirm moving the application bundle to the Trash")
+        var yes = false
+
         func run() async throws {
             // Convert the provided string path to a URL
             let url = URL(fileURLWithPath: path)
@@ -127,6 +143,10 @@ struct PearCLI: ParsableCommand {
             guard let appInfo = AppInfoFetcher.getAppInfo(atPath: url) else {
                 printOS("Error: Invalid path or unable to fetch app info at path: \(path)\n")
                 Foundation.exit(1)
+            }
+
+            guard PearCLI.confirmDestructiveOperation([appInfo.path], acknowledged: yes) else {
+                Foundation.exit(2)
             }
 
             // Kill app before deletion
@@ -153,6 +173,9 @@ struct PearCLI: ParsableCommand {
         @Argument(help: "Path to the application")
         var path: String
 
+        @Flag(name: .long, help: "Confirm moving the application and related files to the Trash")
+        var yes = false
+
         func run() async throws {
             // Convert the provided string path to a URL
             let url = URL(fileURLWithPath: path)
@@ -168,6 +191,10 @@ struct PearCLI: ParsableCommand {
 
             // Call findPaths to get the Set of URLs
             let foundPaths = appPathFinder.findPathsCLI()
+
+            guard PearCLI.confirmDestructiveOperation(Array(foundPaths), acknowledged: yes) else {
+                Foundation.exit(2)
+            }
 
             // Check if any file is protected (non-writable)
             let protectedFiles = foundPaths.filter {
@@ -207,6 +234,9 @@ struct PearCLI: ParsableCommand {
                 "Remove ALL orphaned files (To ignore files, add them to the exception list within Silocleaner settings)"
         )
 
+        @Flag(name: .long, help: "Confirm moving all listed orphaned files to the Trash")
+        var yes = false
+
         func run() throws {
 
             // Get installed apps for filtering
@@ -221,6 +251,10 @@ struct PearCLI: ParsableCommand {
                 sortedApps: AppState.shared.sortedApps
             )
                 .reversePathsSearchCLI()
+
+            guard PearCLI.confirmDestructiveOperation(foundPaths, acknowledged: yes) else {
+                Foundation.exit(2)
+            }
 
             // Check if any file is protected (non-writable)
             let protectedFiles = foundPaths.filter {
@@ -364,21 +398,11 @@ struct PearCLI: ParsableCommand {
         var message: String = "Homebrew is requesting your password to perform a privileged action"
 
         func run() throws {
-            // Check keychain first
-            if let cached = KeychainPasswordManager.shared.retrievePassword() {
-                print(cached)
-                Darwin.exit(0)
-            }
-
-            // Not cached, get fresh password
             guard let password = obtainPassword() else {
                 Darwin.exit(1)
             }
 
-            // Save to keychain (uses user-configured timeout from settings)
-            KeychainPasswordManager.shared.savePassword(password)
-
-            // Print and exit immediately
+            // SUDO_ASKPASS consumes this value immediately. Never retain it.
             print(password)
             Darwin.exit(0)
         }

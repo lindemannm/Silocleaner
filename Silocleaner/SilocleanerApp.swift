@@ -84,8 +84,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
         ensureApplicationSupportFolderExists()
 
-        cleanupSilocleanerTempDirs()
-
     }
 
     func applicationWillTerminate(_ notification: Notification) {}

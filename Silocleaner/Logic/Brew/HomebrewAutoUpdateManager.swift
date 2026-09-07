@@ -324,9 +324,7 @@ class HomebrewAutoUpdateManager: ObservableObject {
 
         // Register with launchctl
         let uid = getuid()
-        let bootstrapCommand = "launchctl bootstrap gui/\(uid) \(plistPath)"
-
-        let result = shell(bootstrapCommand)
+        let result = runTool("/bin/launchctl", arguments: ["bootstrap", "gui/\(uid)", plistPath])
         if result.exitCode != 0 {
             throw HomebrewAutoUpdateError.registrationFailed(result.stderr)
         }
@@ -339,9 +337,7 @@ class HomebrewAutoUpdateManager: ObservableObject {
     /// - Parameter updateStatus: Whether to update isAgentLoaded state (default: true)
     func unregisterAgent(updateStatus: Bool = true) throws {
         let uid = getuid()
-        let bootoutCommand = "launchctl bootout gui/\(uid)/\(label)"
-
-        let result = shell(bootoutCommand)
+        let result = runTool("/bin/launchctl", arguments: ["bootout", "gui/\(uid)/\(label)"])
         // Note: bootout returns error if service not loaded, which is fine
         if result.exitCode != 0 && !result.stderr.contains("Could not find service") {
             throw HomebrewAutoUpdateError.registrationFailed(result.stderr)
@@ -356,9 +352,7 @@ class HomebrewAutoUpdateManager: ObservableObject {
     /// Check if LaunchAgent is currently loaded
     func checkAgentStatus() {
         let uid = getuid()
-        let printCommand = "launchctl print gui/\(uid)/\(label)"
-
-        let result = shell(printCommand)
+        let result = runTool("/bin/launchctl", arguments: ["print", "gui/\(uid)/\(label)"])
         // If launchctl print succeeds, the service is loaded
         isAgentLoaded = (result.exitCode == 0)
     }
@@ -414,13 +408,11 @@ class HomebrewAutoUpdateManager: ObservableObject {
             return
         }
 
-        // Extract global actions from ProgramArguments (apply to all schedules)
-        if let programArgs = plist["ProgramArguments"] as? [String],
-           programArgs.count >= 3 {
-            let command = programArgs[2]
-            runUpdate = command.contains("brew update")
-            runUpgrade = command.contains("brew upgrade")
-            runCleanup = command.contains("brew autoremove") || command.contains("brew cleanup")
+        // The arguments are flags for the bundled, static runner script.
+        if let programArgs = plist["ProgramArguments"] as? [String] {
+            runUpdate = programArgs.contains("--update")
+            runUpgrade = programArgs.contains("--upgrade")
+            runCleanup = programArgs.contains("--cleanup")
         }
 
         // Parse each interval into ScheduleOccurrence
@@ -471,11 +463,11 @@ class HomebrewAutoUpdateManager: ObservableObject {
 
     // MARK: - Private Methods
 
-    /// Execute shell command and return result
-    private func shell(_ command: String) -> (stdout: String, stderr: String, exitCode: Int32) {
+    /// Execute a fixed executable with separately-delimited arguments.
+    private func runTool(_ executable: String, arguments: [String]) -> (stdout: String, stderr: String, exitCode: Int32) {
         let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/bin/sh")
-        process.arguments = ["-c", command]
+        process.executableURL = URL(fileURLWithPath: executable)
+        process.arguments = arguments
 
         let outputPipe = Pipe()
         let errorPipe = Pipe()
@@ -502,55 +494,14 @@ class HomebrewAutoUpdateManager: ObservableObject {
     private func generatePlist() -> String {
         let enabledSchedules = schedules.filter { $0.isEnabled }
 
-        // Build command as a shell script block for clean output
-        let brewPath = HomebrewController.shared.getBrewPrefix() + "/bin/brew"
-        var scriptLines: [String] = []
-
-        // Header
-        scriptLines.append("echo \"\"")
-        scriptLines.append("echo \"================================\"")
-        scriptLines.append("echo \"Homebrew Auto-Update - $(date)\"")
-        scriptLines.append("echo \"================================\"")
-        scriptLines.append("echo \"\"")
-
-        // Update section
-        if runUpdate {
-            scriptLines.append("echo \"[ Updating Homebrew ]\"")
-            scriptLines.append("OUTPUT=$(\(brewPath) update 2>&1)")
-            scriptLines.append("if [ -z \"$OUTPUT\" ]; then echo \"No action needed\"; else echo \"$OUTPUT\"; fi")
-            scriptLines.append("echo \"\"")
-        }
-
-        // Upgrade section
-        if runUpgrade {
-            scriptLines.append("echo \"[ Upgrading Packages ]\"")
-            scriptLines.append("OUTPUT=$(\(brewPath) upgrade --greedy 2>&1)")
-            scriptLines.append("if [ -z \"$OUTPUT\" ]; then echo \"No action needed\"; else echo \"$OUTPUT\"; fi")
-            scriptLines.append("echo \"\"")
-        }
-
-        // Cleanup section
-        if runCleanup {
-            scriptLines.append("echo \"[ Cleaning Up ]\"")
-            scriptLines.append("OUTPUT=$(\(brewPath) autoremove 2>&1; \(brewPath) cleanup --scrub --prune=all 2>&1)")
-            scriptLines.append("if [ -z \"$OUTPUT\" ]; then echo \"No action needed\"; else echo \"$OUTPUT\"; fi")
-            scriptLines.append("echo \"\"")
-        }
-
-        // Footer
-        scriptLines.append("echo \"================================\"")
-        scriptLines.append("echo \"Completed at $(date)\"")
-        scriptLines.append("echo \"================================\"")
-
-        // Wrap in braces for single execution block and redirect to overwrite log file
-        let scriptBlock = "{ " + scriptLines.joined(separator: "; ") + "; } > /tmp/homebrew-autoupdate.log 2>&1"
-
-        // Escape XML special characters for plist
-        let escapedCommand = scriptBlock
-            .replacingOccurrences(of: "&", with: "&amp;")
-            .replacingOccurrences(of: "<", with: "&lt;")
-            .replacingOccurrences(of: ">", with: "&gt;")
-            .replacingOccurrences(of: "\"", with: "&quot;")
+        let runnerPath = Bundle.main.bundleURL
+            .appendingPathComponent("Contents/Resources/homebrew-auto-update.sh").path
+        var runnerArguments = [runnerPath]
+        if runUpdate { runnerArguments.append("--update") }
+        if runUpgrade { runnerArguments.append("--upgrade") }
+        if runCleanup { runnerArguments.append("--cleanup") }
+        let programArguments = runnerArguments.map { "                <string>\($0.xmlEscaped)</string>" }
+            .joined(separator: "\n")
 
         // Generate StartCalendarInterval entries
         let calendarIntervals = enabledSchedules.map { schedule in
@@ -609,16 +560,14 @@ class HomebrewAutoUpdateManager: ObservableObject {
             <string>\(label)</string>
             <key>ProgramArguments</key>
             <array>
-                <string>/bin/sh</string>
-                <string>-c</string>
-                <string>\(escapedCommand)</string>
+        \(programArguments)
             </array>
             <key>EnvironmentVariables</key>
             <dict>
                 <key>PATH</key>
-                <string>\(HomebrewController.shared.getBrewPrefix())/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+                <string>\((HomebrewController.shared.getBrewPrefix() + "/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin").xmlEscaped)</string>
                 <key>SUDO_ASKPASS</key>
-                <string>\(Bundle.main.bundlePath)/Contents/Resources/askpass.sh</string>
+                <string>\((Bundle.main.bundlePath + "/Contents/Resources/askpass.sh").xmlEscaped)</string>
             </dict>
             <key>RunAtLoad</key>
             <false/>
@@ -629,6 +578,16 @@ class HomebrewAutoUpdateManager: ObservableObject {
         </dict>
         </plist>
         """
+    }
+}
+
+private extension String {
+    var xmlEscaped: String {
+        replacingOccurrences(of: "&", with: "&amp;")
+            .replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;")
+            .replacingOccurrences(of: "\"", with: "&quot;")
+            .replacingOccurrences(of: "'", with: "&apos;")
     }
 }
 

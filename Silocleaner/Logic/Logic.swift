@@ -344,33 +344,33 @@ func getSortedApps(paths: [String], useStreaming: Bool = false) -> [AppInfo] {
 
 // Get directory path for darwin cache and temp directories
 func darwinCT() -> (String, String) {
-    let command = "echo $(getconf DARWIN_USER_CACHE_DIR) $(getconf DARWIN_USER_TEMP_DIR)"
-//    let command = "echo $(realpath $(getconf DARWIN_USER_CACHE_DIR)) $(realpath $(getconf DARWIN_USER_TEMP_DIR))"
-    let process = Process()
-    process.launchPath = "/bin/bash"
-    process.arguments = ["-c", command]
+    func getconf(_ variable: String) -> String? {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/getconf")
+        process.arguments = [variable]
+        let pipe = Pipe()
+        process.standardOutput = pipe
 
-    let pipe = Pipe()
-    process.standardOutput = pipe
-    process.launch()
+        do {
+            try process.run()
+            process.waitUntilExit()
+        } catch {
+            return nil
+        }
 
-    let data = pipe.fileHandleForReading.readDataToEndOfFile()
-    guard
-        let output = String(data: data, encoding: .utf8)?.trimmingCharacters(
-            in: .whitespacesAndNewlines)
-    else {
+        guard process.terminationStatus == 0 else { return nil }
+        return String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    guard let cacheDirectory = getconf("DARWIN_USER_CACHE_DIR"),
+          let temporaryDirectory = getconf("DARWIN_USER_TEMP_DIR"),
+          !cacheDirectory.isEmpty,
+          !temporaryDirectory.isEmpty else {
         printOS("Could not get DARWIN_USER_CACHE_DIR or DARWIN_USER_TEMP_DIR")
         return ("", "")
     }
-
-    let paths = output.split(separator: " ").map(String.init)
-    guard paths.count >= 2 else {
-        printOS("Could not parse DARWIN_USER_CACHE_DIR or DARWIN_USER_TEMP_DIR")
-        return ("", "")
-    }
-    return (
-        paths[0].trimmingCharacters(in: .whitespaces), paths[1].trimmingCharacters(in: .whitespaces)
-    )
+    return (cacheDirectory, temporaryDirectory)
 }
 
 func listAppSupportDirectories() -> [String] {
