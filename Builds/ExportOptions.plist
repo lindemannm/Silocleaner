@@ -4,12 +4,8 @@
 <dict>
 	<key>method</key>
 	<string>mac-application</string>
-	<key>teamID</key>
-	<string>BK8443AXLU</string>
-	<key>signingCertificate</key>
-	<string>Developer ID Application: Marius Lupascu (BK8443AXLU)</string>
 	<key>signingStyle</key>
-	<string>manual</string>
+	<string>automatic</string>
 	<key>stripSwiftSymbols</key>
 	<true/>
 	<key>destination</key>

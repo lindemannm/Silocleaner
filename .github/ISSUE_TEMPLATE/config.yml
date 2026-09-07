@@ -1,9 +1,9 @@
 blank_issues_enabled: false
 contact_links:
-  - name: PEARCLEANER IS NOW IN MAINTENANCE MODE
-    url: https://github.com/alienator88/Pearcleaner/blob/main/.github/ISSUE_TEMPLATE/project.md
-    about: New feature requests will be ignored/closed. Click here for more details.
+  - name: Silocleaner project information
+    url: https://github.com/lindemannm/Silocleaner/blob/main/.github/ISSUE_TEMPLATE/project.md
+    about: Read the project's current scope and contribution guidance.
   - name: ❓ Ask a Question
-    url: https://github.com/alienator88/Pearcleaner/discussions/new?category=general
+    url: https://github.com/lindemannm/Silocleaner/discussions/new?category=general
     about: Ask the community for help
   

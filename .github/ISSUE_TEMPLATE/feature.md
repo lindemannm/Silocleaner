@@ -13,7 +13,7 @@ WARNING: Issues with the template below removed will be closed!
 -->
 
 <!--
-Thanks for helping make Pearcleaner better! Before you submit your issue, please make sure you follow the list below and check the appropriate boxes by putting an x inside the [ ]: [x] 
+Thanks for helping make Silocleaner better! Before you submit your issue, please make sure you follow the list below and check the appropriate boxes by putting an x inside the [ ]: [x]
 -->
 
 ### New Feature Checklist

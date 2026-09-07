@@ -10,11 +10,20 @@ import FinderSync
 
 class FinderOpen: FIFinderSync {
 
+    /// Finder Sync menus are intentionally limited to the standard application
+    /// locations. The extension only receives selected URLs from Finder and
+    /// hands them to the main app; it does not need a filesystem exception.
+    private static let observedApplicationDirectories: Set<URL> = [
+        URL(fileURLWithPath: "/Applications", isDirectory: true),
+        URL(fileURLWithPath: "/System/Applications", isDirectory: true),
+        FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent("Applications", isDirectory: true),
+    ]
+
     override init() {
         super.init()
         NSLog("FinderSync() launched from %@", Bundle.main.bundlePath as NSString)
-        // Set the directory URLs that the Finder Sync extension observes
-        FIFinderSyncController.default().directoryURLs = Set([URL(fileURLWithPath: "/")])
+        FIFinderSyncController.default().directoryURLs = Self.observedApplicationDirectories
     }
 
     override func menu(for menuKind: FIMenuKind) -> NSMenu {
@@ -26,7 +35,7 @@ class FinderOpen: FIFinderSync {
             if let selectedItemURLs = FIFinderSyncController.default().selectedItemURLs(),
                selectedItemURLs.count == 1, selectedItemURLs.first?.pathExtension == "app" {
                 // Add menu item if the selected item is a .app file
-                let menuItem = NSMenuItem(title: String(localized: "Pearcleaner Uninstall"), action: #selector(openInMyApp), keyEquivalent: "")
+                let menuItem = NSMenuItem(title: "Uninstall with Silocleaner", action: #selector(openInMyApp), keyEquivalent: "")
                 // Add icon if enabled in main app
                 if UserDefaults.showAppIconInMenu {
                     if let appIcon = NSApp.applicationIconImage {
@@ -55,8 +64,15 @@ class FinderOpen: FIFinderSync {
 
         // Consider only the first selected item
         let firstSelectedItem = selectedItems[0]
-        let path = firstSelectedItem.path
-        NSWorkspace.shared.open(URL(string: "pear://com.alienator88.Pearcleaner?path=\(path)")!)
+        var components = URLComponents()
+        components.scheme = "silocleaner"
+        components.host = "com.lindemannm.Silocleaner"
+        components.queryItems = [URLQueryItem(name: "path", value: firstSelectedItem.path)]
+
+        guard let deepLink = components.url else {
+            return
+        }
+        NSWorkspace.shared.open(deepLink)
 
     }
 

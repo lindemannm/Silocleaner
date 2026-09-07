@@ -1,0 +1,79 @@
+//
+//  main.swift
+//  SilocleanerHelper
+//
+//  Created by Alin Lupascu on 3/14/25.
+//
+
+import Foundation
+import ObjectiveC
+
+@objc(HelperToolProtocol)
+public protocol HelperToolProtocol {
+    func runThinning(atPath: String, withReply reply: @escaping (Bool, String) -> Void)
+    func runBundleThinning(bundlePath: String, withReply reply: @escaping (Bool, String, [String: UInt64]) -> Void)
+}
+
+// XPC Communication setup
+class HelperToolDelegate: NSObject, NSXPCListenerDelegate, HelperToolProtocol {
+    private var activeConnections = Set<NSXPCConnection>()
+    
+    override init() {
+        super.init()
+    }
+    
+
+    
+    // Accept new XPC connections by setting up the exported interface and object.
+    func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
+        guard isValidClient(connection: newConnection) else {
+            print("❌ Rejected connection from unauthorized client")
+            return false
+        }
+        newConnection.exportedInterface = NSXPCInterface(with: HelperToolProtocol.self)
+        newConnection.exportedObject = self
+        newConnection.invalidationHandler = { [weak self] in
+            self?.activeConnections.remove(newConnection)
+            if self?.activeConnections.isEmpty == true {
+                exit(0) // Exit when no active connections remain
+            }
+        }
+        activeConnections.insert(newConnection)
+        newConnection.resume()
+        return true
+    }
+    
+    // Execute app lipo using privileges for apps owned by root
+    func runThinning(atPath: String, withReply reply: @escaping (Bool, String) -> Void) {
+        let success = thinBinaryUsingMachO(executablePath: atPath)
+        reply(success, success ? "Success" : "Failed")
+    }
+    
+    func runBundleThinning(bundlePath: String, withReply reply: @escaping (Bool, String, [String: UInt64]) -> Void) {
+        let bundleURL = URL(fileURLWithPath: bundlePath)
+        let result = thinAppBundle(at: bundleURL)
+        
+        let success = result.0
+        let message = success ? "Bundle thinning completed successfully" : "Bundle thinning failed"
+        let sizes = result.1 ?? [:]
+        
+        reply(success, message, sizes)
+    }
+
+    // Only the exact, Developer-ID-signed main app may use this root service.
+    private func isValidClient(connection: NSXPCConnection) -> Bool {
+        do {
+            return try CodesignCheck.isAuthorizedClient(pid: connection.processIdentifier)
+        } catch {
+            print("Helper code signing check failed with error: \(error)")
+            return false
+        }
+    }
+}
+
+// Set up and start the XPC listener.
+let delegate = HelperToolDelegate()
+let listener = NSXPCListener(machServiceName: "com.lindemannm.Silocleaner.SilocleanerHelper")
+listener.delegate = delegate
+listener.resume()
+RunLoop.main.run()
