@@ -6,9 +6,9 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 // Main command structure
-struct PearCLI: ParsableCommand {
+struct SilocleanerCLI: ParsableCommand {
     static var configuration = CommandConfiguration(
-        commandName: "pear",
+        commandName: "silocleaner",
         abstract: "Command-line interface for the Silocleaner app",
         subcommands: [
 //            Run.self,
@@ -74,7 +74,7 @@ struct PearCLI: ParsableCommand {
             }
 
             // Use the AppPathFinder to find paths synchronously
-            let appPathFinder = AppPathFinder(appInfo: appInfo, locations: PearCLI.locations)
+            let appPathFinder = AppPathFinder(appInfo: appInfo, locations: SilocleanerCLI.locations)
 
             // Call findPaths to get the Set of URLs
             let foundPaths = appPathFinder.findPathsCLI()
@@ -98,14 +98,14 @@ struct PearCLI: ParsableCommand {
         func run() throws {
             // Get installed apps for filtering
             DispatchQueue.global(qos: .userInitiated).async {
-                let _ = getSortedApps(paths: PearCLI.fsm.folderPaths, useStreaming: false)
+                let _ = getSortedApps(paths: SilocleanerCLI.fsm.folderPaths, useStreaming: false)
             }
 
 
             // Find orphaned files
             let foundPaths = ReversePathsSearcher(
-                locations: PearCLI.locations,
-                fsm: PearCLI.fsm,
+                locations: SilocleanerCLI.locations,
+                fsm: SilocleanerCLI.fsm,
                 sortedApps: AppState.shared.sortedApps
             )
                 .reversePathsSearchCLI()
@@ -141,7 +141,7 @@ struct PearCLI: ParsableCommand {
                 Foundation.exit(1)
             }
 
-            guard PearCLI.confirmDestructiveOperation([appInfo.path], acknowledged: yes) else {
+            guard SilocleanerCLI.confirmDestructiveOperation([appInfo.path], acknowledged: yes) else {
                 Foundation.exit(2)
             }
 
@@ -183,12 +183,12 @@ struct PearCLI: ParsableCommand {
             }
 
             // Use the AppPathFinder to find paths synchronously
-            let appPathFinder = AppPathFinder(appInfo: appInfo, locations: PearCLI.locations)
+            let appPathFinder = AppPathFinder(appInfo: appInfo, locations: SilocleanerCLI.locations)
 
             // Call findPaths to get the Set of URLs
             let foundPaths = appPathFinder.findPathsCLI()
 
-            guard PearCLI.confirmDestructiveOperation(Array(foundPaths), acknowledged: yes) else {
+            guard SilocleanerCLI.confirmDestructiveOperation(Array(foundPaths), acknowledged: yes) else {
                 Foundation.exit(2)
             }
 
@@ -237,18 +237,18 @@ struct PearCLI: ParsableCommand {
 
             // Get installed apps for filtering
             DispatchQueue.global(qos: .userInitiated).async {
-                let _ = getSortedApps(paths: PearCLI.fsm.folderPaths, useStreaming: false)
+                let _ = getSortedApps(paths: SilocleanerCLI.fsm.folderPaths, useStreaming: false)
             }
 
             // Find orphaned files
             let foundPaths = ReversePathsSearcher(
-                locations: PearCLI.locations,
-                fsm: PearCLI.fsm,
+                locations: SilocleanerCLI.locations,
+                fsm: SilocleanerCLI.fsm,
                 sortedApps: AppState.shared.sortedApps
             )
                 .reversePathsSearchCLI()
 
-            guard PearCLI.confirmDestructiveOperation(foundPaths, acknowledged: yes) else {
+            guard SilocleanerCLI.confirmDestructiveOperation(foundPaths, acknowledged: yes) else {
                 Foundation.exit(2)
             }
 

@@ -600,16 +600,16 @@ func handleLaunchMode() {
     if isRunningInTerminal || hasCLICommand {
         let locations = Locations()
         let fsm = FolderSettingsManager()
-        PearCLI.setupDependencies(locations: locations, fsm: fsm)
+        SilocleanerCLI.setupDependencies(locations: locations, fsm: fsm)
         do {
             // Drop the program name as to not interfere with argument parsing
             let args = Array(arguments.dropFirst())
-            var command = try PearCLI.parseAsRoot(args)
+            var command = try SilocleanerCLI.parseAsRoot(args)
 
             // Run the command if no errors in parsing were caught
             try command.run()
         } catch {
-            PearCLI.exit(withError: error)  // Cli exit
+            SilocleanerCLI.exit(withError: error)  // CLI exit
         }
     }
 

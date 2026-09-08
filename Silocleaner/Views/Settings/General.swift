@@ -353,7 +353,7 @@ struct GeneralSettingsTab: View {
                                     Text("Silocleaner CLI support")
                                         .font(.callout)
                                         .foregroundStyle(ThemeColors.shared(for: colorScheme).primaryText)
-                                    InfoButton(text: String(localized: "Enabling the CLI will allow you to execute Silocleaner actions from the Terminal. This will add silocleaner command into /usr/local/bin so it's available directly from your PATH environment variable. Try it after enabling:\n\n> pear --help"))
+                                    InfoButton(text: String(localized: "Enabling the CLI lets you execute Silocleaner actions from Terminal. It adds the silocleaner command to /usr/local/bin so it is available from your PATH. Try it after enabling:\n\n> silocleaner --help"))
                                     Spacer()
                                 }
 
@@ -396,7 +396,7 @@ struct GeneralSettingsTab: View {
         .onAppear {
             Task {
                 appState.updateExtensionStatus()
-                fixLegacySymlink()
+                migrateLegacyCLISymlink()
                 isCLISymlinked = checkCLISymlink()
             }
         }

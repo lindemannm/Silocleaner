@@ -22,6 +22,12 @@ Open [Silocleaner.xcodeproj](Silocleaner.xcodeproj) in Xcode. The app bundle
 identifier is `com.lindemannm.Silocleaner`; release signing requires a
 Silocleaner-controlled Apple Developer team and provisioning configuration.
 
+## Command line
+
+Enable **Silocleaner CLI support** in Settings to install the `silocleaner`
+command in `/usr/local/bin`, then run `silocleaner --help`. An app-owned legacy
+`pear` link is migrated when Settings opens; unrelated links are left alone.
+
 ## Issues and discussion
 
 Use the repository's [issue templates](https://github.com/lindemannm/Silocleaner/issues/new/choose)

@@ -33,33 +33,35 @@ func playTrashSound(undo: Bool = false) {
 }
 
 
-// Check if pear symlink exists
-func checkCLISymlink() -> Bool {
-    let filePath = "/usr/local/bin/pear"
-    let fileManager = FileManager.default
+private let silocleanerCLIPath = "/usr/local/bin/silocleaner"
+private let legacyPearCLIPath = "/usr/local/bin/pear"
 
-    guard fileManager.fileExists(atPath: filePath) else { return false }
-
-    do {
-        let destination = try fileManager.destinationOfSymbolicLink(atPath: filePath)
-        return destination == Bundle.main.executablePath
-    } catch {
+private func symlinkPointsToCurrentExecutable(at path: String) -> Bool {
+    guard let executablePath = Bundle.main.executablePath,
+          FileManager.default.fileExists(atPath: path) else {
         return false
     }
+
+    return (try? FileManager.default.destinationOfSymbolicLink(atPath: path)) == executablePath
 }
 
-// Fix legacy silocleaner symlink if it exists
-func fixLegacySymlink() {
-    let legacyPath = "/usr/local/bin/silocleaner"
-    let fileManager = FileManager.default
-    if fileManager.fileExists(atPath: legacyPath) {
-        manageSymlink(install: false, symlinkName: "silocleaner")
-        manageSymlink(install: true, symlinkName: "pear")
+// Check whether the Silocleaner-owned CLI link points to this app bundle.
+func checkCLISymlink() -> Bool {
+    symlinkPointsToCurrentExecutable(at: silocleanerCLIPath)
+}
+
+// Migrate an old, app-owned `pear` command without touching another tool's link.
+func migrateLegacyCLISymlink() {
+    guard symlinkPointsToCurrentExecutable(at: legacyPearCLIPath) else { return }
+
+    manageSymlink(install: false, symlinkName: "pear")
+    if !FileManager.default.fileExists(atPath: silocleanerCLIPath) {
+        manageSymlink(install: true, symlinkName: "silocleaner")
     }
 }
 
 // Install/uninstall symlink for CLI
-func manageSymlink(install: Bool, symlinkName: String = "pear") {
+func manageSymlink(install: Bool, symlinkName: String = "silocleaner") {
     @AppStorage("settings.general.cli") var isCLISymlinked = false
 
     guard let appPath = Bundle.main.executablePath else {
