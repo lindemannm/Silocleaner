@@ -57,18 +57,32 @@ struct HelperSettingsTab: View {
                             })
                             .toggleStyle(SettingsToggle())
                             .frame(alignment: .trailing)
+                            .disabled(helperToolManager.lifecycleState.isBusy)
 
                         }
 
                         Divider()
                             .padding(.vertical, 5)
 
-                        HStack {
+                        HStack(alignment: .top) {
+                            Label(
+                                helperToolManager.lifecycleState.title,
+                                systemImage: helperStateSymbol
+                            )
+                            .font(.footnote.weight(.semibold))
+                            .foregroundStyle(helperStateColor)
+
                             Text(helperToolManager.message)
                                 .font(.footnote)
                                 .foregroundStyle(ThemeColors.shared(for: colorScheme).secondaryText)
                             Spacer()
 
+                            if helperToolManager.lifecycleState.needsSystemSettings {
+                                Button("Open Login Items") {
+                                    helperToolManager.openSMSettings()
+                                }
+                                .controlSize(.small)
+                            }
                         }
                     }
                     .padding(5)
@@ -99,6 +113,25 @@ struct HelperSettingsTab: View {
             }
         }
 
+    }
+
+    private var helperStateSymbol: String {
+        switch helperToolManager.lifecycleState {
+        case .enabled: return "checkmark.circle.fill"
+        case .approvalRequired, .denied: return "exclamationmark.triangle.fill"
+        case .invalidSignature, .failed: return "xmark.octagon.fill"
+        case .installing, .checking, .maintenance: return "arrow.triangle.2.circlepath"
+        case .unavailable, .installable: return "arrow.down.circle"
+        }
+    }
+
+    private var helperStateColor: Color {
+        switch helperToolManager.lifecycleState {
+        case .enabled: return .green
+        case .approvalRequired, .denied: return .orange
+        case .invalidSignature, .failed: return .red
+        default: return ThemeColors.shared(for: colorScheme).secondaryText
+        }
     }
 
 }

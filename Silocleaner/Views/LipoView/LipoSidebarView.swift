@@ -28,6 +28,8 @@ struct LipoSidebarView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     LipoDescriptionSection()
                     Divider()
+                    LipoHelperStatusSection()
+                    Divider()
                     LipoSavingsSection(
                         totalSpaceSaved: totalSpaceSaved, savingsAllApps: savingsAllApps)
                     Divider()
@@ -47,6 +49,44 @@ struct LipoSidebarView: View {
                 infoSidebar = false
             }
         }
+    }
+}
+
+struct LipoHelperStatusSection: View {
+    @ObservedObject private var helperToolManager = HelperToolManager.shared
+    @Environment(\.colorScheme) var colorScheme
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            HStack {
+                Label(helperToolManager.lifecycleState.title, systemImage: helperStateSymbol)
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(helperStateColor)
+                Spacer()
+                if helperToolManager.lifecycleState.needsSystemSettings {
+                    Button("Login Items") {
+                        helperToolManager.openSMSettings()
+                    }
+                    .buttonStyle(.borderless)
+                    .font(.caption)
+                }
+            }
+            Text(helperToolManager.message)
+                .font(.caption)
+                .foregroundStyle(ThemeColors.shared(for: colorScheme).secondaryText)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    private var helperStateSymbol: String {
+        helperToolManager.lifecycleState.isEnabled ? "checkmark.shield.fill" : "exclamationmark.shield.fill"
+    }
+
+    private var helperStateColor: Color {
+        if helperToolManager.lifecycleState.isEnabled { return .green }
+        if helperToolManager.lifecycleState.needsSystemSettings { return .orange }
+        if helperToolManager.lifecycleState == .invalidSignature { return .red }
+        return ThemeColors.shared(for: colorScheme).secondaryText
     }
 }
 

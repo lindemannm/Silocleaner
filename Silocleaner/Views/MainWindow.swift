@@ -13,6 +13,7 @@ import SwiftUI
 struct MainWindow: View {
     @ObservedObject private var themeManager = ThemeManager.shared
     @ObservedObject private var consoleManager = GlobalConsoleManager.shared
+    @ObservedObject private var helperToolManager = HelperToolManager.shared
     @StateObject private var brewManager = HomebrewManager()
     @StateObject private var updateManager = UpdateManager.shared
     @EnvironmentObject var appState: AppState
@@ -306,11 +307,11 @@ struct MainWindow: View {
                     .sheet(isPresented: $showPermissionList) {
                         PermissionsSheetView()
                     }
-                } else if HelperToolManager.shared.shouldShowHelperBadge {
+                } else if helperToolManager.shouldShowHelperBadge {
                     noticeButton(
                         image: "gear",
                         color: .orange,
-                        help: "Helper Not Installed"
+                        help: "Helper \(helperToolManager.lifecycleState.title)"
                     ) {
                         openAppSettingsWindow(tab: .helper, updater: updater)
                     }

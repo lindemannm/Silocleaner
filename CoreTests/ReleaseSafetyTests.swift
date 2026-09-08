@@ -164,4 +164,48 @@ final class ReleaseSafetyTests: XCTestCase {
         XCTAssertNil(environment["BASH_ENV"])
         XCTAssertNil(environment["ENV"])
     }
+
+    func testHelperLifecycleMapsEveryServiceOutcomeAndFailsClosed() {
+        let cases: [(HelperServiceStatus, HelperLifecycleState)] = [
+            (.unavailable, .unavailable),
+            (.installable, .installable),
+            (.approvalRequired, .approvalRequired),
+            (.enabled, .enabled),
+            (.unknown, .failed("macOS returned an unknown helper service status."))
+        ]
+
+        for (status, expected) in cases {
+            let state = HelperLifecycleState.resolve(status: status)
+            XCTAssertEqual(state, expected)
+            XCTAssertEqual(state.isEnabled, expected == .enabled)
+        }
+    }
+
+    func testHelperLifecycleMapsInstallAndFailureStates() {
+        XCTAssertTrue(HelperLifecycleState.installing.isBusy)
+        XCTAssertFalse(HelperLifecycleState.installing.isEnabled)
+        XCTAssertEqual(
+            HelperLifecycleState.resolve(status: .installable, error: .denied),
+            .denied
+        )
+        XCTAssertEqual(
+            HelperLifecycleState.resolve(status: .installable, error: .authorizationRequired),
+            .denied
+        )
+        XCTAssertEqual(
+            HelperLifecycleState.resolve(status: .installable, error: .invalidSignature),
+            .invalidSignature
+        )
+        XCTAssertEqual(
+            HelperLifecycleState.resolve(status: .installable, error: .alreadyRegistered),
+            .enabled
+        )
+        XCTAssertEqual(
+            HelperLifecycleState.resolve(status: .installable, error: .other("Registration failed.")),
+            .failed("Registration failed.")
+        )
+        XCTAssertTrue(HelperLifecycleState.approvalRequired.needsSystemSettings)
+        XCTAssertTrue(HelperLifecycleState.denied.needsSystemSettings)
+        XCTAssertFalse(HelperLifecycleState.invalidSignature.needsSystemSettings)
+    }
 }

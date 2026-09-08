@@ -225,6 +225,11 @@ Status: **foundation complete; integration, hardware, and independent-review gat
     move planning (including duplicate filenames), and inverse undo planning.
     The app uses these tested plans; the tests do not touch a real Trash or
     privileged helper.
+  - [x] Add a fixture-tested helper lifecycle model for unavailable,
+    installable/installing, approval-required, enabled, denied, invalid-
+    signature, and unknown/failure outcomes. Settings and Lipo now present the
+    state and only the enabled state authorizes helper use. This does not prove
+    the signed `SMAppService` registration or XPC connection on a real Mac.
 - [ ] Test on a clean macOS 13+ user account with Full Disk Access absent and
   present, both Apple silicon and Intel where supported.
 - [ ] Perform an external security review before the first public release,
@@ -243,13 +248,14 @@ hardware, privacy-permission, signed-release, and independent-review gates.
 
 ## Next implementation slice
 
-Build a testable helper-lifecycle state model and cover unavailable, install,
-approval-required, enabled, denied, and invalid-signature outcomes without
-registering a real system service. Wire the Settings and Lipo presentation to
-that model, then follow with a signed-machine test of the actual service.
+Build the Finder invocation integration seam and tests: accepted application-
+folder selection, rejected non-application selection, correct `silocleaner://`
+deep-link construction, and safe app-side routing. Follow that with a signed-
+machine helper test covering the real install, approval, unavailable, and XPC
+failure states.
 
-After that, continue the Phase 5 integration/UI suite around Finder invocation,
-Sentinel lifecycle, and Pearcleaner coexistence.
+After that, continue the Phase 5 integration/UI suite around Sentinel lifecycle
+and Pearcleaner coexistence.
 
 ## Verification record
 
@@ -258,5 +264,5 @@ Sentinel lifecycle, and Pearcleaner coexistence.
 | Clone and Git status | Passed | Clean `main` at `2527435` before the Phase 0 documentation change. |
 | Dependency resolution | Passed | Sparkle 2.8.0, ArgumentParser 1.6.1, AlinFoundation `f61241c`. |
 | Full build | Passed | Unsigned, isolated Debug and Release builds completed with Xcode 26.6 on macOS 26.6.2; see `BASELINE.md`. |
-| Automated tests | Passed | `swift test --disable-sandbox` executed 19/19 package tests on 2026-09-08: 8 helper-security and 11 core-safety tests. This is not Xcode UI or signed-release evidence. |
-| Unsigned Debug build after hardening slices | Passed | `Silocleaner Debug` built with `CODE_SIGNING_ALLOWED=NO` on 2026-09-08 after the deletion-safety and direct-environment changes. This does not prove signed, physical-install, Finder, Sentinel, or privacy-permission behavior. |
+| Automated tests | Passed | `swift test --disable-sandbox` executed 21/21 package tests on 2026-09-08: 8 helper-security and 13 core-safety tests. This is not Xcode UI or signed-release evidence. |
+| Unsigned Debug build after helper lifecycle slice | Passed | `Silocleaner Debug` built with `CODE_SIGNING_ALLOWED=NO` on 2026-09-08 after the helper-lifecycle changes. This does not prove signed, physical-install, Finder, Sentinel, or privacy-permission behavior. |

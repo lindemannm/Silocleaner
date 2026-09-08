@@ -47,7 +47,7 @@ public final class HelperBundleThinningResult: NSObject, NSSecureCoding {
     }
 }
 
-enum HelperToolAction {
+enum HelperToolAction: Equatable {
     case none      // Only check status
     case install   // Install the helper tool
     case uninstall // Uninstall the helper tool
@@ -61,12 +61,14 @@ class HelperToolManager: ObservableObject {
     @Published var isHelperToolInstalled: Bool = false
     @Published var message: String = String(localized: "Checking...")
     @Published var isInitialCheckComplete: Bool = false
+    @Published private(set) var lifecycleState: HelperLifecycleState = .checking
+
     var status: String {
-        return isHelperToolInstalled ? String(localized:"Enabled") : String(localized:"Disabled")
+        lifecycleState.title
     }
 
     var shouldShowHelperBadge: Bool {
-        return isInitialCheckComplete && !isHelperToolInstalled
+        isInitialCheckComplete && lifecycleState.shouldShowAttention
     }
 
     // Trigger overlay when operation fails due to missing helper
@@ -80,11 +82,24 @@ class HelperToolManager: ObservableObject {
         }
     }
 
+    private func setLifecycleState(_ state: HelperLifecycleState) {
+        updateOnMain {
+            self.lifecycleState = state
+            self.message = String(localized: String.LocalizationValue(state.message))
+            self.isHelperToolInstalled = state.isEnabled
+            self.isInitialCheckComplete = state != .checking
+        }
+    }
+
     // Function to manage the helper tool installation/uninstallation
     func manageHelperTool(action: HelperToolAction = .none) async {
         let plistName = "\(helperToolIdentifier).plist"
         let service = SMAppService.daemon(plistName: plistName)
         var occurredError: NSError?
+
+        if action == .install || action == .reinstall {
+            setLifecycleState(.installing)
+        }
 
         // Perform install/uninstall actions if specified
         switch action {
@@ -92,14 +107,9 @@ class HelperToolManager: ObservableObject {
             // Pre-check before registering
             switch service.status {
             case .requiresApproval:
-                updateOnMain {
-                    self.message = String(localized: "Registered but requires enabling in System Settings > Login Items.")
-                }
                 SMAppService.openSystemSettingsLoginItems()
             case .enabled:
-                updateOnMain {
-                    self.message = String(localized: "Service is already enabled.")
-                }
+                break
             default:
                 do {
                     try service.register()
@@ -108,15 +118,9 @@ class HelperToolManager: ObservableObject {
                     }
                 } catch let nsError as NSError {
                     occurredError = nsError
-                    if nsError.code == 1 { // Operation not permitted
-                        updateOnMain {
-                            self.message = String(localized: "Permission required. Enable in System Settings > Login Items.")
-                        }
+                    if HelperServiceError.from(nsError) == .denied {
                         SMAppService.openSystemSettingsLoginItems()
                     } else {
-                        updateOnMain {
-                            self.message = String(localized: "Installation failed: \(nsError.localizedDescription)")
-                        }
                         printOS("Failed to register helper: \(nsError.localizedDescription)")
                     }
 
@@ -162,12 +166,12 @@ class HelperToolManager: ObservableObject {
             break
         }
 
-        await updateStatusMessages(with: service, occurredError: occurredError)
-        let isEnabled = (service.status == .enabled)
-        updateOnMain {
-            self.isHelperToolInstalled = isEnabled
-            self.isInitialCheckComplete = true
-        }
+        setLifecycleState(
+            HelperLifecycleState.resolve(
+                status: HelperServiceStatus.from(service.status),
+                error: occurredError.map(HelperServiceError.from)
+            )
+        )
     }
 
     // Function to open Settings > Login Items
@@ -216,57 +220,6 @@ class HelperToolManager: ObservableObject {
 
 
 
-    // Helper to update helper status messages
-    func updateStatusMessages(with service: SMAppService, occurredError: NSError?) async {
-        if let nsError = occurredError {
-            switch nsError.code {
-            case kSMErrorAlreadyRegistered:
-                updateOnMain {
-                    self.message = String(localized: "Service is already registered and enabled.")
-                }
-            case kSMErrorLaunchDeniedByUser:
-                updateOnMain {
-                    self.message = String(localized: "User denied permission. Enable in System Settings > Login Items.")
-                }
-            case kSMErrorInvalidSignature:
-                updateOnMain {
-                    self.message = String(localized: "Invalid signature, ensure proper signing on the application and helper tool.")
-                }
-            case 1:
-                updateOnMain {
-                    self.message = String(localized: "Authorization required in Settings > Login Items > \(Bundle.main.name).app.")
-                }
-            default:
-                updateOnMain {
-                    self.message = String(localized: "Operation failed: \(nsError.localizedDescription)")
-                }
-            }
-        } else {
-            switch service.status {
-            case .notRegistered:
-                updateOnMain {
-                    self.message = String(localized: "Service hasn't been registered. You may register it now.")
-                }
-            case .enabled:
-                updateOnMain {
-                    self.message = String(localized: "Service successfully registered.")
-                }
-            case .requiresApproval:
-                updateOnMain {
-                    self.message = String(localized: "Service registered but requires user approval in Settings > Login Items > \(Bundle.main.name).app.")
-                }
-            case .notFound:
-                updateOnMain {
-                    self.message = String(localized: "Service is not installed.")
-                }
-            @unknown default:
-                updateOnMain {
-                    self.message = String(localized: "Unknown service status (\(service.status.rawValue)).")
-                }
-            }
-        }
-    }
-
     // MARK: - Nuclear Reset
 
     /// Nuclear reset: Reset BTM (Background Task Management) database to clear desynced helper registrations
@@ -276,9 +229,7 @@ class HelperToolManager: ObservableObject {
     func nuclearResetHelper() async -> Bool {
         printOS("Starting nuclear reset of helper tool...")
 
-        updateOnMain {
-            self.message = String(localized: "Resetting BTM database...")
-        }
+        setLifecycleState(.maintenance("Resetting Background Task Management database…"))
 
         // Execute sfltool resetbtm to clear Background Task Management database
         // NOTE: This only works if user has disabled the service in System Settings first
@@ -293,18 +244,47 @@ class HelperToolManager: ObservableObject {
             helperConnection?.invalidate()
             helperConnection = nil
 
-            updateOnMain {
-                self.message = String(localized: "BTM reset complete. Please reinstall helper.")
-                self.isHelperToolInstalled = false
-            }
+            setLifecycleState(.installable)
 
             return true
         } else {
             printOS("BTM reset failed: \(output)")
-            updateOnMain {
-                self.message = String(localized: "BTM reset failed: \(output)")
-            }
+            setLifecycleState(.failed("Background Task Management reset failed: \(output)"))
             return false
+        }
+    }
+}
+
+private extension HelperServiceStatus {
+    static func from(_ status: SMAppService.Status) -> Self {
+        switch status {
+        case .notFound:
+            return .unavailable
+        case .notRegistered:
+            return .installable
+        case .requiresApproval:
+            return .approvalRequired
+        case .enabled:
+            return .enabled
+        @unknown default:
+            return .unknown
+        }
+    }
+}
+
+private extension HelperServiceError {
+    static func from(_ error: NSError) -> Self {
+        switch error.code {
+        case kSMErrorAlreadyRegistered:
+            return .alreadyRegistered
+        case kSMErrorLaunchDeniedByUser:
+            return .denied
+        case kSMErrorInvalidSignature:
+            return .invalidSignature
+        case 1:
+            return .authorizationRequired
+        default:
+            return .other(error.localizedDescription)
         }
     }
 }
