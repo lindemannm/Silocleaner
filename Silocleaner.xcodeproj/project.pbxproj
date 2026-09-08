@@ -200,11 +200,6 @@
 			);
 			target = C73545EF2D849A1B00A3DC0C /* SilocleanerHelper */;
 		};
-		C75E82E42E8C58620090C3B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = ();
-			target = C77B8FFF2AF18E2E009CC655 /* Silocleaner */;
-		};
 		C75E82E52E8C58620090C3B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -238,7 +233,7 @@
 		C74649EE2E4800BB002D1C63 /* AppsView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppsView; sourceTree = "<group>"; };
 		C74649EF2E480111002D1C63 /* Style */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (C74649F02E480128002D1C63 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Style; sourceTree = "<group>"; };
 		C74649FA2E48076B002D1C63 /* Settings */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Settings; sourceTree = "<group>"; };
-		C75E82DD2E8C58380090C3B1 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (C75E82E42E8C58620090C3B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, C75E82E52E8C58620090C3B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, C75E82E12E8C585D0090C3B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
+		C75E82DD2E8C58380090C3B1 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (C75E82E52E8C58620090C3B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, C75E82E12E8C585D0090C3B1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
 		C76073F32E3C1C2C003957A7 /* FilesView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FilesView; sourceTree = "<group>"; };
 		C783F8FD2E903707003450E7 /* FileSearch */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FileSearch; sourceTree = "<group>"; };
 		C783F9492E903B53003450E7 /* PKG */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PKG; sourceTree = "<group>"; };
@@ -493,13 +488,13 @@
 				C781216A2BC892A000BE06BD /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				C75E82DD2E8C58380090C3B1 /* Shared */,
 				C71B87562EF49C58009C5B07 /* TCC */,
 				C71DC3392EAAAFF000503474 /* Components */,
 				C74649E62E48000C002D1C63 /* LipoView */,
 				C74649EA2E48008A002D1C63 /* ZombieView */,
 				C74649EE2E4800BB002D1C63 /* AppsView */,
 				C74649FA2E48076B002D1C63 /* Settings */,
+				C75E82DD2E8C58380090C3B1 /* Shared */,
 				C76073F32E3C1C2C003957A7 /* FilesView */,
 				C783F8FD2E903707003450E7 /* FileSearch */,
 				C783F9492E903B53003450E7 /* PKG */,

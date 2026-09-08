@@ -206,7 +206,7 @@ Status: **in progress**
   and Release without developer-local paths, runs tests, and reports failures.
 - [x] Add unit tests for file-scope classification, deep-link parsing,
   temporary-file lifecycle, and destructive-operation previews.
-- [ ] Add command-argument construction tests after extracting the remaining
+- [x] Add command-argument construction tests after extracting the remaining
   user-shell environment capture behind a direct-process interface.
 - [ ] Add integration/UI tests for Finder invocation, Sentinel behaviour,
   helper installation/approval states, protected/unprotected deletion, undo,

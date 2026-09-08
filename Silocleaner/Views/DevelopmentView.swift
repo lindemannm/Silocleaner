@@ -1464,32 +1464,19 @@ struct PipPackageCleanerView: View {
     private func runPipCommand(_ arguments: [String], attempt: Int = 1) async throws -> String {
         return try await withCheckedThrowingContinuation { continuation in
             DispatchQueue.global(qos: .userInitiated).async { [pythonPath] in
-                let process = Process()
-                process.executableURL = URL(fileURLWithPath: pythonPath)
-
                 // Add --disable-pip-version-check flag for faster execution
                 var pipArgs = ["-m", "pip"]
                 pipArgs.append(contentsOf: arguments)
                 if !arguments.contains("--disable-pip-version-check") {
                     pipArgs.append("--disable-pip-version-check")
                 }
-                process.arguments = pipArgs
-
-                // Set environment, prioritizing the selected Python's directory
-                var env = ProcessInfo.processInfo.userEnvironment
-
-                // Extract the directory containing the Python executable
-                let pythonDir = (pythonPath as NSString).deletingLastPathComponent
-
-                // Prepend Python's directory to PATH to ensure we use the correct pip
-                let oldPath = env["PATH"] ?? ""
-                if !oldPath.isEmpty {
-                    env["PATH"] = "\(pythonDir):\(oldPath)"
-                } else {
-                    env["PATH"] = pythonDir
-                }
-
-                process.environment = env
+                let invocation = DirectProcessInvocation(
+                    executablePath: pythonPath,
+                    arguments: pipArgs,
+                    userEnvironment: ProcessInfo.processInfo.userEnvironment,
+                    prependExecutableDirectoryToPath: true
+                )
+                let process = invocation.makeProcess()
 
                 // Close stdin to prevent any waiting
                 process.standardInput = nil
@@ -1562,12 +1549,14 @@ struct PipPackageCleanerView: View {
     // MARK: - Python Detection
 
     private func detectActivePython() async -> String {
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/which")
-        process.arguments = ["python3"]
-
-        // Use user's environment to respect their PATH (e.g., Homebrew Python)
-        process.environment = ProcessInfo.processInfo.userEnvironment
+        // Use the user's inherited environment to respect their PATH (for
+        // example Homebrew Python), while keeping the executable and argv
+        // separate from any shell interpretation.
+        let process = DirectProcessInvocation(
+            executablePath: "/usr/bin/which",
+            arguments: ["python3"],
+            userEnvironment: ProcessInfo.processInfo.userEnvironment
+        ).makeProcess()
 
         let pipe = Pipe()
         process.standardOutput = pipe
@@ -1592,21 +1581,14 @@ struct PipPackageCleanerView: View {
     }
 
     private func detectSitePackages(pythonPath: String) async -> [String] {
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: pythonPath)
         // Python's `-c` receives Python source, not shell source. The source is
         // a constant and no path or user value is interpolated into it.
-        process.arguments = ["-c", "import site; print('\\n'.join(site.getsitepackages()))"]
-
-        // Set environment, prioritizing the selected Python's directory
-        var env = ProcessInfo.processInfo.userEnvironment
-        let pythonDir = (pythonPath as NSString).deletingLastPathComponent
-        if let currentPath = env["PATH"] {
-            env["PATH"] = "\(pythonDir):\(currentPath)"
-        } else {
-            env["PATH"] = pythonDir
-        }
-        process.environment = env
+        let process = DirectProcessInvocation(
+            executablePath: pythonPath,
+            arguments: ["-c", "import site; print('\\n'.join(site.getsitepackages()))"],
+            userEnvironment: ProcessInfo.processInfo.userEnvironment,
+            prependExecutableDirectoryToPath: true
+        ).makeProcess()
 
         let pipe = Pipe()
         process.standardOutput = pipe

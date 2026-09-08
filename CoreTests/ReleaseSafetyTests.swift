@@ -32,4 +32,37 @@ final class ReleaseSafetyTests: XCTestCase {
         try PrivateTemporaryDirectory.remove(directory)
         XCTAssertFalse(FileManager.default.fileExists(atPath: directory.path))
     }
+
+    func testDirectProcessInvocationPreservesMetacharactersAsArguments() {
+        let packageName = "example; touch /tmp/should-not-run $(whoami) 'quoted'"
+        let invocation = DirectProcessInvocation(
+            executablePath: "/Applications/Python 3/bin/python3",
+            arguments: ["-m", "pip", "uninstall", "-y", packageName],
+            userEnvironment: ["PATH": "/usr/local/bin:/usr/bin", "HOME": "/Users/tester"],
+            prependExecutableDirectoryToPath: true
+        )
+
+        XCTAssertEqual(invocation.executableURL.path, "/Applications/Python 3/bin/python3")
+        XCTAssertEqual(invocation.arguments, ["-m", "pip", "uninstall", "-y", packageName])
+        XCTAssertEqual(invocation.environment["PATH"], "/Applications/Python 3/bin:/usr/local/bin:/usr/bin")
+        XCTAssertEqual(invocation.environment["HOME"], "/Users/tester")
+    }
+
+    func testDirectProcessInvocationDoesNotNeedAUserShellPath() {
+        let optionLikeValue = "--config=$(id); echo unexpected"
+        let invocation = DirectProcessInvocation(
+            executablePath: "/opt/custom python/bin/python3",
+            arguments: ["-m", "pip", "show", optionLikeValue],
+            userEnvironment: [:],
+            prependExecutableDirectoryToPath: true
+        )
+
+        XCTAssertEqual(invocation.arguments.last, optionLikeValue)
+        XCTAssertEqual(invocation.environment["PATH"], "/opt/custom python/bin")
+
+        let process = invocation.makeProcess()
+        XCTAssertEqual(process.executableURL, invocation.executableURL)
+        XCTAssertEqual(process.arguments, invocation.arguments)
+        XCTAssertEqual(process.environment, invocation.environment)
+    }
 }
