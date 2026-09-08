@@ -53,6 +53,7 @@
 		C7F539382AF60865007DF1B2 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F539372AF60865007DF1B2 /* Utilities.swift */; };
 		C7F8436B2CBF066F00E3E30A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C7F8436A2CBF066F00E3E30A /* Localizable.xcstrings */; };
 		C7FBD9DF2DAD66D500151934 /* AlinFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C7C90DDD2DA8221B0056769A /* AlinFoundation */; };
+		C7E300012F00000100F1AD3E /* FinderInvocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E300022F00000100F1AD3E /* FinderInvocation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +174,7 @@
 		C7D31D502AFF00F300C7ED9E /* Locations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
 		C7DD49E92BAB4D8100CCBA16 /* AppInfoFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoFetch.swift; sourceTree = "<group>"; };
 		C7DD49ED2BAB7F6000CCBA16 /* ReversePathsFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversePathsFetch.swift; sourceTree = "<group>"; };
+		C7E300022F00000100F1AD3E /* FinderInvocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/FinderInvocation.swift; sourceTree = SOURCE_ROOT; };
 		C7E200022F00000100SEC002 /* homebrew-auto-update.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "homebrew-auto-update.sh"; sourceTree = "<group>"; };
 		C7E300012F00000100AD0001 /* Silocleaner/Config/Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Silocleaner/Config/Signing.xcconfig; sourceTree = SOURCE_ROOT; };
 		C7F539372AF60865007DF1B2 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				C78121652BC892A000BE06BD /* FinderOpen.swift */,
+				C7E300022F00000100F1AD3E /* FinderInvocation.swift */,
 				C78121672BC892A000BE06BD /* Info.plist */,
 				C78121682BC892A000BE06BD /* FinderOpen.entitlements */,
 				C7A6DBF02C9DD27200CFA042 /* Assets.xcassets */,
@@ -680,6 +683,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C78121662BC892A000BE06BD /* FinderOpen.swift in Sources */,
+				C7E300012F00000100F1AD3E /* FinderInvocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

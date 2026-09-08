@@ -110,9 +110,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             return
         }
 
-        // Open deep link for each app - DeeplinkManager will queue and process them sequentially
+        // Use the explicit Services action rather than the Finder-extension
+        // route: Services may legitimately receive apps outside Applications.
         for appURL in appURLs {
-            if let deepLinkURL = URL(string: "silocleaner://com.lindemannm.Silocleaner?path=\(appURL.path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? appURL.path)") {
+            if let deepLinkURL = SilocleanerDeepLink.serviceDeepLink(for: appURL) {
                 NSWorkspace.shared.open(deepLinkURL)
             }
         }

@@ -58,35 +58,33 @@ class DeeplinkManager {
     }
 
     func manage(url: URL, appState: AppState, locations: Locations) {
-        // Set externalMode to true
-        updateOnMain {
-            appState.externalMode = true
-        }
-
-        guard SilocleanerDeepLink.isAppURL(url) else {
-            guard !url.path.isEmpty else {
+        switch SilocleanerDeepLink.route(
+            url,
+            homeDirectory: FileManager.default.homeDirectoryForCurrentUser
+        ) {
+        case .externalFile(let externalURL):
+            guard !externalURL.path.isEmpty else {
                 printOS("DLM: URL path is empty.")
                 return
             }
-            handleAsPathOrDropped(url: url, appState: appState, locations: locations)
-            return
-        }
-
-        if let host = url.host, SilocleanerDeepLink.isKnownAction(host) {
-            switch host {
-            case DeepLinkActions.uninstallApp:
-                handleAsPathOrDropped(url: url, appState: appState, locations: locations)
-            default:
-                if let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-                   let queryItems = components.queryItems {
-                    handleAppFunctions(action: host, queryItems: queryItems, appState: appState, fsm: fsm)
-                } else {
-                    handleAppFunctions(action: host, queryItems: [], appState: appState, fsm: fsm)
-                }
+            updateOnMain { appState.externalMode = true }
+            handleAsPathOrDropped(url: externalURL, appState: appState, locations: locations)
+        case .finderApplication(let applicationURL):
+            updateOnMain { appState.externalMode = true }
+            handleAsPathOrDropped(url: applicationURL, appState: appState, locations: locations)
+        case .serviceApplication(let applicationURL):
+            updateOnMain { appState.externalMode = true }
+            handleAsPathOrDropped(url: applicationURL, appState: appState, locations: locations)
+        case .action(let action):
+            updateOnMain { appState.externalMode = true }
+            if let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+               let queryItems = components.queryItems {
+                handleAppFunctions(action: action, queryItems: queryItems, appState: appState, fsm: fsm)
+            } else {
+                handleAppFunctions(action: action, queryItems: [], appState: appState, fsm: fsm)
             }
-        } else {
-            // Host is nil or not in actions, treat as dropped/path scenario
-            handleAsPathOrDropped(url: url, appState: appState, locations: locations)
+        case .rejected:
+            printOS("DLM: Rejected unsupported or malformed Silocleaner deep link.")
         }
     }
 

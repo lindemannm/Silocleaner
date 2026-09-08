@@ -208,4 +208,102 @@ final class ReleaseSafetyTests: XCTestCase {
         XCTAssertTrue(HelperLifecycleState.denied.needsSystemSettings)
         XCTAssertFalse(HelperLifecycleState.invalidSignature.needsSystemSettings)
     }
+
+    func testFinderInvocationAcceptsExactlyOneApplicationInAnObservedFolder() {
+        let directories = [
+            URL(fileURLWithPath: "/Applications", isDirectory: true),
+            URL(fileURLWithPath: "/System/Applications", isDirectory: true),
+            URL(fileURLWithPath: "/Users/fixture/Applications", isDirectory: true)
+        ]
+
+        XCTAssertEqual(
+            FinderInvocationPolicy.selectedApplicationURL(
+                from: [URL(fileURLWithPath: "/Applications/Utility/Example.app")],
+                applicationDirectories: directories
+            )?.path,
+            "/Applications/Utility/Example.app"
+        )
+        XCTAssertEqual(
+            FinderInvocationPolicy.selectedApplicationURL(
+                from: [URL(fileURLWithPath: "/System/Applications/Example.app")],
+                applicationDirectories: directories
+            )?.path,
+            "/System/Applications/Example.app"
+        )
+        XCTAssertEqual(
+            FinderInvocationPolicy.selectedApplicationURL(
+                from: [URL(fileURLWithPath: "/Users/fixture/Applications/Example.app")],
+                applicationDirectories: directories
+            )?.path,
+            "/Users/fixture/Applications/Example.app"
+        )
+        XCTAssertNil(FinderInvocationPolicy.selectedApplicationURL(
+            from: [URL(fileURLWithPath: "/Users/fixture/Downloads/Example.app")],
+            applicationDirectories: directories
+        ))
+        XCTAssertNil(FinderInvocationPolicy.selectedApplicationURL(
+            from: [URL(fileURLWithPath: "/Applications/Readme.txt")],
+            applicationDirectories: directories
+        ))
+        XCTAssertNil(FinderInvocationPolicy.selectedApplicationURL(
+            from: [
+                URL(fileURLWithPath: "/Applications/One.app"),
+                URL(fileURLWithPath: "/Applications/Two.app")
+            ],
+            applicationDirectories: directories
+        ))
+    }
+
+    func testFinderInvocationEncodesAndRoutesOnlyValidatedApplicationLinks() throws {
+        let home = URL(fileURLWithPath: "/Users/fixture", isDirectory: true)
+        let directories = FinderInvocationPolicy.applicationDirectories(homeDirectory: home)
+        let application = URL(fileURLWithPath: "/Applications/A & B #1.app")
+        let deepLink = try XCTUnwrap(FinderInvocationPolicy.finderDeepLink(
+            for: [application],
+            applicationDirectories: directories
+        ))
+
+        let components = try XCTUnwrap(URLComponents(url: deepLink, resolvingAgainstBaseURL: false))
+        XCTAssertEqual(deepLink.scheme, "silocleaner")
+        XCTAssertEqual(deepLink.host, FinderInvocationPolicy.finderHost)
+        XCTAssertEqual(components.queryItems, [URLQueryItem(name: "path", value: application.path)])
+        XCTAssertEqual(SilocleanerDeepLink.route(deepLink, homeDirectory: home), .finderApplication(application))
+
+        XCTAssertEqual(
+            SilocleanerDeepLink.route(
+                URL(string: "silocleaner://evil.example?path=/Applications/Example.app")!,
+                homeDirectory: home
+            ),
+            .rejected
+        )
+        XCTAssertEqual(
+            SilocleanerDeepLink.route(
+                URL(string: "silocleaner://com.lindemannm.Silocleaner?path=/tmp/Evil.app")!,
+                homeDirectory: home
+            ),
+            .rejected
+        )
+        XCTAssertEqual(
+            SilocleanerDeepLink.route(
+                URL(string: "silocleaner://openSettings")!,
+                homeDirectory: home
+            ),
+            .action("openSettings")
+        )
+
+        let serviceURL = try XCTUnwrap(SilocleanerDeepLink.serviceDeepLink(
+            for: URL(fileURLWithPath: "/Users/fixture/Downloads/External App.app")
+        ))
+        XCTAssertEqual(
+            SilocleanerDeepLink.route(serviceURL, homeDirectory: home),
+            .serviceApplication(URL(fileURLWithPath: "/Users/fixture/Downloads/External App.app"))
+        )
+        XCTAssertEqual(
+            SilocleanerDeepLink.route(
+                URL(string: "silocleaner://uninstallApp?path=/Users/fixture/Readme.txt")!,
+                homeDirectory: home
+            ),
+            .rejected
+        )
+    }
 }

@@ -10,7 +10,7 @@ let package = Package(
             name: "SilocleanerCore",
             path: "Shared",
             exclude: ["AppGroupDefaults.swift"],
-            sources: ["ReleaseSafety.swift", "DirectProcessInvocation.swift", "DestructiveOperationSafety.swift", "UserProcessEnvironment.swift", "HelperLifecycleState.swift"]
+            sources: ["ReleaseSafety.swift", "DirectProcessInvocation.swift", "DestructiveOperationSafety.swift", "UserProcessEnvironment.swift", "HelperLifecycleState.swift", "FinderInvocation.swift"]
         ),
         .target(
             name: "SilocleanerHelperSecurity",

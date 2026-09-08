@@ -1,7 +1,7 @@
 import Foundation
 
 enum SilocleanerDeepLink {
-    static let scheme = "silocleaner"
+    static let scheme = FinderInvocationPolicy.scheme
 
     static let actions: Set<String> = [
         "openSilocleaner", "openSettings", "openPermissions", "uninstallApp",
@@ -16,6 +16,52 @@ enum SilocleanerDeepLink {
     static func isKnownAction(_ action: String?) -> Bool {
         guard let action else { return false }
         return actions.contains(action)
+    }
+
+    static func route(_ url: URL, homeDirectory: URL) -> SilocleanerDeepLinkRoute {
+        guard isAppURL(url) else { return .externalFile(url) }
+
+        let applicationDirectories = FinderInvocationPolicy.applicationDirectories(homeDirectory: homeDirectory)
+        if url.host == FinderInvocationPolicy.finderHost {
+            guard let applicationURL = FinderInvocationPolicy.applicationURL(
+                fromFinderDeepLink: url,
+                applicationDirectories: applicationDirectories
+            ) else { return .rejected }
+            return .finderApplication(applicationURL)
+        }
+
+        guard let host = url.host, isKnownAction(host) else { return .rejected }
+        if host == "uninstallApp" {
+            guard let applicationURL = applicationURL(fromServiceDeepLink: url) else {
+                return .rejected
+            }
+            return .serviceApplication(applicationURL)
+        }
+        return .action(host)
+    }
+
+    static func serviceDeepLink(for applicationURL: URL) -> URL? {
+        guard applicationURL.pathExtension.caseInsensitiveCompare("app") == .orderedSame else {
+            return nil
+        }
+        var components = URLComponents()
+        components.scheme = scheme
+        components.host = "uninstallApp"
+        components.queryItems = [URLQueryItem(name: "path", value: applicationURL.standardizedFileURL.path)]
+        return components.url
+    }
+
+    private static func applicationURL(fromServiceDeepLink url: URL) -> URL? {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let queryItems = components.queryItems,
+              queryItems.count == 1,
+              queryItems[0].name == "path",
+              let path = queryItems[0].value,
+              !path.isEmpty else { return nil }
+        let applicationURL = URL(fileURLWithPath: path).standardizedFileURL
+        return applicationURL.pathExtension.caseInsensitiveCompare("app") == .orderedSame
+            ? applicationURL
+            : nil
     }
 }
 

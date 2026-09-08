@@ -27,7 +27,7 @@ The first objective is a safe privilege boundary, not a cosmetic rename.
 | SEC-02 | Resolved in code; signed-release evidence pending | Helper authorization uses a designated requirement. A Developer ID-signed client/helper pair must still prove it in the release matrix. | `SilocleanerHelper/CodesignCheck.swift`, `RELEASE-VALIDATION.md` |
 | SEC-03 | Resolved | Destructive and privileged operations pass discrete `Process` arguments, and subprocesses use a direct allowlisted environment without launching a user shell. | `Silocleaner/Logic/Utilities.swift`, `Silocleaner/Logic/ProcessEnv.swift`, `Shared/UserProcessEnvironment.swift` |
 | ID-01 | Resolved | Targets, app group, service labels, URL scheme, updater origin, and user-facing branding have been migrated to Silocleaner. Final Apple signing credentials remain a release gate. | project, plists, entitlements, Swift sources |
-| SEC-04 | Resolved | Finder extension now observes only standard application folders and has no filesystem temporary exception. | `FinderOpen/FinderOpen.entitlements`, `FinderOpen/FinderOpen.swift` |
+| SEC-04 | Resolved | Finder extension observes only standard application folders, validates exactly one selected `.app`, and emits a safely encoded deep link that the app revalidates. | `FinderOpen/FinderOpen.entitlements`, `FinderOpen/FinderOpen.swift`, `Shared/FinderInvocation.swift` |
 | SEC-05 | Resolved | The Keychain password cache was removed. `SUDO_ASKPASS` requests a password for the immediate operation and does not persist it. | `Silocleaner/Logic/CLI.swift`, `Silocleaner/Resources/askpass.sh` |
 | SUP-01 | Resolved | `AlinFoundation` is pinned to immutable revision `f61241c2ea1856ef41cbfc965afe9d756121456f`. | `Silocleaner.xcodeproj/project.pbxproj`, `Silocleaner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved` |
 | REL-01 | Resolved | Private PackageKit/CommerceKit/StoreFoundation build integration was removed. Package receipts use public `pkgutil`; App Store discovery uses the public lookup API and installation is handed to App Store. | `Silocleaner.xcodeproj/project.pbxproj`, `Silocleaner/Logic/PKG/PKGManager.swift` |
@@ -230,6 +230,12 @@ Status: **foundation complete; integration, hardware, and independent-review gat
     signature, and unknown/failure outcomes. Settings and Lipo now present the
     state and only the enabled state authorizes helper use. This does not prove
     the signed `SMAppService` registration or XPC connection on a real Mac.
+  - [x] Add a shared, fixture-tested Finder invocation policy: exactly one
+    selected `.app` beneath `/Applications`, `/System/Applications`, or
+    `~/Applications` may create a safely encoded Finder deep link; the app
+    rejects malformed or unknown Silocleaner deep links. Services retain an
+    explicit `.app`-only route for apps outside those folders. This verifies
+    policy, not an installed/signed Finder extension or Services registration.
 - [ ] Test on a clean macOS 13+ user account with Full Disk Access absent and
   present, both Apple silicon and Intel where supported.
 - [ ] Perform an external security review before the first public release,
@@ -248,14 +254,14 @@ hardware, privacy-permission, signed-release, and independent-review gates.
 
 ## Next implementation slice
 
-Build the Finder invocation integration seam and tests: accepted application-
-folder selection, rejected non-application selection, correct `silocleaner://`
-deep-link construction, and safe app-side routing. Follow that with a signed-
-machine helper test covering the real install, approval, unavailable, and XPC
-failure states.
+Build the Sentinel lifecycle integration seam and tests: registration,
+enablement, current-user Trash monitoring, graceful failure/recovery, and a
+visible lifecycle state. Then validate it on a signed machine alongside the
+real helper install, approval, unavailable, and XPC-failure states.
 
-After that, continue the Phase 5 integration/UI suite around Sentinel lifecycle
-and Pearcleaner coexistence.
+After that, complete the remaining Phase 5 integration/UI suite around Finder
+and Services invocation, protected/unprotected deletion and undo, and
+Pearcleaner coexistence.
 
 ## Verification record
 
@@ -264,5 +270,5 @@ and Pearcleaner coexistence.
 | Clone and Git status | Passed | Clean `main` at `2527435` before the Phase 0 documentation change. |
 | Dependency resolution | Passed | Sparkle 2.8.0, ArgumentParser 1.6.1, AlinFoundation `f61241c`. |
 | Full build | Passed | Unsigned, isolated Debug and Release builds completed with Xcode 26.6 on macOS 26.6.2; see `BASELINE.md`. |
-| Automated tests | Passed | `swift test --disable-sandbox` executed 21/21 package tests on 2026-09-08: 8 helper-security and 13 core-safety tests. This is not Xcode UI or signed-release evidence. |
-| Unsigned Debug build after helper lifecycle slice | Passed | `Silocleaner Debug` built with `CODE_SIGNING_ALLOWED=NO` on 2026-09-08 after the helper-lifecycle changes. This does not prove signed, physical-install, Finder, Sentinel, or privacy-permission behavior. |
+| Automated tests | Passed | `swift test --disable-sandbox` executed 23/23 package tests on 2026-09-08: 8 helper-security and 15 core-safety tests, including the Finder invocation policy. This is not Xcode UI or signed-release evidence. |
+| Unsigned Debug build after Finder invocation slice | Passed | `Silocleaner Debug` built with `CODE_SIGNING_ALLOWED=NO` on 2026-09-08 after the Finder invocation changes. This does not prove signed, physical-install, Finder, Sentinel, Services, or privacy-permission behavior. |

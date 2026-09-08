@@ -13,12 +13,11 @@ class FinderOpen: FIFinderSync {
     /// Finder Sync menus are intentionally limited to the standard application
     /// locations. The extension only receives selected URLs from Finder and
     /// hands them to the main app; it does not need a filesystem exception.
-    private static let observedApplicationDirectories: Set<URL> = [
-        URL(fileURLWithPath: "/Applications", isDirectory: true),
-        URL(fileURLWithPath: "/System/Applications", isDirectory: true),
-        FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent("Applications", isDirectory: true),
-    ]
+    private static let observedApplicationDirectories: Set<URL> = Set(
+        FinderInvocationPolicy.applicationDirectories(
+            homeDirectory: FileManager.default.homeDirectoryForCurrentUser
+        )
+    )
 
     override init() {
         super.init()
@@ -33,7 +32,10 @@ class FinderOpen: FIFinderSync {
         if menuKind == .contextualMenuForItems {
             // Get the selected items
             if let selectedItemURLs = FIFinderSyncController.default().selectedItemURLs(),
-               selectedItemURLs.count == 1, selectedItemURLs.first?.pathExtension == "app" {
+               FinderInvocationPolicy.selectedApplicationURL(
+                   from: selectedItemURLs,
+                   applicationDirectories: Array(Self.observedApplicationDirectories)
+               ) != nil {
                 // Add menu item if the selected item is a .app file
                 let menuItem = NSMenuItem(title: "Uninstall with Silocleaner", action: #selector(openInMyApp), keyEquivalent: "")
                 // Add icon if enabled in main app
@@ -58,18 +60,11 @@ class FinderOpen: FIFinderSync {
 
     @objc func openInMyApp(_ sender: AnyObject?) {
         // Get the selected items (files/folders) in Finder
-        guard let selectedItems = FIFinderSyncController.default().selectedItemURLs(), !selectedItems.isEmpty else {
-            return
-        }
-
-        // Consider only the first selected item
-        let firstSelectedItem = selectedItems[0]
-        var components = URLComponents()
-        components.scheme = "silocleaner"
-        components.host = "com.lindemannm.Silocleaner"
-        components.queryItems = [URLQueryItem(name: "path", value: firstSelectedItem.path)]
-
-        guard let deepLink = components.url else {
+        guard let selectedItems = FIFinderSyncController.default().selectedItemURLs(),
+              let deepLink = FinderInvocationPolicy.finderDeepLink(
+                  for: selectedItems,
+                  applicationDirectories: Array(Self.observedApplicationDirectories)
+              ) else {
             return
         }
         NSWorkspace.shared.open(deepLink)
