@@ -480,7 +480,6 @@
 				C781216C2BC892A000BE06BD /* Embed Foundation Extensions */,
 				C7B3AB0B2D83910400D829C5 /* CopyFiles */,
 				C73545FA2D849B6900A3DC0C /* CopyFiles */,
-				C739C33B2EB0280F003639C6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -624,27 +623,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		C739C33B2EB0280F003639C6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "chmod +x \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/askpass.sh\"\nchmod +x \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/homebrew-auto-update.sh\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C728930B2AFD51EA00C8C1CD /* Sources */ = {
