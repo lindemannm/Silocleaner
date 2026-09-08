@@ -77,9 +77,6 @@ class FileManagerUndo {
         let dispatchSemaphore = DispatchSemaphore(value: 0)  // Semaphore to make it synchronous
         var finalStatus = false  // Store the final success/failure status
 
-        var tempFilePairs: [(trashURL: URL, originalURL: URL)] = []
-        var seenFileNames: [String: Int] = [:]
-
         let hasProtectedFiles = validURLs.contains { $0.isProtected }
 
         // Create bundle folder name with app name and timestamp
@@ -102,31 +99,15 @@ class FileManagerUndo {
         }
 
         let bundleFolderName = "\(folderName)_\(timestamp)"
-        let bundleFolderPath = (trashPath as NSString).appendingPathComponent(bundleFolderName)
-        let bundleFolderURL = URL(fileURLWithPath: bundleFolderPath)
-
-        var operations: [(String, [String])] = [("/bin/mkdir", ["-p", bundleFolderPath])]
-        for file in validURLs {
-            let baseName = file.lastPathComponent
-            var count = seenFileNames[baseName] ?? 0
-            var finalName = baseName
-
-            // Check for duplicate names within the bundle folder
-            repeat {
-                if count > 0 {
-                    finalName = "\(baseName)-\(count)"
-                }
-                count += 1
-            } while FileManager.default.fileExists(atPath: (bundleFolderPath as NSString).appendingPathComponent(finalName))
-
-            seenFileNames[baseName] = count
-
-            let destinationURL = bundleFolderURL.appendingPathComponent(finalName)
-            tempFilePairs.append((trashURL: destinationURL, originalURL: file))
-
-            operations.append(("/bin/mv", [file.path, destinationURL.path]))
-        }
-        let filePairs = tempFilePairs
+        let plan = TrashMovePlan.make(
+            files: validURLs,
+            trashDirectoryURL: URL(fileURLWithPath: trashPath, isDirectory: true),
+            bundleFolderName: bundleFolderName,
+            destinationExists: { FileManager.default.fileExists(atPath: $0.path) }
+        )
+        let bundleFolderPath = plan.bundleFolderURL.path
+        let operations = plan.deleteOperations.map { ($0.executable, $0.arguments) }
+        let filePairs = plan.filePairs.map { (trashURL: $0.trashURL, originalURL: $0.originalURL) }
 
         if executeFileOperations(operations, isCLI: isCLI, hasProtectedFiles: hasProtectedFiles) {
             undoManager.registerUndo(withTarget: self) { target in
@@ -174,21 +155,11 @@ class FileManagerUndo {
             $0.originalURL.deletingLastPathComponent().isProtected
         }
 
-        var operations = filePairs.map { ("/bin/mv", [$0.trashURL.path, $0.originalURL.path]) }
-
-        // Determine the bundle folder to clean up after restore
-        var bundleFolderToRemove: String? = nil
-        if let firstFilePair = filePairs.first {
-            let bundleFolder = firstFilePair.trashURL.deletingLastPathComponent()
-            // Only remove if it looks like our generated bundle folder (contains underscore for timestamp)
-            if bundleFolder.lastPathComponent.contains("_") {
-                bundleFolderToRemove = bundleFolder.path
-            }
-        }
-
-        if let bundleFolder = bundleFolderToRemove {
-            operations.append(("/bin/rmdir", [bundleFolder]))
-        }
+        let plannedPairs = filePairs.map { TrashMovePlan.FilePair(trashURL: $0.trashURL, originalURL: $0.originalURL) }
+        let operations = TrashMovePlan.restoreOperations(for: plannedPairs).map { ($0.executable, $0.arguments) }
+        let bundleFolderToRemove = plannedPairs.first?.trashURL.deletingLastPathComponent().lastPathComponent.contains("_") == true
+            ? plannedPairs.first?.trashURL.deletingLastPathComponent().path
+            : nil
 
         if executeFileOperations(operations, isCLI: isCLI, hasProtectedFiles: hasProtectedFiles, isRestore: true) {
             // Remove from persistent history after successful restore

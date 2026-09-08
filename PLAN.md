@@ -223,6 +223,11 @@ Status: **foundation complete; integration, hardware, and independent-review gat
 - [ ] Add integration/UI tests for Finder invocation, Sentinel behaviour,
   helper installation/approval states, protected/unprotected deletion, undo,
   and a conflicting Pearcleaner install.
+  - [x] Add fixture-backed deletion-safety coverage for confirmation-before-
+    authorization, protected-path refusal without approved elevation, literal
+    move planning (including duplicate filenames), and inverse undo planning.
+    The app uses these tested plans; the tests do not touch a real Trash or
+    privileged helper.
 - [ ] Test on a clean macOS 13+ user account with Full Disk Access absent and
   present, both Apple silicon and Intel where supported.
 - [ ] Perform an external security review before the first public release,
@@ -258,4 +263,5 @@ protected versus unprotected deletion and undo, then Pearcleaner coexistence.
 | Clone and Git status | Passed | Clean `main` at `2527435` before the Phase 0 documentation change. |
 | Dependency resolution | Passed | Sparkle 2.8.0, ArgumentParser 1.6.1, AlinFoundation `f61241c`. |
 | Full build | Passed | Unsigned, isolated Debug and Release builds completed with Xcode 26.6 on macOS 26.6.2; see `BASELINE.md`. |
-| Automated tests | Passed | `swift test --disable-sandbox` executed 14/14 package tests on 2026-09-08: 8 helper-security and 6 core-safety tests. This is not Xcode UI or signed-release evidence. |
+| Automated tests | Passed | `swift test --disable-sandbox` executed 18/18 package tests on 2026-09-08: 8 helper-security and 10 core-safety tests. This is not Xcode UI or signed-release evidence. |
+| Unsigned Debug build after deletion-safety slice | Passed | `Silocleaner Debug` built with `CODE_SIGNING_ALLOWED=NO` on 2026-09-08. This does not prove signed, physical-install, Finder, Sentinel, or privacy-permission behavior. |
