@@ -6,8 +6,11 @@ Silocleaner is a new fork of Pearcleaner: a native macOS application cleaner
 with a Finder extension, login-item Sentinel, command-line interface, updater,
 and a privileged helper. The checked-out baseline is `7724df7` on `main`.
 
-The SEC-01 generic-command endpoint has been removed. The remaining phases are
-not implemented yet.
+The privilege-boundary, command-construction, identity, entitlement, and
+release-automation implementation work is complete. The remaining work is
+targeted hardening plus evidence from a signed distribution, real installations,
+and an independent review; it must not be inferred from unsigned builds or the
+package-level tests.
 
 ## Release rule
 
@@ -20,15 +23,15 @@ The first objective is a safe privilege boundary, not a cosmetic rename.
 
 | ID | Priority | Finding | Primary location |
 | --- | --- | --- | --- |
-| SEC-01 | Critical | Root helper accepts arbitrary Bash strings over XPC. | `PearcleanerHelper/main.swift` |
-| SEC-02 | Critical | Helper caller check compares certificate chains rather than enforcing Silocleaner's designated requirement. | `PearcleanerHelper/CodesignCheck.swift` |
-| SEC-03 | High | Privileged shell commands interpolate untrusted/path-derived values. | `Pearcleaner/Logic/Utilities.swift`, uninstaller and updater code |
+| SEC-01 | Resolved | The root helper exposes only a typed bundle-thinning request; it has no generic shell endpoint. | `SilocleanerHelper/HelperToolProtocol.swift`, `SilocleanerHelper/PrivilegedBundleThinner.swift` |
+| SEC-02 | Resolved in code; signed-release evidence pending | Helper authorization uses a designated requirement. A Developer ID-signed client/helper pair must still prove it in the release matrix. | `SilocleanerHelper/CodesignCheck.swift`, `RELEASE-VALIDATION.md` |
+| SEC-03 | Resolved in code; follow-on hardening queued | Destructive and privileged operations pass discrete `Process` arguments. The only remaining interactive-shell wrapper runs fixed `/usr/bin/env` to capture an environment; replace it with a direct design before public release. | `Silocleaner/Logic/Utilities.swift`, `Silocleaner/Logic/ProcessEnv.swift` |
 | ID-01 | Resolved | Targets, app group, service labels, URL scheme, updater origin, and user-facing branding have been migrated to Silocleaner. Final Apple signing credentials remain a release gate. | project, plists, entitlements, Swift sources |
 | SEC-04 | Resolved | Finder extension now observes only standard application folders and has no filesystem temporary exception. | `FinderOpen/FinderOpen.entitlements`, `FinderOpen/FinderOpen.swift` |
-| SEC-05 | Medium | The app caches a sudo password in Keychain without explicit access controls. | `Pearcleaner/Logic/KeychainPasswordManager.swift` |
+| SEC-05 | Resolved | The Keychain password cache was removed. `SUDO_ASKPASS` requests a password for the immediate operation and does not persist it. | `Silocleaner/Logic/CLI.swift`, `Silocleaner/Resources/askpass.sh` |
 | SUP-01 | Resolved | `AlinFoundation` is pinned to immutable revision `f61241c2ea1856ef41cbfc965afe9d756121456f`. | `Silocleaner.xcodeproj/project.pbxproj`, `Silocleaner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved` |
 | REL-01 | Resolved | Private PackageKit/CommerceKit/StoreFoundation build integration was removed. Package receipts use public `pkgutil`; App Store discovery uses the public lookup API and installation is handed to App Store. | `Silocleaner.xcodeproj/project.pbxproj`, `Silocleaner/Logic/PKG/PKGManager.swift` |
-| QLT-01 | Medium | No unit/UI test targets currently exist. | Xcode project |
+| QLT-01 | Partially resolved | A SwiftPM suite exercises helper-security and core safety contracts; Xcode integration/UI tests and physical-install evidence remain absent. | `Package.swift`, `HelperSecurityTests`, `CoreTests`, `RELEASE-VALIDATION.md` |
 
 ## Phase 0 -- establish a reproducible baseline
 
@@ -92,7 +95,7 @@ Exit criteria:
 
 ## Phase 2 -- eliminate unsafe command construction and password caching
 
-Status: **in progress**
+Status: **complete (code hardening); follow-on hardening tracked separately**
 
 - [x] Find every shell `Process(... "-c" ...)`, `runSUCommand`,
   `performPrivilegedCommands`, and string-built command. The one remaining
@@ -118,14 +121,22 @@ Status: **in progress**
 
 Exit criteria:
 
-- Static review finds no generic root-shell pathway and no unescaped
-  path-derived shell construction.
-- Password material is not retained beyond an approved, documented design.
-- Temporary-file cleanup cannot delete unrelated same-user files by prefix.
+- [x] Static review finds no generic root-shell pathway and no unescaped
+  path-derived shell construction in the destructive and privileged flows.
+- [x] Password material is not retained beyond an approved, documented design.
+- [x] Temporary-file cleanup cannot delete unrelated same-user files by prefix.
+
+The legacy `ProcessEnv.userShellInvocation()` wrapper remains only to obtain an
+interactive-login environment by executing the fixed `/usr/bin/env` program.
+It is not on a destructive or privileged path, but it still constructs
+`shell -ilc <command>` and trusts the selected shell. Replace it with a direct,
+allowlisted environment-capture design and add focused tests as the next
+hardening slice. Do not reopen the completed migration of path-derived command
+arguments merely because of this isolated wrapper.
 
 ## Phase 3 -- establish Silocleaner identity and signing
 
-Status: **in progress**
+Status: **complete in source/configuration; signed-install evidence pending**
 
 Identity selected for this fork: `com.lindemannm.Silocleaner`, with
 `group.com.lindemannm.Silocleaner`, the `silocleaner://` URL scheme,
@@ -163,7 +174,7 @@ Exit criteria:
 
 ## Phase 4 -- entitlement and distribution hardening
 
-Status: **in progress**
+Status: **complete in source/configuration; signed distribution evidence pending**
 
 - [x] Re-evaluate the Finder extension's `/` read exception. The extension
   observes only `/Applications`, `/System/Applications`, and
@@ -196,7 +207,7 @@ Exit criteria:
 
 ## Phase 5 -- dependencies, tests, and release confidence
 
-Status: **in progress**
+Status: **foundation complete; integration, hardware, and independent-review gates pending**
 
 - [x] Pin every dependency to an immutable revision in both the project and
   `Package.resolved`. AlinFoundation remains an upstream-owned, immutable
@@ -206,8 +217,9 @@ Status: **in progress**
   and Release without developer-local paths, runs tests, and reports failures.
 - [x] Add unit tests for file-scope classification, deep-link parsing,
   temporary-file lifecycle, and destructive-operation previews.
-- [x] Add command-argument construction tests after extracting the remaining
-  user-shell environment capture behind a direct-process interface.
+- [x] Add command-argument construction tests for direct-process invocation and
+  literal metacharacter handling. The legacy environment-capture wrapper is
+  deliberately tracked as follow-on hardening, not claimed as extracted.
 - [ ] Add integration/UI tests for Finder invocation, Sentinel behaviour,
   helper installation/approval states, protected/unprotected deletion, undo,
   and a conflicting Pearcleaner install.
@@ -227,13 +239,17 @@ Exit criteria:
 `RELEASE-VALIDATION.md` is the required evidence record for the remaining
 hardware, privacy-permission, signed-release, and independent-review gates.
 
-## Suggested first implementation slice
+## Next implementation slice
 
-1. Complete Phase 0's operation inventory and release-channel decision.
-2. Implement and test the Phase 1 typed helper boundary.
-3. Carry out the Phase 3 identity/signing change in the same coherent slice,
-   because the helper's designated requirement depends on the final identity.
-4. Only then rename the wider UI and begin feature work.
+Replace `ProcessEnv.userShellInvocation()` with a direct, allowlisted
+environment-capture mechanism, and add tests that prove hostile shell paths,
+shell-startup files, and metacharacters cannot influence execution. This is
+defence-in-depth: it does not change the completed Phase 2 finding that current
+destructive and privileged paths use structured process arguments.
+
+After that, build the Phase 5 integration/UI suite around the release matrix:
+Finder invocation, Sentinel lifecycle, helper unavailable/approval states,
+protected versus unprotected deletion and undo, then Pearcleaner coexistence.
 
 ## Verification record
 
@@ -242,4 +258,4 @@ hardware, privacy-permission, signed-release, and independent-review gates.
 | Clone and Git status | Passed | Clean `main` at `2527435` before the Phase 0 documentation change. |
 | Dependency resolution | Passed | Sparkle 2.8.0, ArgumentParser 1.6.1, AlinFoundation `f61241c`. |
 | Full build | Passed | Unsigned, isolated Debug and Release builds completed with Xcode 26.6 on macOS 26.6.2; see `BASELINE.md`. |
-| Automated tests | Pending | No test target or test source files were found in the baseline project. |
+| Automated tests | Passed | `swift test --disable-sandbox` executed 14/14 package tests on 2026-09-08: 8 helper-security and 6 core-safety tests. This is not Xcode UI or signed-release evidence. |
