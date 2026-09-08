@@ -11,7 +11,9 @@ permissions:
 jobs:
   build-and-test:
     name: macOS build and tests
-    runs-on: macos-15
+    # Liquid Glass APIs require the macOS 26 SDK even though their use is
+    # availability-gated for the app's macOS 13 deployment target.
+    runs-on: macos-26
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
