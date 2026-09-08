@@ -25,7 +25,7 @@ The first objective is a safe privilege boundary, not a cosmetic rename.
 | --- | --- | --- | --- |
 | SEC-01 | Resolved | The root helper exposes only a typed bundle-thinning request; it has no generic shell endpoint. | `SilocleanerHelper/HelperToolProtocol.swift`, `SilocleanerHelper/PrivilegedBundleThinner.swift` |
 | SEC-02 | Resolved in code; signed-release evidence pending | Helper authorization uses a designated requirement. A Developer ID-signed client/helper pair must still prove it in the release matrix. | `SilocleanerHelper/CodesignCheck.swift`, `RELEASE-VALIDATION.md` |
-| SEC-03 | Resolved in code; follow-on hardening queued | Destructive and privileged operations pass discrete `Process` arguments. The only remaining interactive-shell wrapper runs fixed `/usr/bin/env` to capture an environment; replace it with a direct design before public release. | `Silocleaner/Logic/Utilities.swift`, `Silocleaner/Logic/ProcessEnv.swift` |
+| SEC-03 | Resolved | Destructive and privileged operations pass discrete `Process` arguments, and subprocesses use a direct allowlisted environment without launching a user shell. | `Silocleaner/Logic/Utilities.swift`, `Silocleaner/Logic/ProcessEnv.swift`, `Shared/UserProcessEnvironment.swift` |
 | ID-01 | Resolved | Targets, app group, service labels, URL scheme, updater origin, and user-facing branding have been migrated to Silocleaner. Final Apple signing credentials remain a release gate. | project, plists, entitlements, Swift sources |
 | SEC-04 | Resolved | Finder extension now observes only standard application folders and has no filesystem temporary exception. | `FinderOpen/FinderOpen.entitlements`, `FinderOpen/FinderOpen.swift` |
 | SEC-05 | Resolved | The Keychain password cache was removed. `SUDO_ASKPASS` requests a password for the immediate operation and does not persist it. | `Silocleaner/Logic/CLI.swift`, `Silocleaner/Resources/askpass.sh` |
@@ -95,7 +95,7 @@ Exit criteria:
 
 ## Phase 2 -- eliminate unsafe command construction and password caching
 
-Status: **complete (code hardening); follow-on hardening tracked separately**
+Status: **complete**
 
 - [x] Find every shell `Process(... "-c" ...)`, `runSUCommand`,
   `performPrivilegedCommands`, and string-built command. The one remaining
@@ -126,13 +126,11 @@ Exit criteria:
 - [x] Password material is not retained beyond an approved, documented design.
 - [x] Temporary-file cleanup cannot delete unrelated same-user files by prefix.
 
-The legacy `ProcessEnv.userShellInvocation()` wrapper remains only to obtain an
-interactive-login environment by executing the fixed `/usr/bin/env` program.
-It is not on a destructive or privileged path, but it still constructs
-`shell -ilc <command>` and trusts the selected shell. Replace it with a direct,
-allowlisted environment-capture design and add focused tests as the next
-hardening slice. Do not reopen the completed migration of path-derived command
-arguments merely because of this isolated wrapper.
+`ProcessEnv.userShellInvocation()` has been removed. User-owned subprocesses
+receive only a direct, allowlisted `HOME`, `TMPDIR`, and supported
+system/Homebrew `PATH`; they do not launch a login shell or source startup
+files. Package tests verify hostile `SHELL`, `BASH_ENV`, `ENV`, and `PATH`
+values cannot influence that environment.
 
 ## Phase 3 -- establish Silocleaner identity and signing
 
@@ -217,9 +215,8 @@ Status: **foundation complete; integration, hardware, and independent-review gat
   and Release without developer-local paths, runs tests, and reports failures.
 - [x] Add unit tests for file-scope classification, deep-link parsing,
   temporary-file lifecycle, and destructive-operation previews.
-- [x] Add command-argument construction tests for direct-process invocation and
-  literal metacharacter handling. The legacy environment-capture wrapper is
-  deliberately tracked as follow-on hardening, not claimed as extracted.
+- [x] Add command-argument construction and direct-environment tests for
+  literal metacharacter handling and hostile shell/startup-file values.
 - [ ] Add integration/UI tests for Finder invocation, Sentinel behaviour,
   helper installation/approval states, protected/unprotected deletion, undo,
   and a conflicting Pearcleaner install.
@@ -246,15 +243,13 @@ hardware, privacy-permission, signed-release, and independent-review gates.
 
 ## Next implementation slice
 
-Replace `ProcessEnv.userShellInvocation()` with a direct, allowlisted
-environment-capture mechanism, and add tests that prove hostile shell paths,
-shell-startup files, and metacharacters cannot influence execution. This is
-defence-in-depth: it does not change the completed Phase 2 finding that current
-destructive and privileged paths use structured process arguments.
+Build a testable helper-lifecycle state model and cover unavailable, install,
+approval-required, enabled, denied, and invalid-signature outcomes without
+registering a real system service. Wire the Settings and Lipo presentation to
+that model, then follow with a signed-machine test of the actual service.
 
-After that, build the Phase 5 integration/UI suite around the release matrix:
-Finder invocation, Sentinel lifecycle, helper unavailable/approval states,
-protected versus unprotected deletion and undo, then Pearcleaner coexistence.
+After that, continue the Phase 5 integration/UI suite around Finder invocation,
+Sentinel lifecycle, and Pearcleaner coexistence.
 
 ## Verification record
 
@@ -263,5 +258,5 @@ protected versus unprotected deletion and undo, then Pearcleaner coexistence.
 | Clone and Git status | Passed | Clean `main` at `2527435` before the Phase 0 documentation change. |
 | Dependency resolution | Passed | Sparkle 2.8.0, ArgumentParser 1.6.1, AlinFoundation `f61241c`. |
 | Full build | Passed | Unsigned, isolated Debug and Release builds completed with Xcode 26.6 on macOS 26.6.2; see `BASELINE.md`. |
-| Automated tests | Passed | `swift test --disable-sandbox` executed 18/18 package tests on 2026-09-08: 8 helper-security and 10 core-safety tests. This is not Xcode UI or signed-release evidence. |
-| Unsigned Debug build after deletion-safety slice | Passed | `Silocleaner Debug` built with `CODE_SIGNING_ALLOWED=NO` on 2026-09-08. This does not prove signed, physical-install, Finder, Sentinel, or privacy-permission behavior. |
+| Automated tests | Passed | `swift test --disable-sandbox` executed 19/19 package tests on 2026-09-08: 8 helper-security and 11 core-safety tests. This is not Xcode UI or signed-release evidence. |
+| Unsigned Debug build after hardening slices | Passed | `Silocleaner Debug` built with `CODE_SIGNING_ALLOWED=NO` on 2026-09-08 after the deletion-safety and direct-environment changes. This does not prove signed, physical-install, Finder, Sentinel, or privacy-permission behavior. |

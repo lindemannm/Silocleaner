@@ -143,4 +143,25 @@ final class ReleaseSafetyTests: XCTestCase {
             ]
         )
     }
+
+    func testUserProcessEnvironmentIgnoresShellAndStartupFileInjection() {
+        let environment = UserProcessEnvironment.make(
+            homeDirectory: URL(fileURLWithPath: "/Users/fixture", isDirectory: true),
+            temporaryDirectory: URL(fileURLWithPath: "/private/tmp/fixture", isDirectory: true),
+            inheritedEnvironment: [
+                "SHELL": "/tmp/hostile-shell",
+                "BASH_ENV": "/tmp/hostile-startup",
+                "ENV": "/tmp/hostile-startup",
+                "PATH": "/tmp/hostile-bin",
+                "HOME": "/tmp/hostile-home"
+            ]
+        )
+
+        XCTAssertEqual(environment["HOME"], "/Users/fixture")
+        XCTAssertEqual(environment["TMPDIR"], "/private/tmp/fixture")
+        XCTAssertEqual(environment["PATH"], UserProcessEnvironment.executableSearchPath)
+        XCTAssertNil(environment["SHELL"])
+        XCTAssertNil(environment["BASH_ENV"])
+        XCTAssertNil(environment["ENV"])
+    }
 }
