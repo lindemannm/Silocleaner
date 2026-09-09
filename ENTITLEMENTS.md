@@ -39,12 +39,14 @@ only; its `showAppIconInMenu` preference is the sole app-group consumer.
 
    It archives the `Silocleaner Release` scheme, verifies the main app,
    Finder extension, Sentinel and helper independently, requires their signing
-   team to match, submits a ZIP to notarization, staples the ticket, runs
-   Gatekeeper assessment, and verifies the exact component set again. The
-   verification script intentionally does not use `codesign --deep`.
+   team to match, submits a ZIP to notarization, staples the app ticket, runs
+   Gatekeeper assessment, and verifies the exact component set again. It then
+   creates a signed, read-only `Silocleaner.dmg` with an `Applications`
+   shortcut, notarizes and staples that DMG, and assesses it with Gatekeeper.
+   The verification script intentionally does not use `codesign --deep`.
 
-5. On a clean macOS 13+ user account, copy the stapled app to `/Applications`,
-   open it via Finder, confirm Gatekeeper accepts it, enable the Finder
+5. On a clean macOS 13+ user account, open the stapled DMG, drag the app to
+   `/Applications`, open it via Finder, confirm Gatekeeper accepts it, enable the Finder
    extension, enable Sentinel and (only after the Phase 1--3 gates) the helper
    in Login Items, then exercise the Finder command, a Sentinel notification,
    and helper thinning of a root-owned app in `/Applications`. Record the

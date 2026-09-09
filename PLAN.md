@@ -193,7 +193,8 @@ Status: **complete in source/configuration; signed distribution evidence pending
 - [x] Set a supported signing/notarization workflow with verification of the
   app, Finder extension, Sentinel, and privileged helper as a single bundle.
   `Scripts/notarize-release.sh` archives, verifies, notarizes, staples, runs
-  Gatekeeper assessment, and re-verifies the individual signed components;
+  Gatekeeper assessment, re-verifies the individual signed components, and
+  produces a separately signed, notarized, stapled drag-to-Applications DMG;
   `ENTITLEMENTS.md` supplies the required fresh-machine acceptance record.
 
 Exit criteria:
