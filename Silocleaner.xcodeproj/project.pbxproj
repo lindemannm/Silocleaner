@@ -50,10 +50,10 @@
 		C7DD49EA2BAB4D8100CCBA16 /* AppInfoFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DD49E92BAB4D8100CCBA16 /* AppInfoFetch.swift */; };
 		C7DD49EE2BAB7F6000CCBA16 /* ReversePathsFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DD49ED2BAB7F6000CCBA16 /* ReversePathsFetch.swift */; };
 		C7E200012F00000100SEC002 /* homebrew-auto-update.sh in Resources */ = {isa = PBXBuildFile; fileRef = C7E200022F00000100SEC002 /* homebrew-auto-update.sh */; };
+		C7E300012F00000100F1AD3E /* Shared/FinderInvocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E300022F00000100F1AD3E /* Shared/FinderInvocation.swift */; };
 		C7F539382AF60865007DF1B2 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F539372AF60865007DF1B2 /* Utilities.swift */; };
 		C7F8436B2CBF066F00E3E30A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C7F8436A2CBF066F00E3E30A /* Localizable.xcstrings */; };
 		C7FBD9DF2DAD66D500151934 /* AlinFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C7C90DDD2DA8221B0056769A /* AlinFoundation */; };
-		C7E300012F00000100F1AD3E /* FinderInvocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E300022F00000100F1AD3E /* FinderInvocation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,9 +174,9 @@
 		C7D31D502AFF00F300C7ED9E /* Locations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
 		C7DD49E92BAB4D8100CCBA16 /* AppInfoFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoFetch.swift; sourceTree = "<group>"; };
 		C7DD49ED2BAB7F6000CCBA16 /* ReversePathsFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversePathsFetch.swift; sourceTree = "<group>"; };
-		C7E300022F00000100F1AD3E /* FinderInvocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/FinderInvocation.swift; sourceTree = SOURCE_ROOT; };
 		C7E200022F00000100SEC002 /* homebrew-auto-update.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "homebrew-auto-update.sh"; sourceTree = "<group>"; };
 		C7E300012F00000100AD0001 /* Silocleaner/Config/Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Silocleaner/Config/Signing.xcconfig; sourceTree = SOURCE_ROOT; };
+		C7E300022F00000100F1AD3E /* Shared/FinderInvocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/FinderInvocation.swift; sourceTree = SOURCE_ROOT; };
 		C7F539372AF60865007DF1B2 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		C7F8436A2CBF066F00E3E30A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -417,7 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				C78121652BC892A000BE06BD /* FinderOpen.swift */,
-				C7E300022F00000100F1AD3E /* FinderInvocation.swift */,
+				C7E300022F00000100F1AD3E /* Shared/FinderInvocation.swift */,
 				C78121672BC892A000BE06BD /* Info.plist */,
 				C78121682BC892A000BE06BD /* FinderOpen.entitlements */,
 				C7A6DBF02C9DD27200CFA042 /* Assets.xcassets */,
@@ -683,7 +683,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C78121662BC892A000BE06BD /* FinderOpen.swift in Sources */,
-				C7E300012F00000100F1AD3E /* FinderInvocation.swift in Sources */,
+				C7E300012F00000100F1AD3E /* Shared/FinderInvocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -948,6 +948,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "$(SILOCLEANER_DEVELOPMENT_TEAM)";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 3W63V86W3G;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -972,6 +973,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lindemannm.Silocleaner;
 				PRODUCT_NAME = Silocleaner;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Silocleaner Developer ID";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -997,6 +999,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "$(SILOCLEANER_DEVELOPMENT_TEAM)";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 3W63V86W3G;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1020,6 +1023,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lindemannm.Silocleaner;
 				PRODUCT_NAME = Silocleaner;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Silocleaner Developer ID";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
@@ -1038,6 +1042,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = "$(APP_BUILD)";
 				DEVELOPMENT_TEAM = "$(SILOCLEANER_DEVELOPMENT_TEAM)";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 3W63V86W3G;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FinderOpen/Info.plist;
@@ -1054,6 +1059,7 @@
 				MARKETING_VERSION = "$(APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lindemannm.Silocleaner.FinderOpen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Silocleaner FinderOpen Developer ID";
 				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1072,6 +1078,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = "$(APP_BUILD)";
 				DEVELOPMENT_TEAM = "$(SILOCLEANER_DEVELOPMENT_TEAM)";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 3W63V86W3G;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_OPTIMIZATION_LEVEL = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1089,6 +1096,7 @@
 				MARKETING_VERSION = "$(APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lindemannm.Silocleaner.FinderOpen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Silocleaner FinderOpen Developer ID";
 				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;

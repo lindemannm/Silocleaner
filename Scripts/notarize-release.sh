@@ -33,6 +33,7 @@ xcodebuild \
     -archivePath "$archive_path" \
     archive
 
+/bin/bash "$repo_root/Scripts/resign-sparkle-components.sh" "$app_path"
 "$repo_root/Scripts/verify-release-bundle.sh" "$app_path"
 
 /usr/bin/ditto -c -k --keepParent "$app_path" "$zip_path"
